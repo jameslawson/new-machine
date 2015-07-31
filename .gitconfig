@@ -1,0 +1,15 @@
+[user]
+	name = James Lawson
+	email = james.lawson10@imperial.ac.uk
+[push]
+	default = simple
+[alias]
+	st = status
+	ci = commit -v
+	co = checkout
+	s = status -s
+	lg = log --oneline --decorate --all --graph
+[core]
+	editor = vim
+[pull]
+	rebase = true
