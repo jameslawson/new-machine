@@ -9,4 +9,7 @@ To keep dotfiles in sync, create the appropriate softlinks:
 ln -s ~/github_projects/dotfiles/.zshrc ~/.zshrc
 ln -s ~/github_projects/dotfiles/.vimrc ~/.vimrc
 ln -s ~/github_projects/dotfiles/.tmux.conf ~/.tmux.conf
+...
 ````
+
+In your home folder, you can do `l | grep lrw` to see which dot files are symlinks.
