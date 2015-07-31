@@ -13,3 +13,16 @@ ln -s ~/github_projects/dotfiles/.tmux.conf ~/.tmux.conf
 ````
 
 In your home folder, you can do `l | grep lrw` to see which dot files are symlinks.
+
+----
+
+**YouCompleteMe**   
+````
+brew install cmake 
+vim
+:PluginInstall
+:q
+cd ~/.vim/bundle/YouCompleteMe
+./install.sh --clang-completer
+````
+[Full Instructions](https://github.com/Valloric/YouCompleteMe)
