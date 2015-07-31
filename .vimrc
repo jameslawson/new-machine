@@ -1,29 +1,52 @@
-filetype off
-filetype plugin indent off
-execute pathogen#infect()
-filetype off
-syntax on
-filetype plugin indent on
+" Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tpope/vim-commentary'
+Plugin 'ReekenX/vim-rename2'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/ctrlp.vim'
+Plugin 'teranex/jk-jumps.vim'
+Plugin 'mattn/emmet-vim'
 
-" https://github.com/nelstrom/vim-textobj-rubyblock
-runtime macros/matchit.vim
-set nocompatible
-if has("autocmd")
-  filetype indent plugin on
-endif
+" Plugin 'SirVer/ultisnips'
+
+Plugin 'kana/vim-textobj-user'
+"Plugin 'Julian/vim-textobj-brace'
+Plugin 'file:///Users/james/github_projects/vim-textobj-brace'
+Plugin 'beloglazov/vim-textobj-quotes'
+Plugin 'glts/vim-textobj-comment'
+
+" Run Rspec specs from vim
+Plugin 'tpope/vim-dispatch'
+Plugin 'thoughtbot/vim-rspec'
+
+Plugin 'tpope/vim-rails'
+
+" Highlight trailing whitespace
+Plugin 'ntpeters/vim-better-whitespace'
+
+" compiler plugin to run nodelint.
+" Plugin 'bigfish/vim-nodelint'
+
+Plugin 'nanotech/jellybeans.vim'
+call vundle#end() " required by vundle
+filetype plugin indent on " required by vundle
+
+colorscheme jellybeans
 
 " reduce keymap timeout from default
 " of 1000ms to 200ms
 set timeoutlen=1000
 
-" Disable VIM backups (.swp files)
-" a controversial mapping but I save so often 
-" and I close terminal, it's a hassle deleting .swp files 
-set nobackup
-set noswapfile
-
-" Make :W an alias for :w
-cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+" Useful aliases for the command line
+command! W w
+command! Q q
+command! Q q
+command! Qall qall
+command! QA qall
+command! E e
 
 " Enable syntax highlighting
 :syntax enable
@@ -40,36 +63,32 @@ source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powe
 set laststatus=2 " Always show status bar
 
 " Fix backspace
+" allow backspacing over everything in insert mode
 " http://vim.wikia.com/wiki/Backspace_and_delete_problems
 set backspace=indent,eol,start
-
-
-" vertical split opens new split area below 
-" (not above, which is the default)
-set splitbelow
-
-" horizontal split opens new split area on the right 
-" (not left, which is the default)
-set splitright
 
 " Use Space to play macros
 " :nnoremap <S-Space> @q
 :nnoremap <Space> @q
 
-:set ignorecase " ignore case when searching with /
-:set smartcase 
-" highlight all matches when
-" we perform a search
+" ignore case when searching with /
+:set ignorecase
+
+:set smartcase
+
+" highlight all matches when we perform a search
 :set hlsearch
-" Highlight next match *while
-" still typing out search pattern*
+
+" Highlight next match *while still typing out search pattern*
 :set incsearch
-:set scrolloff=3 "keep 3 lines visible at top and bottom
+
+" keep 3 lines visible at top and bottom
+:set scrolloff=3
 
 " map the vim Leader Key to comma
 let mapleader = ","
 
-:nnoremap <leader>m %
+" :nnoremap <leader>m %
 :set showmatch
 
 " Nicer highlighting of matching paranthsis
@@ -77,9 +96,20 @@ let mapleader = ","
 hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 
-" Bad Habits ----------------------------------------------------------- {{{
+" Disable  ----------------------------------------------------------- {{{
 
-" Avoiding bad habits, map arrow keys to no-ops 
+" Disable VIM backups (.swp files)
+" a controversial mapping but I save so often that I don't need them.
+" Also when I close terminal without exiting vim,
+" it's a real hassle deleting .swp files
+set nobackup
+set noswapfile
+
+" Don't clutter my dirs up with swp and tmp files
+" set backupdir=~/.tmp
+" set directory=~/.tmp
+
+" Avoiding bad habits, map arrow keys to no-ops
 :map <up> <nop>
 :map <down> <nop>
 :map <left> <nop>
@@ -113,14 +143,15 @@ augroup END
 " Invisibles  -------------------------------------------------------- {{{
 
 " http://vimcasts.org/episodes/show-invisibles/
-
 " Shortcut to rapidly toggle `set list`
-nmap <leader>l :set list!<CR>
+" nmap <leader>l :set list!<CR>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 
 " Turn on invisibles by default
 set list!
+
+command! Inv set list!
 
 " }}}
 
@@ -148,6 +179,50 @@ nnoremap S i<CR><Esc><right>
 :inoremap <Leader>c ,
 :inoremap <Leader>[ [
 
+inoremap { {}<esc>i
+inoremap ( ()<esc>i
+inoremap ) <c-o>:call SmartBrackets()<cr>
+
+function! SmartBrackets()
+  let l = line(".")
+  let c = col(".")
+  let line = getline(".")
+  let current = matchstr(line, '\%' . c . 'c.')
+  let next = matchstr(line, '\%' . (c+1) . 'c.')
+  if (current ==# ')')
+    call cursor(l, c+1)
+  else
+    execute "normal! i)"
+    execute "normal! l"
+  endif
+endfunction
+
+
+" :inoremap | |<Esc>:execute "normal a["<cr>a
+
+" function! MoveAfterBrackets()
+"   let l = line(".")
+"   let c = col(".")
+"   let line = getline(".")
+"   let current = matchstr(line, '\%' . c . 'c.')
+"   let prev = matchstr(line, '\%' . (c-1) . 'c.')
+"   if (prev ==# '(' && current ==# ')')
+"     call cursor(l, c+1)
+"   endif
+" endfunction
+
+" :autocmd InsertLeave * :call SmartBrackets()
+" http://stackoverflow.com/a/23323958/3649209
+" function! MoveAfterBrackets()
+"   let l = line(".")
+"   let c = col(".")
+"   let line = getline(".")
+"   let current = matchstr(line, '\%' . c . 'c.')
+"   let next = matchstr(line, '\%' . (c+1) . 'c.')
+"   if (current ==# '(' && next ==# ')')
+"     call cursor(l, c+1)
+"   endif
+" endfunction
 
 " add semicolon at the end of the line
 :inoremap <Leader><Leader> <Esc>$a;<Esc>
@@ -174,27 +249,85 @@ nnoremap S i<CR><Esc><right>
 " H goes to front of current line
 " L goes to end of current line
 nnoremap H ^
-nnoremap L g_
+nnoremap L g_l
 vnoremap H ^
 vnoremap L $h
 vnoremap dH d^
 
+" Make m/M go to the end of the previous word/WORD
+nnoremap m ge
+nnoremap M gE
+
 " make gi put cursor in center
 nnoremap gi gi<Esc>zzi
-
-" go to before/after pasted text
-nnoremap gP `[
-nnoremap gp `]
 
 " go to previous/next cursor locations
 nnoremap gb <C-O>
 nnoremap gf <C-I>
 
+" repeat a find in visual mode
+vnoremap <leader><leader> ;
+
+" better movement when lines are long (line wrapping)
+" noremap j gj
+" noremap k gk
+
+
+" }}}
+
+
+" Splits ----------------------------------------------------------- {{{
+
+
+" vertical split opens new split area _below_
+" (not above, which is the default)
+set splitbelow
+
+" horizontal split opens new split area on the _right_
+" (not left, which is the default)
+set splitright
+
+" nnoremap z<left> <C-W><C-H>
+" nnoremap z<down> <C-W><C-J>
+" nnoremap z<up> <C-W><C-K>
+" nnoremap z<right> <C-W><C-L>
+
+" nnoremap zk :res +5<cr>
+" nnoremap zj :res -5<cr>
+" nnoremap zh :vertical resize -5<cr>
+" nnoremap zl :vertical resize +5<cr>
+
+nnoremap zh <C-W><C-H>
+nnoremap zj <C-W><C-J>
+nnoremap zk <C-W><C-K>
+nnoremap zl <C-W><C-L>
+
+nnoremap z<up> :res +5<cr>
+nnoremap z<down> :res -5<cr>
+nnoremap z<left> :vertical resize -5<cr>
+nnoremap z<right> :vertical resize +5<cr>
+
+nnoremap zs :sp<cr>
+nnoremap zv :vsp<cr>
+nnoremap zz <C-W><C-W>
+
+nnoremap <leader>fp <c-^>
+
+
+" nnoremap zx <c-w>q
+
+" nnoremap zx :!
+
+" nnoremap zc zz
+" nnoremap sv :source $MYVIMRC<cr>
+
+" depends on UltiSnips
+nnoremap <leader>es :vsplit $HOME/.vim/UltiSnips<cr>
+
 " }}}
 
 
 " Search/Replace -------------------------------------------------------- {{{
-
 
 " if you don't like typing :%s to search+replace
 nnoremap <leader>s :%s//<left>
@@ -211,17 +344,8 @@ vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" open quickfiz with search results
-nnoremap <silent> <leader>/ :execute 'vimgrep /'.@/.'/g %'<CR>:open<CR>
-
 " }}}
-
-" adding comments in insert mode with commentary.vim
-" use leader-x instead of ctrl-x with commentary.vim
-:inoremap <Leader>x <C-X>
-
-" shortcut to turn off search highlighting
-nnoremap <leader>nh :noh
+"
 
 " Indentation ----------------------------------------------------------- {{{
 
@@ -233,76 +357,74 @@ nnoremap <leader>nh :noh
 " Ruby looks nice with width=2
 " C,java look nice with width=4
 " Javascript looks nice with width=4
-" indent with spaces (spaces ftw!)
+" indent with *spaces*, not tabs
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype python setlocal ts=2 sts=2 sw=2
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
 autocmd Filetype c setlocal ts=4 sts=4 sw=4
 autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
-autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 
 " }}}
 
 " Text objects  ----------------------------------------------------------- {{{
 
-" call textobj#user#plugin('datetime', {
-" \   'date': {
-" \     'pattern': '\<\d\d\d\d-\d\d-\d\d\>',
-" \     'select': ['ad', 'id'],
-" \   },
-" \   'time': {
-" \     'pattern': '\<\d\d:\d\d:\d\d\>',
-" \     'select': ['at', 'it'],
-" \   },
-" \ })
-
-" call textobj#user#plugin('line', {
-" \   '-': {
-" \     'select-a-function': 'CurrentLineA',
-" \     'select-a': 'al',
-" \     'select-i-function': 'CurrentLineI',
-" \     'select-i': 'il',
-" \   },
-" \ })
-
-function! CurrentLineA()
-  normal! 0
-  let head_pos = getpos('.')
-  normal! $
-  let tail_pos = getpos('.')
-  return ['v', head_pos, tail_pos]
-endfunction
-
-function! CurrentLineI()
-  normal! ^
-  let head_pos = getpos('.')
-  normal! g_
-  let tail_pos = getpos('.')
-  let non_blank_char_exists_p = getline('.')[head_pos[2] - 1] !~# '\s'
-  return
-  \ non_blank_char_exists_p
-  \ ? ['v', head_pos, tail_pos]
-  \ : 0
-endfunction
-
 " Insert double brackets (depends on Ultisnips)"
 " requires snippet definitions for '(, '{, 'dq, 'sq, '["
 " to add (), {}, "", '', [] from within a snippet (see all.snippets)
-:inoremap ( '(<Esc>:execute "normal a["<cr>a
-:inoremap { '{<Esc>:execute "normal a["<cr>a
-:inoremap " 'dq<Esc>:execute "normal a["<cr>a
-:inoremap ' 'sq<Esc>:execute "normal a["<cr>a
-:inoremap ,s '[<Esc>:execute "normal a["<cr>a
-:inoremap ,r <space><space><Esc>i
+" :inoremap ( '(<Esc>:execute "normal a["<cr>a
+" :inoremap { '{<Esc>:execute "normal a["<cr>a
+" :inoremap " 'dq<Esc>:execute "normal a["<cr>a
+" :inoremap ' 'sq<Esc>:execute "normal a["<cr>a
+" :inoremap ,s '[<Esc>:execute "normal a["<cr>a
+" :inoremap ,r <space><space><Esc>i
 " :inoremap | |<Esc>:execute "normal a["<cr>a
 
 " Insert double brackets around visual selection
-vnoremap ( xi'(<Esc>:execute "normal a["<cr>a<esc>p
-vnoremap { xi'{<Esc>:execute "normal a["<cr>a<esc>p
-vnoremap " xi'dq<Esc>:execute "normal a["<cr>a<esc>p
-vnoremap ' xi'sq<Esc>:execute "normal a["<cr>a<esc>p
-vnoremap ,s xi'[<Esc>:execute "normal a["<cr>a<esc>p
+" vnoremap ( xi'(<Esc>:execute "normal a["<cr>a<esc>p
+" vnoremap { xi'{<Esc>:execute "normal a["<cr>a<esc>p
+" vnoremap " xi'dq<Esc>:execute "normal a["<cr>a<esc>p
+" vnoremap ' xi'sq<Esc>:execute "normal a["<cr>a<esc>p
+" vnoremap ,s xi'[<Esc>:execute "normal a["<cr>a<esc>p
+"
+vnoremap q <esc>:call QuickWrap("'")<cr>
+vnoremap Q <esc>:call QuickWrap('"')<cr>
+vnoremap s <esc>:call StripWrap()<cr>
+
+function! QuickWrap(wrapper)
+  let l:w = a:wrapper
+  let l:inside_or_around = (&selection == 'exclusive') ? ('i') : ('a')
+  normal `>
+  execute "normal " . inside_or_around . escape(w, '\')
+  normal `<
+  execute "normal i" . escape(w, '\')
+  normal `<
+endfunction
+
+function! StripWrap()
+  normal `>x`<x
+endfunction
+
+
+" A hack to allow lowercase user commands
+" let g:command_line_substitutes = [
+"      \ ['^inv ', 'Inv ']
+" \]
+" function! CommandLineSubstitute()
+"     let cl = getcmdline()
+"     if exists('g:command_line_substitutes')
+"         for [k, v] in g:command_line_substitutes
+"             if match(cl, k) == 0
+"                 let cl = substitute(cl, k, v, "")
+"                 break
+"             endif
+"         endfor
+"     endif
+"     return cl
+" endfunction
+" cnoremap <cr> <c-\>eCommandLineSubstitute()<cr><cr>
+" end hack
 
 " Square brackets motion with d
 " onoremap id i[
@@ -344,20 +466,24 @@ set clipboard=unnamed
 " go to just before/after pasted text with gp and gP
 nnoremap <leader>v `[v`]
 
+" go to before/after pasted text
+nnoremap gP `[
+nnoremap gp `]
+
 " Yank till end of line
 :nnoremap Y y$
 
 " Unconditional pasting
 " http://vim.wikia.com/wiki/Unconditional_linewise_or_characterwise_paste
-function! PasteJointCharacterwise(regname, pastecmd)
-  let reg_type = getregtype(a:regname)
-  call setreg(a:regname, '', "ac")
-  exe 'normal "'.a:regname . a:pastecmd
-  call setreg(a:regname, '', "a".reg_type)
-  exe 'normal `[v`]J'
-endfunction
-nmap <Leader>p :call PasteJointCharacterwise(v:register, "p")<CR>
-nmap <Leader>P :call PasteJointCharacterwise(v:register, "P")<CR>
+" function! PasteJointCharacterwise(regname, pastecmd)
+"   let reg_type = getregtype(a:regname)
+"   call setreg(a:regname, '', "ac")
+"   exe 'normal "'.a:regname . a:pastecmd
+"   call setreg(a:regname, '', "a".reg_type)
+"   exe 'normal `[v`]J'
+" endfunction
+" nmap <Leader>p :call PasteJointCharacterwise(v:register, "p")<CR>
+" nmap <Leader>P :call PasteJointCharacterwise(v:register, "P")<CR>
 
 
 " }}}
@@ -366,24 +492,83 @@ nmap <Leader>P :call PasteJointCharacterwise(v:register, "P")<CR>
 " Plugins ----------------------------------------------------------- {{{
 "
 " ctrlp custom maps
-let g:ctrlp_prompt_mappings = {
-      \ 'AcceptSelection("h")': ['<S-CR>'],
-      \ 'AcceptSelection("v")': ['<C-CR>'],
-      \ 'PrtExit()':            ['<C-X>']
-      \}
+nnoremap <leader>p :CtrlP<CR>
 
-nnoremap <leader>f :CtrlP<CR>
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|bower_components|tmp|target|dist)|(\.(swp|ico|git|svn))$'
+
+" Search from current directory instead of project root
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_use_caching = 0
+" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:40,results:40'
+" let g:ctrlp_map = ''
+let g:ctrlp_prompt_mappings = {
+      \ 'AcceptSelection("h")': ['<leader>'],
+      \ 'AcceptSelection("v")': ['<V>'],
+      \ 'PrtExit()':            ['<X>', '', '<esc>']
+      \}
+" AcceptSelection("h") = what mapping triggers opening horizontal split
+" AcceptSelection("v") = what mapping triggers opening vertical split
+" AcceptSelection("v") = what mapping closes ctrlp prompt
+"
+" let g:ctrlp_buffer_func = { 'enter': 'CtrlPMappings' }
+" function! CtrlPMappings()
+"   nnoremap <buffer> <silent> ,h :call JamesTest()<cr>
+" endfunction
+" function! JamesTest()
+"   echom "Hello"
+"   echo "Hello"
+" endfunction
 
 " emmet.vim custom trigger
 let g:user_emmet_leader_key='<Leader>e'
 
 " Ultisnips
-let g:UltiSnipsExpandTrigger="\["
+" let g:UltiSnipsExpandTrigger="\["
+" let g:UltiSnipsJumpForwardTrigger="\["
+" let g:UltiSnipsJumpBackwardTrigger="\]"
+
+" let g:ycm_key_invoke_completion="<cr>" bad
+
+" thoughtbot/vim-rspec + tpope/dispatch
+let g:rspec_command = "Dispatch rspec {spec}"
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+
+
+" Ultisnips + YouCompleteMe
+" let g:UltiSnipsExpandTrigger="\[" good
 let g:UltiSnipsJumpForwardTrigger="\["
-let g:UltiSnipsJumpBackwardTrigger="\]"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+
+" https://github.com/SirVer/ultisnips/blob/master/doc/UltiSnips.txt
+let g:ulti_expand_or_jump_res = 0 "default value, just set once
+function! Ulti_ExpandOrJump_and_getRes()
+  call UltiSnips#ExpandSnippetOrJump()
+  return g:ulti_expand_or_jump_res
+endfunction
+function! InvokeUlti()
+  if Ulti_ExpandOrJump_and_getRes() > 0
+    return ""
+  else
+    return "["
+  endif
+endfunction
+inoremap [ <c-r>=InvokeUlti()<cr>
+
 
 " jkjumps
 let g:jk_jumps_minimum_lines = 2
+
+
+" YouCompleteMe keybindings
+" let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', ']']
+" let g:ycm_key_invoke_completion = '<cr>' bad!
 
 
 " }}}
@@ -431,41 +616,6 @@ endif
 
 " }}}
 
-" Maximise the current split 
-" A bit like tmux zoom
-:nnoremap <leader>z :call MaximizeToggle()<CR>
-function! MaximizeToggle()
-  if exists("s:maximize_session")
-    exec "source " . s:maximize_session
-    call delete(s:maximize_session)
-    unlet s:maximize_session
-    let &hidden=s:maximize_hidden_save
-    unlet s:maximize_hidden_save
-  else
-    let s:maximize_hidden_save = &hidden
-    let s:maximize_session = tempname()
-    set hidden
-    exec "mksession! " . s:maximize_session
-    only
-  endif
-endfunction
-
-
-" Editing files ----------------------------------------------------------- {{{
-
-" Editing and sourcing .vimrc with leader+ev, leader+sv
-" (where ev = edit vimrc, sv = source vimrc)
-" Editing Ultisnips files with leader+es (es = edit snips)
-:nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-" :nnoremap <leader>sv :source $MYVIMRC<cr>
-:nnoremap <leader>es :vsplit $HOME/.vim/UltiSnips<cr>
-
-" Edit another file in the same directory as current file
-:nnoremap <leader>dd :e <C-R>=expand("%:p:h") . '/'<CR><CR>
-:nnoremap <leader>ds :split <C-R>=expand("%:p:h") . '/'<CR><CR>
-:nnoremap <leader>dv :vnew <C-R>=expand("%:p:h") . '/'<CR><CR>
-
-" }}}
 
 " Syntax checking (syntastic) ---------------------------------------------- {{{
 
