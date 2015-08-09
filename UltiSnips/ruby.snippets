@@ -1,0 +1,58 @@
+snippet def
+def ${1:# method_name}
+  ${2:# body}
+end
+endsnippet
+
+snippet ifel
+if ${1:# condition}
+  ${2:# ...}
+else
+  ${3:# ...}
+end
+endsnippet
+
+snippet each 
+${1:elements}.each do |${2:${1/s$//}}|
+	${0:# TODO}
+end
+endsnippet
+
+snippet else
+else
+  ${1}
+endsnippet
+
+# rspec
+snippet describe
+describe "${1:something}" do
+  ${2:# behaviour}
+end
+endsnippet
+
+snippet it
+it "should ${1:something}" do
+  ${2:# behaviour}
+end
+endsnippet
+
+snippet before
+before do
+  ${1: # initialization }
+end
+endsnippet
+
+snippet itl
+it { ${1: # behaviour} }
+endsnippet
+
+snippet beforel
+before { ${1: # behaviour} }
+endsnippet
+
+snippet context
+context '${1}' do
+  ${2}
+end
+endsnippet
+

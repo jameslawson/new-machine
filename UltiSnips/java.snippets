@@ -1,0 +1,116 @@
+snippet fn "fns" i
+${1:fn}(${2})
+endsnippet
+
+snippet psvm
+public static void main(String[] args) {
+    ${1} 
+}
+endsnippet
+
+snippet ter
+(${1:/* condition */}) ? ${2:/* T */} : ${3:/* F */};
+endsnippet
+
+snippet new
+new ${1:ClassName}();
+endsnippet
+
+snippet newg
+new ${1:ClassName}<${2:GenericsName}>();
+endsnippet
+
+snippet if
+if (${1:/* condition */}) {
+    ${2}
+}
+endsnippet
+
+snippet ifl
+if (${1:/* condition */}) ${2: /* body */} 
+endsnippet
+
+snippet ifel
+if (${1:/* condition */}) {
+    ${2}
+} else {
+    ${3}
+}
+endsnippet
+
+snippet for
+for (int ${1:i} = ${2:0}; $1 < ${3:N}; $1${4:++}) {
+    ${5}
+}
+endsnippet
+
+snippet fora
+for (int ${1:i} = ${2:0}; $1 < ${3:list}.length; $1{4:++}) {
+    ${5}
+}
+endsnippet
+
+snippet while
+while (${1:condition}) {
+    ${2:body}
+}
+endsnippet
+
+snippet whilel
+while (${1:/* condition */}) ${2:/* body */}
+endsnippet
+
+snippet println
+System.out.println(${1});
+endsnippet
+snippet pln
+System.out.println(${1});
+endsnippet
+snippet pp
+System.out.print(${1});
+endsnippet
+
+snippet scanner
+Scanner in = new Scanner(System.in);
+endsnippet
+snippet impscanner
+import java.util.Scanner;
+endsnippet
+
+snippet nint
+in.nextInt();
+endsnippet
+snippet nexti
+in.nextInt();
+endsnippet
+
+snippet class
+public class ${1:ClassName} {
+    ${2}
+}
+endsnippet
+
+snippet classe
+public class ${1:Subclass} extends ${2:Base} {
+    ${3:/* class body */}
+}
+endsnippet
+
+snippet staticm
+public static ${1:returnType} ${2:methodName}(${3:args}) {
+    ${4:body}
+}
+endsnippet
+
+# data structures
+snippet hashm
+HashMap<${1}, ${2}> ${3} = new HashMap<$1, $2>();
+endsnippet
+
+snippet alist
+ArrayList<${1}> ${2} = new ArrayList<$1>();
+endsnippet
+
+snippet stack
+Stack<${1:type}>
+endsnippet
