@@ -8,6 +8,7 @@ To keep dotfiles in sync, create the appropriate softlinks:
 ````
 ln -s ~/github_projects/dotfiles/.zshrc ~/.zshrc
 ln -s ~/github_projects/dotfiles/.vimrc ~/.vimrc
+ln -s ~/github_projects/dotfiles/UltiSnips ~/.vim/UltiSnips
 ln -s ~/github_projects/dotfiles/.tmux.conf ~/.tmux.conf
 ...
 ````
