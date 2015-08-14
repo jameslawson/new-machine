@@ -194,7 +194,6 @@ function! SmartBrackets()
   let colend = len(line)
   let cursor_at_end = c ==# colend
   let edit = cursor_at_end ? 'a' : 'i'
-  echom cursor_at_end
   if (current ==# ')' && cursor_at_end == 0)
     " move the cursor right
     call cursor(l, c+1)
