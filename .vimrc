@@ -5,12 +5,12 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'tpope/vim-commentary'
 Plugin 'ReekenX/vim-rename2'
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'kien/ctrlp.vim'
 Plugin 'teranex/jk-jumps.vim'
 Plugin 'mattn/emmet-vim'
 
-" Plugin 'SirVer/ultisnips'
+Plugin 'SirVer/ultisnips'
 
 Plugin 'kana/vim-textobj-user'
 "Plugin 'Julian/vim-textobj-brace'
@@ -29,6 +29,8 @@ Plugin 'ntpeters/vim-better-whitespace'
 
 " compiler plugin to run nodelint.
 " Plugin 'bigfish/vim-nodelint'
+"
+Plugin 'derekwyatt/vim-scala'
 
 Plugin 'nanotech/jellybeans.vim'
 call vundle#end() " required by vundle
@@ -189,10 +191,16 @@ function! SmartBrackets()
   let line = getline(".")
   let current = matchstr(line, '\%' . c . 'c.')
   let next = matchstr(line, '\%' . (c+1) . 'c.')
-  if (current ==# ')')
+  let colend = len(line)
+  let cursor_at_end = c ==# colend
+  let edit = cursor_at_end ? 'a' : 'i'
+  echom cursor_at_end
+  if (current ==# ')' && cursor_at_end == 0)
+    " move the cursor right
     call cursor(l, c+1)
   else
-    execute "normal! i)"
+    " add the brackets
+    execute "normal! " . edit . ")"
     execute "normal! l"
   endif
 endfunction
@@ -541,7 +549,7 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 
 " Ultisnips + YouCompleteMe
-" let g:UltiSnipsExpandTrigger="\[" good
+" let g:UltiSnipsExpandTrigger="\["
 let g:UltiSnipsJumpForwardTrigger="\["
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
