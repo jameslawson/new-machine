@@ -15,6 +15,9 @@ source $ZSH/oh-my-zsh.sh
 
 source /usr/local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh
 
+# https://github.com/robbyrussell/oh-my-zsh/issues/449
+# unsetopt nomatch
+
 # PATH
 # -----------------------
 # export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/texbin:/Library/Frameworks/Python.framework/Versions/2.6/bin"
@@ -41,6 +44,11 @@ export PATH="$HOME/Library/Haskell/bin:$PATH"
 # Vim
 # --------------------
 export EDITOR='vim'
+
+# Latex
+# ------
+LIBGS=/usr/local/Cellar/ghostscript/9.16/lib/libgs.9.16.dylib
+
 
 # Vim for command line editing
 # usr/local/bin/vim has +clipboard

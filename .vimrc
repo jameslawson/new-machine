@@ -158,7 +158,7 @@ augroup END
 " -- ESSENTIAL APPEARANCE
 " ----------------------------------------------------------
 
-" -- Use jellybeans theme
+" -- use jellybeans theme
 "    depends on [JELLY]
 colorscheme jellybeans
 
@@ -257,7 +257,7 @@ nnoremap Y y$
 " -- EDITING
 " ----------------------------------------------------------
 
-" add a comma at the end of the line
+" -- add a comma at the end of the line
 inoremap << <Esc>$a,<Esc>
 
 " -- add a new line in normal mode
@@ -367,7 +367,7 @@ set shiftwidth=2
 set autoindent
 
 " -- indent with *spaces*, not tabs
-" -- use either 2 or 4 spaces, depending on the language
+"    use either 2 or 4 spaces, depending on the language
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype python setlocal ts=2 sts=2 sw=2
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
