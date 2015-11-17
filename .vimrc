@@ -2,34 +2,49 @@
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
+
+" -- Highlight trailing whitespace
+Plugin 'ntpeters/vim-better-whitespace'
+
+" -- integrate vim and tmux
 Plugin 'christoomey/vim-tmux-navigator'
+
+" -- gcc to comment a file
 Plugin 'tpope/vim-commentary'
+
+" -- add :Rename to rename a file
 Plugin 'ReekenX/vim-rename2'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'kien/ctrlp.vim'
+
 Plugin 'teranex/jk-jumps.vim'
 Plugin 'mattn/emmet-vim'
 
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/ctrlp.vim'
 Plugin 'SirVer/ultisnips'
 
 Plugin 'kana/vim-textobj-user'
 "Plugin 'Julian/vim-textobj-brace'
-Plugin 'file:///Users/james/github_projects/vim-textobj-brace'
+Plugin 'terryma/vim-expand-region'
 Plugin 'beloglazov/vim-textobj-quotes'
 Plugin 'glts/vim-textobj-comment'
 
+" ------------------------------------
+" -- Rails
+" ------------------------------------
 " Run Rspec specs from vim
 Plugin 'tpope/vim-dispatch'
 Plugin 'thoughtbot/vim-rspec'
-
 Plugin 'tpope/vim-rails'
 
-" Highlight trailing whitespace
-Plugin 'ntpeters/vim-better-whitespace'
+" ------------------------------------
+" -- Haskell and Elm
+" ------------------------------------
+Plugin 'lukerandall/haskellmode-vim'
+Plugin 'ElmCast/elm-vim'
 
-" compiler plugin to run nodelint.
-" Plugin 'bigfish/vim-nodelint'
-"
+" ------------------------------------
+" -- Scala
+" ------------------------------------
 Plugin 'derekwyatt/vim-scala'
 
 Plugin 'nanotech/jellybeans.vim'
@@ -547,6 +562,7 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 
 
+
 " Ultisnips + YouCompleteMe
 " let g:UltiSnipsExpandTrigger="\["
 let g:UltiSnipsJumpForwardTrigger="\["
@@ -576,6 +592,12 @@ let g:jk_jumps_minimum_lines = 2
 " YouCompleteMe keybindings
 " let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', ']']
 " let g:ycm_key_invoke_completion = '<cr>' bad!
+let g:ycm_auto_trigger = 0
+
+" Haskell mode
+let g:haddock_browser = "open"
+let g:haddock_browser_callformat = "%s %s"
+au BufEnter *.hs compiler ghc
 
 
 " }}}
