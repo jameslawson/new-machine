@@ -290,28 +290,31 @@ vnoremap ;; <Esc>
 " -- SMART BRACKETS
 " ----------------------------------------------------------
 
+" -- CLOSING BRACKETS:
+" -- move cursor when:
+"    - cursor sitting on a character that is )
+" -- add right bracket when:
+"    - cursor sitting on "" (ie the empty space at end of line)
+"    - cursor sitting on a character that is not )
+function! SmartClose(closebracket)
+  let col = col(".")
+  let sitting = getline(".")[col-1]
+  echom sitting
+  if (sitting ==# a:closebracket)
+    " -- move the cursor right
+    call cursor(line("."), col+1)
+    return ''
+  else
+    " -- add the closing bracket
+    return a:closebracket
+  endif
+  return ''
+endfunction
+
 inoremap { {}<esc>i
 inoremap ( ()<esc>i
-inoremap ) <c-o>:call SmartBrackets()<cr>
-
-function! SmartBrackets()
-  let l = line(".")
-  let c = col(".")
-  let line = getline(".")
-  let current = matchstr(line, '\%' . c . 'c.')
-  let next = matchstr(line, '\%' . (c+1) . 'c.')
-  let colend = len(line)
-  let cursor_at_end = c ==# colend
-  let edit = cursor_at_end ? 'a' : 'i'
-  if (current ==# ')' && cursor_at_end == 0)
-    " move the cursor right
-    call cursor(l, c+1)
-  else
-    " add the brackets
-    execute "normal! " . edit . ")"
-    execute "normal! l"
-  endif
-endfunction
+inoremap ) <c-r>=SmartClose(')')<cr>
+inoremap } <c-r>=SmartClose('}')<cr>
 
 " ----------------------------------------------------------
 " -- MOVEMENT
