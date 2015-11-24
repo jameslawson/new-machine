@@ -158,6 +158,10 @@ augroup END
 " -- ESSENTIAL APPEARANCE
 " ----------------------------------------------------------
 
+" -- enable highlighting of current line
+set cul
+hi CursorLine term=none cterm=none ctermbg=3
+
 " -- use jellybeans theme
 "    depends on [JELLY]
 colorscheme jellybeans
