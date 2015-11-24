@@ -324,7 +324,7 @@ inoremap } <c-r>=SmartClose('}')<cr>
 "    H goes to front of current line
 "    L goes to end of current line
 nnoremap H ^
-nnoremap L g_
+nnoremap L $
 vnoremap H ^
 vnoremap L $h
 vnoremap dH d^
