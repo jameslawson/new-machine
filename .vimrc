@@ -323,12 +323,11 @@ vnoremap <leader>s <esc>:call Sandwich()<cr>
 " -- move cursor when:
 "    - cursor sitting on a character that is )
 " -- add right bracket when:
-"    - cursor sitting on "" (ie the empty space at end of line)
+"    - cursor sitting on <CR> (ie the empty space at end of line)
 "    - cursor sitting on a character that is not )
 function! SmartClose(closebracket)
   let col = col(".")
   let sitting = getline(".")[col-1]
-  echom sitting
   if (sitting ==# a:closebracket)
     " -- move the cursor right
     call cursor(line("."), col+1)
