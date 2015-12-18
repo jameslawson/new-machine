@@ -295,6 +295,27 @@ inoremap ;; <Esc>
 vnoremap ;; <Esc>
 
 " ----------------------------------------------------------
+" -- SANDWICH
+" ----------------------------------------------------------
+
+" -- Surround a visual selection with
+"    a given input (form a sandwich with the input).
+function! Sandwich()
+  let bread = input('Surround with: ', '')
+  if len(bread) > 0
+    " add the top slice
+    normal `<
+    exe 'normal i' . bread
+
+    " add the bottom slice
+    let command = (&selection == 'exclusive') ? 'i' : 'a'
+    normal `>
+    exe 'normal ' . command . bread
+  endif
+endfunction
+vnoremap <leader>s <esc>:call Sandwich()<cr>
+
+" ----------------------------------------------------------
 " -- SMART BRACKETS
 " ----------------------------------------------------------
 
