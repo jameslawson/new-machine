@@ -376,9 +376,6 @@ set smartcase
 set hlsearch
 set incsearch
 
-" -- if you don't like typing :%s to search+replace
-nnoremap <leader>s :%s//<left>
-
 " -- center screen when moving between between search terms
 nnoremap n nzzzv
 nnoremap N Nzzzv
