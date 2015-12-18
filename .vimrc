@@ -55,6 +55,7 @@ call vundle#begin()
 "    that manages Vundle. Essential, don't remove
 "    depends on [1]
 Plugin 'gmarik/Vundle.vim'
+
 " ----------------------------------------------------------
 
 " -- [YCM]: YouCompleteMe - vim as-you-type autocompletion
@@ -124,8 +125,10 @@ Plugin 'beloglazov/vim-textobj-quotes'
 " ----------------------------------------------------------
 " -- END VIM PLUGINS
 " ----------------------------------------------------------
+
 call vundle#end()          " requied for vundle
 filetype plugin indent on  " required for vundle
+
 " ----------------------------------------------------------
 
 " ----------------------------------------------------------
@@ -139,11 +142,12 @@ let mapleader = ","
 set timeoutlen=500
 
 " -- use relative line numbering
+"    relative number is used in visual mode
+"    but becomes absolute number in insert mode
 set relativenumber
-autocmd InsertEnter * :set number
+set number
+autocmd InsertEnter * :set number norelativenumber
 autocmd InsertLeave * :set relativenumber
-au FocusLost * :set number
-au FocusGained * :set relativenumber
 
 " -- make sure vim returns to the same line when you reopen a file.
 augroup line_return
