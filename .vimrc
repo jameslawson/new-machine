@@ -345,6 +345,27 @@ inoremap ) <c-r>=SmartClose(')')<cr>
 inoremap } <c-r>=SmartClose('}')<cr>
 
 " ----------------------------------------------------------
+" -- SMART QUOTES
+" ----------------------------------------------------------
+
+function! SmartQuotes(thequote)
+  let col = col(".")
+  let sitting = getline(".")[col-1]
+  if (sitting ==# a:thequote)
+    " -- move the cursor right
+    call cursor(line("."), col+1)
+  else
+    " -- add the closing bracket
+    "    then position cursor over right quote
+    execute "normal! i" . a:thequote . a:thequote
+  endif
+  return ''
+endfunction
+
+inoremap ' <c-r>=SmartQuotes("'")<cr>
+inoremap " <c-r>=SmartQuotes('"')<cr>
+
+" ----------------------------------------------------------
 " -- MOVEMENT
 " ----------------------------------------------------------
 
