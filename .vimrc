@@ -62,15 +62,18 @@ Plugin 'gmarik/Vundle.vim'
 "    depends on [4]
 " Plugin 'Valloric/YouCompleteMe'
 
-" -- [CTRLP]: ctrlp (control-p) - vim fuzzy file finder
-"    (written in vimscript and has no dependencies)
-Plugin 'kien/ctrlp.vim'
-
 " -- [ULTI]: UltiSnips
 "    depends on [YCM]
 " Plugin 'SirVer/ultisnips'
 
-" -- [SNIPEMU]: SinnpetsEmu
+" ----------------------------------------------------------
+
+" -- [CTRLP]: ctrlp (control-p) - vim fuzzy file finder
+"    (written in vimscript and has no dependencies)
+Plugin 'kien/ctrlp.vim'
+
+
+" -- [SNIPEMU]: SnippetsEmu
 Plugin 'https://github.com/vim-scripts/snippetsEmu'
 
 " ----------------------------------------------------------
