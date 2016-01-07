@@ -68,7 +68,10 @@ Plugin 'kien/ctrlp.vim'
 
 " -- [ULTI]: UltiSnips
 "    depends on [YCM]
-Plugin 'SirVer/ultisnips'
+" Plugin 'SirVer/ultisnips'
+
+" -- [SNIPEMU]: SinnpetsEmu
+Plugin 'https://github.com/vim-scripts/snippetsEmu'
 
 " ----------------------------------------------------------
 
@@ -435,6 +438,9 @@ nnoremap <Space> @q
 " ----------------------------------------------------------
 " -- PLUGINS
 " ----------------------------------------------------------
+
+" -- [SNIPEMU]
+let g:snippetsEmu_key = "["
 
 " -- [CTRLP]
 nnoremap <leader>p :CtrlP<CR>
