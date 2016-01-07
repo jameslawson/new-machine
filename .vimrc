@@ -34,6 +34,8 @@
 " [5] python+
 "     vim needs to be compiled with python+ or python3+
 "     $ vim --version | grep python
+" [6] The Silver Searcher (https://github.com/ggreer/the_silver_searcher)
+"     $ brew install the_silver_searcher
 
 " ----------------------------------------------------------
 " -- SETUP VUNDLE
@@ -72,6 +74,12 @@ Plugin 'gmarik/Vundle.vim'
 "    (written in vimscript and has no dependencies)
 Plugin 'kien/ctrlp.vim'
 
+
+" -- [AG]: add `The Silver Searcher` to vim
+"    depends on [6]
+Plugin 'rking/ag.vim'
+
+" ----------------------------------------------------------
 
 " -- [SNIPEMU]: SnippetsEmu
 Plugin 'https://github.com/vim-scripts/snippetsEmu'
@@ -465,3 +473,10 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " -- [JKJUMP]
 let g:jk_jumps_minimum_lines = 2
+
+" ----------------------------------------------------------
+
+" -- [AG]
+let g:ag_highlight=1
+
+" ----------------------------------------------------------
