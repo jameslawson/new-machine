@@ -7,10 +7,12 @@ To keep dotfiles in sync, create the appropriate softlinks:
 
 ````
 cd <repo>
-ln -s .zshrc ~/.zshrc
-ln -s .vimrc ~/.vimrc
-ln -s UltiSnips ~/.vim/UltiSnips
-ln -s .tmux.conf ~/.tmux.conf
+ln -s $PWD/.vimrc ~/.vimrc
+ln -s $PWD/UltiSnips ~/.vim/UltiSnips
+ln -s $PWD/ftplugin ~/.vim/after/ftplugin
+
+ln -s $PWD/.zshrc ~/.zshrc
+ln -s $PWD/.tmux.conf ~/.tmux.conf
 ...
 ````
 
