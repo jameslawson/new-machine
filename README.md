@@ -8,12 +8,11 @@ To keep dotfiles in sync, create the appropriate softlinks:
 ````
 cd <repo>
 ln -s $PWD/.vimrc ~/.vimrc
-ln -s $PWD/UltiSnips ~/.vim/UltiSnips
-ln -s $PWD/ftplugin ~/.vim/after/ftplugin
-
 ln -s $PWD/.zshrc ~/.zshrc
 ln -s $PWD/.tmux.conf ~/.tmux.conf
-...
+
+mkdir -p ~/.vim/after/ftplugin
+ln -s $PWD/ftplugin ~/.vim/after/ftplugin
 ````
 
 In your home folder, you can do `l | grep lrw` to see which dot files are symlinks.
