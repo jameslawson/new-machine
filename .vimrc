@@ -523,7 +523,6 @@ function! QuickWrap(wrapper)
   execute "normal! i" . escape(w, '\')
   normal `<
 endfunction
-=======
 
 " -- [AG]
 let g:ag_highlight=1
