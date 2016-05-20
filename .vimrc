@@ -84,6 +84,11 @@ Plugin 'rking/ag.vim'
 
 " ----------------------------------------------------------
 
+" -- [SNIPEMU]: SnippetsEmu
+Plugin 'https://github.com/vim-scripts/snippetsEmu'
+
+" ----------------------------------------------------------
+
 " -- [COMMENT]: tim Pope's commenting plugin
 "    use gcc to comment a line
 Plugin 'tpope/vim-commentary'
@@ -449,6 +454,9 @@ nnoremap <Space> @q
 " -- PLUGINS
 " ----------------------------------------------------------
 
+" -- [SNIPEMU]
+let g:snippetsEmu_key = "["
+
 " -- [CTRLP]
 nnoremap <leader>p :CtrlP<CR>
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|bower_components|tmp|target|dist)|(\.(swp|ico|git|svn))$'
@@ -515,3 +523,7 @@ function! QuickWrap(wrapper)
   execute "normal! i" . escape(w, '\')
   normal `<
 endfunction
+=======
+
+" -- [AG]
+let g:ag_highlight=1

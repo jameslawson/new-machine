@@ -2,15 +2,17 @@
 
 My dotfiles for vim, tmux, zsh
 
-Suppose you cloned this repo to `~/github_projects/dotfiles`.    
+Suppose you cloned this repo to `<repo> = ~/github_projects/dotfiles`.    
 To keep dotfiles in sync, create the appropriate softlinks:
 
 ````
-ln -s ~/github_projects/dotfiles/.zshrc ~/.zshrc
-ln -s ~/github_projects/dotfiles/.vimrc ~/.vimrc
-ln -s ~/github_projects/dotfiles/UltiSnips ~/.vim/UltiSnips
-ln -s ~/github_projects/dotfiles/.tmux.conf ~/.tmux.conf
-...
+cd <repo>
+ln -s $PWD/.vimrc ~/.vimrc
+ln -s $PWD/.zshrc ~/.zshrc
+ln -s $PWD/.tmux.conf ~/.tmux.conf
+
+mkdir -p ~/.vim/after/ftplugin
+ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
 ````
 
 In your home folder, you can do `l | grep lrw` to see which dot files are symlinks.
