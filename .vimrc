@@ -34,6 +34,8 @@
 " [5] python+
 "     vim needs to be compiled with python+ or python3+
 "     $ vim --version | grep python
+" [6] The Silver Searcher (https://github.com/ggreer/the_silver_searcher)
+"     $ brew install the_silver_searcher
 
 " ----------------------------------------------------------
 " -- SETUP VUNDLE
@@ -56,19 +58,29 @@ call vundle#begin()
 "    depends on [1]
 Plugin 'gmarik/Vundle.vim'
 
+
+" Plugin 'jaxbot/browserlink.vim'
+
 " ----------------------------------------------------------
 
 " -- [YCM]: YouCompleteMe - vim as-you-type autocompletion
 "    depends on [4]
 " Plugin 'Valloric/YouCompleteMe'
 
+" -- [ULTI]: UltiSnips
+"    depends on [YCM]
+Plugin 'SirVer/ultisnips'
+
+" ----------------------------------------------------------
+
 " -- [CTRLP]: ctrlp (control-p) - vim fuzzy file finder
 "    (written in vimscript and has no dependencies)
 Plugin 'kien/ctrlp.vim'
 
-" -- [ULTI]: UltiSnips
-"    depends on [YCM]
-Plugin 'SirVer/ultisnips'
+" -- [AG]: - make it easier to grep files inside vim
+"    Adds `The Silver Searcher` to vim
+"    depends on [6]
+Plugin 'rking/ag.vim'
 
 " ----------------------------------------------------------
 
@@ -180,8 +192,8 @@ highlight LineNr ctermfg=DarkGrey
 "    depends on [2]
 " -- always show the status bar
 "    needed to actually show powerline
-source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
-set laststatus=2
+" source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
+" set laststatus=2
 
 " -- always keep 3 lines visible at top and bottom
 "    when cursor hits top/bottom and you scroll
@@ -217,7 +229,6 @@ command! Q q
 command! Qall qall
 command! QA qall
 command! E e
-
 
 " ----------------------------------------------------------
 " -- DISABLE
@@ -423,7 +434,9 @@ autocmd Filetype html setlocal ts=2 sts=2 sw=2
 autocmd Filetype c setlocal ts=4 sts=4 sw=4
 autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
+" autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype scss setlocal ts=4 sts=4 sw=4
 
 " ----------------------------------------------------------
 " -- MACROS
@@ -456,3 +469,49 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " -- [JKJUMP]
 let g:jk_jumps_minimum_lines = 2
+
+" ----------------------------------------------------------
+" -- PLUGINS
+" ----------------------------------------------------------
+" -- [AG]
+let g:ag_highlight = 1
+
+" --
+" https://github.com/ggreer/the_silver_searcher/blob/master/doc/ag.1.md
+
+" -- Grep functions
+"    These are built upon [AG] plugin
+function! GrepSass(arg)
+  let command = ['Ag', a:arg] " call the :Ag command that [AG] exposes
+  let command += ['-G .scss'] " only search for .scss files
+  let command += ['--ignore-dir=node_modules/']
+  let command += ['--ignore-dir=.git/']
+  execute join(command, " ")
+endfunction
+command -nargs=* GrepSass call GrepSass('<args>')
+
+function! GrepJs(arg)
+  let command = ['Ag', a:arg] " call the :Ag command that [AG] exposes
+  let command += ['-G .js']   " only search for .js files
+  let command += ['--ignore-case'] " case-insensitive
+  let command += ['--ignore-dir=node_modules/']
+  let command += ['--ignore-dir=.git/']
+  execute join(command, " ")
+endfunction
+command -nargs=* GrepJs call GrepJs('<args>')
+
+
+
+
+vnoremap q <esc>:call QuickWrap("'")<cr>
+vnoremap Q <esc>:call QuickWrap('"')<cr>
+
+function! QuickWrap(wrapper)
+  let l:w = a:wrapper
+  let l:inside_or_around = (&selection == 'exclusive') ? ('i') : ('a')
+  normal `>
+  execute "normal! " . inside_or_around . escape(w, '\')
+  normal `<
+  execute "normal! i" . escape(w, '\')
+  normal `<
+endfunction
