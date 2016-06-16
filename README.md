@@ -12,7 +12,7 @@ ln -s $PWD/.zshrc ~/.zshrc
 ln -s $PWD/.tmux.conf ~/.tmux.conf
 
 # link snippetsemu snippet files
-mkdir -p ~/.vim/after/ftplugin
+mkdir -p ~/.vim/after
 ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
 ```
 
