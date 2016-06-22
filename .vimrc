@@ -41,6 +41,8 @@
 "     $ ./install.sh
 "     Then go to iTerm2 and change the font to one of the newly installed
 "     fonts that end with "for powerline"
+" [8] jq
+"     $ brew install jq
 
 " ----------------------------------------------------------
 " -- SETUP VUNDLE
@@ -543,6 +545,13 @@ function! QuickWrap(wrapper)
   execute "normal! i" . escape(w, '\')
   normal `<
 endfunction
+
+" -- depends on [8]
+function! s:PrettyJSON()
+  %!jq .
+  set filetype=json
+endfunction
+command! PrettyJSON :call <sid>PrettyJSON()
 
 " -- [AG]
 let g:ag_highlight=1
