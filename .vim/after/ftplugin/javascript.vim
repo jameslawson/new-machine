@@ -21,6 +21,11 @@ Snippet strict 'use strict';
 Snippet log console.log(<{}>)
 Snippet clog console.log(<{}>)
 
+" -- Function declaration
+Snippet fn function <{}>() {<cr> <{}> <cr>}
+Snippet fun function <{}>() {<cr> <{}> <cr>}
+
+
 " ----------------------------------------------------------
 " -- CONTROL FLOW
 " ----------------------------------------------------------
