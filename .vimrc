@@ -36,6 +36,11 @@
 "     $ vim --version | grep python
 " [6] The Silver Searcher (https://github.com/ggreer/the_silver_searcher)
 "     $ brew install the_silver_searcher
+" [7] The powerline fonts (https://github.com/powerline/powerline)
+"     $ git clone git@github.com:powerline/fonts.git
+"     $ ./install.sh
+"     Then go to iTerm2 and change the font to one of the newly installed
+"     fonts that end with "for powerline"
 
 " ----------------------------------------------------------
 " -- SETUP VUNDLE
@@ -139,6 +144,11 @@ Plugin 'kana/vim-textobj-user'
 " depends on [TXTOBJ]
 Plugin 'beloglazov/vim-textobj-quotes'
 
+" -- [AIRLINE]: Add airline
+" -- depends on [7]
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
 " ----------------------------------------------------------
 " -- END VIM PLUGINS
 " ----------------------------------------------------------
@@ -215,6 +225,8 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 "    and use the same symbols as TextMate for tabstops and EOLs
 set list!
 set listchars=tab:▸\ ,eol:¬
+
+set laststatus=2
 
 " ----------------------------------------------------------
 " -- FORGIVING
@@ -454,6 +466,19 @@ nnoremap <Space> @q
 " -- PLUGINS
 " ----------------------------------------------------------
 
+" -- [AIRLINE]
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_powerline_fonts = 1
+
+" function! AirLineConfigure(...)
+"   call a:l.add_section('StatusLine', 'all')
+"   return l
+" endfunction
+" call airline#add_statusline_func('AirLineConfigure')
+
+
 " -- [SNIPEMU]
 let g:snippetsEmu_key = "["
 
@@ -478,9 +503,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " -- [JKJUMP]
 let g:jk_jumps_minimum_lines = 2
 
-" ----------------------------------------------------------
-" -- PLUGINS
-" ----------------------------------------------------------
 " -- [AG]
 let g:ag_highlight = 1
 
@@ -507,8 +529,6 @@ function! GrepJs(arg)
   execute join(command, " ")
 endfunction
 command -nargs=* GrepJs call GrepJs('<args>')
-
-
 
 
 vnoremap q <esc>:call QuickWrap("'")<cr>
