@@ -120,6 +120,7 @@ Plugin 'othree/yajs.vim'
 " Plugin 'lukerandall/haskellmode-vim'
 " Plugin 'ElmCast/elm-vim'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'leafgarland/typescript-vim'
 
 " ----------------------------------------------------------
 "
@@ -454,8 +455,8 @@ autocmd Filetype c setlocal ts=4 sts=4 sw=4
 autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
 autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
-" autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 autocmd Filetype json setlocal ts=4 sts=4 sw=4
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 autocmd Filetype scss setlocal ts=4 sts=4 sw=4
 
 " ----------------------------------------------------------
