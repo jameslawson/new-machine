@@ -65,19 +65,6 @@ call vundle#begin()
 "    depends on [1]
 Plugin 'gmarik/Vundle.vim'
 
-
-" Plugin 'jaxbot/browserlink.vim'
-
-" ----------------------------------------------------------
-
-" -- [YCM]: YouCompleteMe - vim as-you-type autocompletion
-"    depends on [4]
-" Plugin 'Valloric/YouCompleteMe'
-
-" -- [ULTI]: UltiSnips
-"    depends on [YCM]
-Plugin 'SirVer/ultisnips'
-
 " ----------------------------------------------------------
 
 " -- [CTRLP]: ctrlp (control-p) - vim fuzzy file finder
@@ -123,7 +110,7 @@ Plugin 'nanotech/jellybeans.vim'
 
 " ----------------------------------------------------------
 
-" -- [YASL]: yet Anthoer Javascript Syntax
+" -- [YASL]: yet another javascript syntax
 Plugin 'othree/yajs.vim'
 
 " -- Other Languages
@@ -132,9 +119,12 @@ Plugin 'othree/yajs.vim'
 " Plugin 'tpope/vim-rails'
 " Plugin 'lukerandall/haskellmode-vim'
 " Plugin 'ElmCast/elm-vim'
-" Plugin 'derekwyatt/vim-scala'
+Plugin 'derekwyatt/vim-scala'
 
 " ----------------------------------------------------------
+"
+" -- [GITDIFF]: show lines added/modified/deleted next to line numbers
+Plugin 'airblade/vim-gitgutter'
 
 " -- [EXPAND]: expand selection gradually
 Plugin 'terryma/vim-expand-region'
@@ -205,13 +195,6 @@ syntax enable
 " -- change colour of the line numbers
 highlight LineNr ctermfg=DarkGrey
 
-" -- import powerline status bar
-"    depends on [2]
-" -- always show the status bar
-"    needed to actually show powerline
-" source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
-" set laststatus=2
-
 " -- always keep 3 lines visible at top and bottom
 "    when cursor hits top/bottom and you scroll
 set scrolloff=3
@@ -229,6 +212,20 @@ set list!
 set listchars=tab:▸\ ,eol:¬
 
 set laststatus=2
+
+" ----------------------------------------------------------
+" -- TEMPORARY FILES
+" ----------------------------------------------------------
+
+" persistent undo
+set undofile
+set undodir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" backup to ~/.tmp
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
 
 " ----------------------------------------------------------
 " -- FORGIVING
@@ -252,10 +249,6 @@ command! E e
 " ----------------------------------------------------------
 " -- DISABLE
 " ----------------------------------------------------------
-
-" -- disable VIM backups (.swp files)
-set nobackup
-set noswapfile
 
 " -- map arrow keys to no-ops
 map <up> <nop>
@@ -455,6 +448,7 @@ autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
 autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
 " autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
+autocmd Filetype json setlocal ts=4 sts=4 sw=4
 autocmd Filetype scss setlocal ts=4 sts=4 sw=4
 
 " ----------------------------------------------------------
@@ -469,17 +463,14 @@ nnoremap <Space> @q
 " ----------------------------------------------------------
 
 " -- [AIRLINE]
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#left_sep = ' '
-" let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_theme='jellybeans'
 let g:airline_powerline_fonts = 1
-
-" function! AirLineConfigure(...)
-"   call a:l.add_section('StatusLine', 'all')
-"   return l
-" endfunction
-" call airline#add_statusline_func('AirLineConfigure')
-
+let g:airline_left_sep = ' '
+let g:airline_left_alt_sep = '|'
+let g:airline_right_sep = ' '
+let g:airline_right_alt_sep = '|'
+" disable airline 'vim-gitdiff' extension (aka 'hunks' extension)
+let g:airline#extensions#hunks#enabled = 0
 
 " -- [SNIPEMU]
 let g:snippetsEmu_key = "["
@@ -507,6 +498,10 @@ let g:jk_jumps_minimum_lines = 2
 
 " -- [AG]
 let g:ag_highlight = 1
+
+" -- [GITGUTTER]
+" Toggle with :GitGutterToggle
+" let g:gitgutter_map_keys = 0
 
 " --
 " https://github.com/ggreer/the_silver_searcher/blob/master/doc/ag.1.md
