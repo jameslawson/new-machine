@@ -1,0 +1,1 @@
+Snippet pln println(<{}>)
