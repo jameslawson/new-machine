@@ -23,3 +23,10 @@ ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
 ```
 
 In your home folder, you can do `l | grep lrw` to see which dot files are symlinks.
+
+#### Proxy Configuration
+
+```bash
+git config --global http.proxy $HTTP_PROXY
+git config --global https.proxy $HTTPS_PROXY
+```
