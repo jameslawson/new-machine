@@ -1,7 +1,9 @@
-### dotfiles
+# dotfiles
 
-My dotfiles for vim, tmux, zsh
+*My dotfiles for vim, tmux, zsh*
 
+
+## Installation
 Suppose you cloned this repo to `<repo> = ~/github_projects/dotfiles`.    
 To keep dotfiles in sync, **create the appropriate softlinks**:
 
