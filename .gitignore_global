@@ -1,0 +1,16 @@
+# +---------------------------------------------------------
+# | Description: global gitignore
+# | Author: James Lawson
+# | Licence: MIT
+# +---------------------------------------------------------
+
+# -- For every project, do the following...
+
+# -- Ignore the exuberant ctags file
+tags
+
+# -- Ignore any file with tilde (temporary)
+*~
+
+# -- Ignore the OSX "Desktop Services Store" file
+.DS_Store
