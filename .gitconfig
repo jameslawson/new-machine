@@ -1,15 +1,44 @@
+; +---------------------------------------------------------
+; | Description: global git configuration
+; | Author: James Lawson
+; | Licence: MIT
+; +---------------------------------------------------------
+;
+; ----------------------------------------------------------
+; -- DEPENDENCIES
+; ----------------------------------------------------------
+; [*]: Requires v2.6.3+ of git
+; [1]: Requires SourceTree:
+;      https://www.sourcetreeapp.com/
+;
+; [http]
+; 	proxy = http://blah.blah.blah:1234
+; [https]
+; 	proxy = https://blah.blah.blah:1234
 [user]
 	name = James Lawson
-	email = james.lawson10@imperial.ac.uk
-[push]
-	default = simple
+	email = jameslawson@users.noreply.github.com
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore_global
 [alias]
 	st = status
 	ci = commit -v
 	co = checkout
 	s = status -s
 	lg = log --oneline --decorate --all --graph
-[core]
-	editor = vim
-[pull]
-	rebase = true
+
+; Depends on [1]
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+; Depends on [1]
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+; [url "https://"]
+; 	insteadOf = git://
+; [pull]
+; 	rebase = true
+[push]
+	default = simple
