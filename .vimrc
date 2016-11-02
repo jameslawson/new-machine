@@ -241,6 +241,7 @@ cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W')
 set backspace=indent,eol,start
 
 " -- useful aliases
+command! Wq wq
 command! W w
 command! Q q
 command! Q q
