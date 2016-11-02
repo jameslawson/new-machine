@@ -169,6 +169,9 @@ set number
 autocmd InsertEnter * :set number norelativenumber
 autocmd InsertLeave * :set relativenumber
 
+" -- Put vim in the background (use `fg` to restore vim)
+noremap zx <c-z>
+
 " -- make sure vim returns to the same line when you reopen a file.
 augroup line_return
     au!
@@ -413,6 +416,15 @@ nnoremap <leader>m %
 "    depends on jk jumps plugin [JKJUMP]
 nnoremap gb <c-o>
 
+
+" ----------------------------------------------------------
+" -- READING
+" ----------------------------------------------------------
+
+function Dir()
+  echo expand('%:p:h')
+endfunction
+command! Dir call Dir()
 
 command! -nargs=1 -complete=help H call HelpFullScreen(<f-args>)
 function! HelpFullScreen( topic )
