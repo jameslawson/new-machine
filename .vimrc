@@ -122,6 +122,7 @@ Plugin 'mxw/vim-jsx'
 " Plugin 'lukerandall/haskellmode-vim'
 " Plugin 'ElmCast/elm-vim'
 Plugin 'derekwyatt/vim-scala'
+Plugin 'leafgarland/typescript-vim'
 
 " ----------------------------------------------------------
 "
@@ -170,6 +171,9 @@ set number
 autocmd InsertEnter * :set number norelativenumber
 autocmd InsertLeave * :set relativenumber
 
+" -- Put vim in the background (use `fg` to restore vim)
+noremap zx <c-z>
+
 " -- make sure vim returns to the same line when you reopen a file.
 augroup line_return
     au!
@@ -213,21 +217,16 @@ hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
 set list!
 set listchars=tab:▸\ ,eol:¬
 
+" --  enable status bar
 set laststatus=2
 
 " ----------------------------------------------------------
-" -- TEMPORARY FILES
+" -- SWAPFILES
 " ----------------------------------------------------------
 
-" persistent undo
-set undofile
-set undodir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-
-" backup to ~/.tmp
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set writebackup
+" -- disable .swp files
+set nobackup
+set noswapfile
 
 " ----------------------------------------------------------
 " -- FORGIVING
@@ -295,25 +294,24 @@ nnoremap Y y$
 inoremap << <Esc>$a,<Esc>
 
 " -- add a new line in normal mode
-nmap <CR> o<Esc>k
+nmap <cr> o<esc>k
 
 " -- keep the cursor in place while joining lines
 nnoremap J mzJ`z
 
 " -- given J joins a line, why not have S split a line "
 "    make S break a line into two lines
-nnoremap S i<CR><Esc><right>
+nnoremap S i<cr><esc><right>
 
 " -- some sneaky shortcuts for inserting symbols
-inoremap <Leader>h #
-inoremap <Leader>b `
-inoremap <Leader>; ;
-inoremap <Leader>c ,
-inoremap <Leader>[ [
+inoremap <leader>h #
+inoremap <leader>b `
+inoremap <leader>; ;
+inoremap <leader>c ,
 
 " -- add semicolon at the end of the line
 "    quickly by using ,,
-inoremap <Leader><Leader> <Esc>$a;<Esc>
+inoremap <leader><leader> <Esc>$a;<Esc>
 
 " -- exit insert mode quickly with ;;
 " -- exit visual mode quickly with ;;
@@ -324,7 +322,7 @@ vnoremap ;; <Esc>
 " -- TDD
 " ----------------------------------------------------------
 
-" Run tests via `npm run t`
+" -- Run tests via `npm run t`
 nnoremap <leader>rt :!npm run t<cr>
 
 " ----------------------------------------------------------
@@ -406,18 +404,50 @@ inoremap " <c-r>=SmartQuotes('"')<cr>
 "    H goes to front of current line
 "    L goes to end of current line
 nnoremap H ^
-nnoremap L $
 vnoremap H ^
+nnoremap L $
 vnoremap L $h
-vnoremap dH d^
+
+" -- dH deletes from here to beginning of line
+nnoremap dH d^
 
 " -- go to matching parenthesis
-:nnoremap <leader>m %
+nnoremap <leader>m %
 
 " -- go to previous/next cursor locations
 "    gb is 'go back'
 "    depends on jk jumps plugin [JKJUMP]
-nnoremap gb <C-O>
+nnoremap gb <c-o>
+
+
+" ----------------------------------------------------------
+" -- READING
+" ----------------------------------------------------------
+
+function Dir()
+  echo expand('%:p:h')
+endfunction
+command! Dir call Dir()
+
+command! -nargs=1 -complete=help H call HelpFullScreen(<f-args>)
+function! HelpFullScreen( topic )
+    exe "h " . a:topic
+    wincmd j
+    try
+        clo
+    catch /^Vim(\a\+):E444:/ " can't close last window
+    endtry
+endfunction
+
+
+function! HelpFullScreen( topic )
+    exe "h " . a:topic
+    wincmd j
+    try
+        clo
+    catch /^Vim(\a\+):E444:/ " can't close last window
+    endtry
+endfunction
 
 " ----------------------------------------------------------
 " -- SEARCH AND REPLACE
@@ -457,8 +487,8 @@ autocmd Filetype c setlocal ts=4 sts=4 sw=4
 autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
 autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
-" autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 autocmd Filetype json setlocal ts=4 sts=4 sw=4
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 autocmd Filetype scss setlocal ts=4 sts=4 sw=4
 
 " ----------------------------------------------------------
@@ -496,7 +526,7 @@ let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<leader>'],
       \ 'AcceptSelection("v")': ['<V>'],
       \ 'PrtExit()':            ['<X>', '', '<esc>']
-      \}
+      \ }
 
 " -- [EMMET]
 let g:user_emmet_leader_key='<Leader>e'
