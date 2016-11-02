@@ -9,10 +9,13 @@ To keep dotfiles in sync, **create the appropriate softlinks**:
 
 ```bash
 cd <repo>
+ln -s $PWD/.gitignore_global ~/.gitignore_global
+ln -s $PWD/.gitconfig ~/.gitconfig
 ln -s $PWD/.vimrc ~/.vimrc
+ln -s $PWD/.ctags ~/.ctags
 ln -s $PWD/.zshrc ~/.zshrc
 ln -s $PWD/.tmux.conf ~/.tmux.conf
-ln -s $PWD/.ctags ~/.ctags
+
 
 # link snippetsemu snippet files
 mkdir -p ~/.vim/after
