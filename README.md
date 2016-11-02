@@ -20,16 +20,3 @@ ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
 ```
 
 In your home folder, you can do `l | grep lrw` to see which dot files are symlinks.
-
-----
-
-**YouCompleteMe**   
-```bash
-brew install cmake 
-vim
-:PluginInstall
-:q
-cd ~/.vim/bundle/YouCompleteMe
-./install.sh --clang-completer
-```
-[Full Instructions](https://github.com/Valloric/YouCompleteMe)
