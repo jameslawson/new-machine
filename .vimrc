@@ -113,6 +113,8 @@ Plugin 'nanotech/jellybeans.vim'
 " -- [YASL]: yet another javascript syntax
 Plugin 'othree/yajs.vim'
 
+Plugin 'mxw/vim-jsx'
+
 " -- Other Languages
 " Plugin 'tpope/vim-dispatch'
 " Plugin 'thoughtbot/vim-rspec'
@@ -468,6 +470,8 @@ nnoremap <Space> @q
 " ----------------------------------------------------------
 " -- PLUGINS
 " ----------------------------------------------------------
+
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 " -- [AIRLINE]
 let g:airline_theme='jellybeans'
