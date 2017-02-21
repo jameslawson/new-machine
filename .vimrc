@@ -606,6 +606,23 @@ function! s:PrettyJSON()
   set filetype=json
 endfunction
 command! PrettyJSON :call <sid>PrettyJSON()
+" ============================
+
+function! Open()
+  let l:dir = expand("%:p:h")
+  silent exe "!open " . l:dir
+endfunction
+command! -nargs=0 O :call Open()
+command! -nargs=0 Open :call Open()
+
+" -- Autocompletes :e to prepare to
+"    open a file **in the current file's folder**
+"    http://stackoverflow.com/a/1708936/3649209
+map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" ============================
+
+" command! -nargs=0 Open :call Open()
 
 " -- [AG]
 let g:ag_highlight=1
