@@ -30,3 +30,9 @@ In your home folder, you can do `l | grep lrw` to see which dot files are symlin
 git config --global http.proxy $HTTP_PROXY
 git config --global https.proxy $HTTPS_PROXY
 ```
+
+```bash
+npm config set proxy $HTTP_PROXY
+npm config set http_proxy $HTTP_PROXY
+npm config set https-proxy $HTTP_PROXY
+```
