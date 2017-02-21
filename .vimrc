@@ -68,11 +68,14 @@ Plugin 'gmarik/Vundle.vim'
 
 " ----------------------------------------------------------
 
+" -- [ASYNC]: Add vim-async
+Plugin 'skywind3000/asyncrun.vim', { 'rev': '66af612eadb59e94c895ee57bca82b36d4aea732' }
+
 " -- [CTRLP]: ctrlp (control-p) - vim fuzzy file finder
 "    (written in vimscript and has no dependencies)
 Plugin 'kien/ctrlp.vim'
 
-" -- [AG]: - make it easier to grep files inside vim
+" -- [AG]: make it easier to grep files inside vim
 "    Adds `The Silver Searcher` to vim
 "    depends on [6]
 Plugin 'rking/ag.vim'
@@ -82,8 +85,6 @@ Plugin 'rking/ag.vim'
 " -- [SNIPEMU]: SnippetsEmu
 Plugin 'https://github.com/vim-scripts/snippetsEmu'
 
-" ----------------------------------------------------------
-
 " -- [COMMENT]: tim Pope's commenting plugin
 "    use gcc to comment a line
 Plugin 'tpope/vim-commentary'
@@ -92,41 +93,21 @@ Plugin 'tpope/vim-commentary'
 "    so that you can rename a file from inside vim
 Plugin 'ReekenX/vim-rename2'
 
-" -- [TMUX]: seamless navigation between tmux panes and vim splits
-Plugin 'christoomey/vim-tmux-navigator'
+" " -- [TMUX]: seamless navigation between tmux panes and vim splits
+" Plugin 'christoomey/vim-tmux-navigator'
 
 " -- [JKJUMP]: cursor can jumping back through previous positions
 Plugin 'teranex/jk-jumps.vim'
 
-" -- [EMMET]: shortcuts for quickly writing HTML
+" " -- [EMMET]: shortcuts for quickly writing HTML
 Plugin 'mattn/emmet-vim'
 
 " -- [WHITESP]: highlight trailing whitespace
 Plugin 'ntpeters/vim-better-whitespace'
 
-" ----------------------------------------------------------
-
-" -- [JELLY] Jellybeans theme
+" -- [JELLY]: Jellybeans theme
 Plugin 'nanotech/jellybeans.vim'
 
-" ----------------------------------------------------------
-
-" -- [YASL]: yet another javascript syntax
-Plugin 'othree/yajs.vim'
-
-Plugin 'mxw/vim-jsx'
-
-" -- Other Languages
-" Plugin 'tpope/vim-dispatch'
-" Plugin 'thoughtbot/vim-rspec'
-" Plugin 'tpope/vim-rails'
-" Plugin 'lukerandall/haskellmode-vim'
-" Plugin 'ElmCast/elm-vim'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'leafgarland/typescript-vim'
-
-" ----------------------------------------------------------
-"
 " -- [GITDIFF]: show lines added/modified/deleted next to line numbers
 Plugin 'airblade/vim-gitgutter'
 
@@ -145,14 +126,34 @@ Plugin 'beloglazov/vim-textobj-quotes'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
+" -- [DISPATCH]: Add vim-dispatch
+"    used to run unit tests in background
+" Plugin 'tpope/vim-dispatch'
+
+
+" ----------------------------------------------------------
+
+" -- [YASL]: yet another javascript syntax
+Plugin 'othree/yajs.vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'rust-lang/rust.vim'
+Plugin 'leafgarland/typescript-vim'
+" -- Other Languages
+" Plugin 'tpope/vim-dispatch'
+" Plugin 'thoughtbot/vim-rspec'
+" Plugin 'tpope/vim-rails'
+" Plugin 'lukerandall/haskellmode-vim'
+" Plugin 'ElmCast/elm-vim'
+
 " ----------------------------------------------------------
 " -- END VIM PLUGINS
 " ----------------------------------------------------------
 
-call vundle#end()          " requied for vundle
-filetype plugin indent on  " required for vundle
-
-" ----------------------------------------------------------
+"  finish initializing vundle
+"  required by [VUNDLE]
+call vundle#end()
+filetype plugin indent on
 
 " ----------------------------------------------------------
 " -- ESSENTIAL BEHAVIOUR
@@ -586,6 +587,17 @@ function! GrepJs(arg)
 endfunction
 command -nargs=1 GrepJs call GrepJs('<args>')
 
+function! Ctags()
+  let command = ['find . -type f ']        " find every file
+  let command += ['-iregex ".*\.js$" ']    " that is a javascript file
+  let command += ['-not -path "./node_modules/*" '] " ignore node_modules
+  let command += ['-not -path "bower_components/*" '] " ignore bower_components
+  let command += ['-exec jsctags {} -f \; '] " ignore node_modules
+  let command += ['| sed /^$/d ']            " remove newlines
+  let command += ['| sort ']                 " sort by name
+  let command += ['> tags']                  " write to file called `tags`
+endfunction
+
 
 vnoremap q <esc>:call QuickWrap("'")<cr>
 vnoremap Q <esc>:call QuickWrap('"')<cr>
@@ -601,11 +613,12 @@ function! QuickWrap(wrapper)
 endfunction
 
 " -- depends on [8]
-function! s:PrettyJSON()
+function! s:Jq()
   %!jq .
   set filetype=json
 endfunction
-command! PrettyJSON :call <sid>PrettyJSON()
+command! PrettyJSON :call <sid>Jq()
+
 " ============================
 
 function! Open()
@@ -622,6 +635,105 @@ map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
 
 " ============================
 
+function NoOp()
+endfunction
+
+function! Tdd_refresh()
+  fun! OnAsyncRunExit()
+    let g:tdd_running = 0
+    if g:asyncrun_status == 'success'
+      let g:tdd_status = "Passing"
+      call airline#parts#define('tdd', { 'function': 'Tdd_check', 'accent': 'green' })
+      let g:airline_section_b = airline#section#create(['tdd'])
+    elseif g:asyncrun_status == 'failure'
+      let g:tdd_status = "Failing"
+      call airline#parts#define('tdd', { 'function': 'Tdd_check', 'accent': 'red' })
+      let g:airline_section_b = airline#section#create(['tdd'])
+    endif
+
+    echom ''
+    exe ':AirlineRefresh'
+  endf
+  let g:asyncrun_exit = "silent! call OnAsyncRunExit()"
+
+  " let l:spec_location = @% " read the contents of the % regsiter
+  " let l:tdd_command = substitute(g:tdd_spec_command, "{spec}", l:spec_location, "g")
+  " let l:async_tdd_command = substitute("AsyncRun! {command}", "{command}", l:async_tdd_command, "g")
+  " execute l:async_tdd_command
+  if (g:tdd_running == 0)
+    let g:tdd_running = 1
+    execute "AsyncRun! npm run test"
+    exe ':AirlineRefresh'
+  endif
+  " TODO: change exe to execute?
+endfunction
+
+" function! s:InSpecFile()
+"   return match(expand("%"), ".spec.js$") != -1
+" endfunction
+
+let g:tdd_status = ""
+let g:tdd_running = 0
+function! Tdd_check()
+  return g:tdd_status
+endfunction
+
+function! Tdd_disabled()
+  return '-'
+endfunction
+
+" Tdd plugin is activated iff there exists some
+" regex in tdd_path_whitelist that matches the
+" current buffer's absolute path
+" Regexes can be deactived (not included in the above check)
+" by changing 1 to 0
+let g:tdd_path_whitelist = {
+    \ '/Users/lawsoj03/github_projects/tipo': 'BABEL_ENV=test ./node_modules/.bin/mocha {spec} --reporter spec --recursive --require ./test/util/spec.helper.js --compilers js:babel-core/register,scss:./test/util/mocha.scss.compiler.js',
+    \ }
+function! MyPlugin(...)
+  let l:file = expand("%:p")  " the filename including extension
+
+  " Determine if current buffer's path matches
+  " some regex in `file_in_whitelist`
+  let l:file_in_whitelist = 0
+  for regex in keys(g:tdd_path_whitelist)
+     if (match(l:file, regex) > -1)
+       let l:file_in_whitelist = 1
+       " let g:tdd_spec_command = tdd_path_whitelist[regex]
+     endif
+  endfor
+
+  " echom (&filetype =~ 'javascript')
+
+  if (&filetype =~ 'javascript' && l:file_in_whitelist)
+    " Enabled
+    " Whenever we save the file, call Tdd_refresh
+    call airline#parts#define('tdd', { 'function': 'Tdd_check' })
+
+    augroup RefreshTddStatus
+      autocmd!
+      autocmd BufWritePost * call Tdd_refresh()
+    augroup END
+
+  else
+    " Disabled
+    call airline#parts#define('tdd', { 'function': 'Tdd_disabled', 'accent': 'yellow' })
+    let g:airline_section_b = airline#section#create(['tdd'])
+  endif
+endfunction
+
+call airline#add_statusline_func('MyPlugin')
+
+" ============================
+
+" function! Spec()
+"   let l:file = expand("%:p")  " the filename including extension
+"   let l:dir = expand("%:p:h") " the directory containing the file
+"   " replace src/ with test/
+"   let l:testdir = substitute(l:dir, "src\/", "test\/", "g") " ???
+"   " replace .js with .spec.js
+
+" endfunction
 " command! -nargs=0 Open :call Open()
 
 " -- [AG]
