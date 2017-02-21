@@ -48,11 +48,12 @@
 " -- SETUP VUNDLE
 " ----------------------------------------------------------
 
-set nocompatible              " required by vundle
-filetype off                  " required by vundle
+set nocompatible              " required by [VUNDLE]
+filetype off                  " required by [VUNDLE]
 
-" -- set the runtime path to include Vundle
-"    initialize vundle then import  [1]
+" -- set the runtime path to include vundle
+"    initialize vundle then import
+"    required by [VUNDLE]
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
