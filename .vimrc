@@ -310,13 +310,26 @@ inoremap <leader>; ;
 inoremap <leader>c ,
 
 " -- add semicolon at the end of the line
-"    quickly by using ,,
-inoremap <leader><leader> <Esc>$a;<Esc>
+"    and exit insert mode by using <leader><leader>
+"    if the autocomplete window is open, pick the
+"    highlighted suggestion, close the window, add a semicolon
+"    at the end of the line and then exit insert mode
+inoremap <expr> <leader><leader> pumvisible() ?  "\<C-Y><Esc>$a;<Esc>" : "\<Esc>$a;<Esc>"
 
 " -- exit insert mode quickly with ;;
 " -- exit visual mode quickly with ;;
 inoremap ;; <Esc>
 vnoremap ;; <Esc>
+
+" -- remove redundant whitespace quickly with KK
+nnoremap KK :%s/\s\+$//e<CR>"
+
+" -- quickly open vim autocomplete
+inoremap <leader>a <c-p>
+
+" -- supress newlines that are sometimes added by autocomplete
+"    http://superuser.com/a/941082
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 
 " ----------------------------------------------------------
 " -- TDD
