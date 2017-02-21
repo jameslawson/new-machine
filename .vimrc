@@ -565,23 +565,26 @@ let g:ag_highlight = 1
 " -- Grep functions
 "    These are built upon [AG] plugin
 function! GrepSass(arg)
-  let command = ['Ag', a:arg] " call the :Ag command that [AG] exposes
-  let command += ['-G .scss'] " only search for .scss files
+  let command = ['Ag']               " call the :Ag command that [AG] exposes
+  let command += ["'" . a:arg. "'"]  " and search for our query string
   let command += ['--ignore-dir=node_modules/']
   let command += ['--ignore-dir=.git/']
   execute join(command, " ")
 endfunction
-command -nargs=* GrepSass call GrepSass('<args>')
+command -nargs=1 GrepSass call GrepSass('<args>')
 
 function! GrepJs(arg)
-  let command = ['Ag', a:arg] " call the :Ag command that [AG] exposes
-  let command += ['-G .js']   " only search for .js files
-  let command += ['--ignore-case'] " case-insensitive
+  let command = ['Ag']               " call the :Ag command that [AG] exposes
+  let command += ["'" . a:arg. "'"]  " and search for our query string
+  " echom &filetype
+  " if &filetype =~ 'javascript'
+  let command += ['-G .js']           " only search for .js files
+  let command += ['--ignore-case']    " case-insensitive
   let command += ['--ignore-dir=node_modules/']
   let command += ['--ignore-dir=.git/']
   execute join(command, " ")
 endfunction
-command -nargs=* GrepJs call GrepJs('<args>')
+command -nargs=1 GrepJs call GrepJs('<args>')
 
 
 vnoremap q <esc>:call QuickWrap("'")<cr>
