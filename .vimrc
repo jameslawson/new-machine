@@ -82,6 +82,9 @@ Plugin 'rking/ag.vim'
 
 " ----------------------------------------------------------
 
+" -- [SLEUTH]: vim-sleuth - auto-detect indentation
+Plugin 'https://github.com/tpope/vim-sleuth'
+
 " -- [SNIPEMU]: SnippetsEmu
 Plugin 'https://github.com/vim-scripts/snippetsEmu'
 
@@ -311,9 +314,8 @@ inoremap <leader>b `
 inoremap <leader>; ;
 inoremap <leader>c ,
 
-" -- add semicolon at the end of the line
-"    and exit insert mode by using <leader><leader>
-"    if the autocomplete window is open, pick the
+" -- add semicolon at the end of the line and exit insert mode by
+"    using <leader><leader> if the autocomplete window is open, pick the
 "    highlighted suggestion, close the window, add a semicolon
 "    at the end of the line and then exit insert mode
 inoremap <expr> <leader><leader> pumvisible() ?  "\<C-Y><Esc>$a;<Esc>" : "\<Esc>$a;<Esc>"
@@ -439,37 +441,18 @@ nnoremap gb <c-o>
 " -- READING
 " ----------------------------------------------------------
 
+" -- use :dir to print the directory the current file is in
+"    which is not the same as :pwd which shows the directory
+"    in which vim was exec'ed from
 function Dir()
   echo expand('%:p:h')
 endfunction
 command! Dir call Dir()
 
-command! -nargs=1 -complete=help H call HelpFullScreen(<f-args>)
-function! HelpFullScreen( topic )
-    exe "h " . a:topic
-    wincmd j
-    try
-        clo
-    catch /^Vim(\a\+):E444:/ " can't close last window
-    endtry
-endfunction
-
-
-function! HelpFullScreen( topic )
-    exe "h " . a:topic
-    wincmd j
-    try
-        clo
-    catch /^Vim(\a\+):E444:/ " can't close last window
-    endtry
-endfunction
-
 " ----------------------------------------------------------
 " -- SEARCH AND REPLACE
 " ----------------------------------------------------------
 
-" -- see: :help ignorecase, :help smartcase,
-"         :help hlsearch, :help incsearch
 set ignorecase
 set smartcase
 set hlsearch
@@ -486,8 +469,6 @@ nnoremap <leader>nh :noh
 " -- INDENTATION
 " ----------------------------------------------------------
 
-" -- see: :help smartindent, :help expandtab,
-"         :help shiftwidth, :help autoindent
 set smartindent
 set expandtab
 set shiftwidth=2
@@ -495,6 +476,7 @@ set autoindent
 
 " -- indent with *spaces*, not tabs
 "    use either 2 or 4 spaces, depending on the language
+"    these will change according to [SLEUTH]
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
 autocmd Filetype python setlocal ts=2 sts=2 sw=2
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
@@ -503,7 +485,6 @@ autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
 autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
 autocmd Filetype json setlocal ts=4 sts=4 sw=4
-autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 autocmd Filetype scss setlocal ts=4 sts=4 sw=4
 
 " ----------------------------------------------------------
