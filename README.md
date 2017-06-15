@@ -1,6 +1,3 @@
-# dotfiles
-
-
 <h1 align="center">dotfiles</h1>
 <p align="center">
   :wrench: A repo for my dotfiles :wrench: <br>
