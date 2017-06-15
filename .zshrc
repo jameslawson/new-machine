@@ -87,3 +87,6 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 # from https://github.com/jferris/dotfiles/blob/master/aliases.local
 alias migrate="rake db:migrate db:test:prepare"
 alias remigrate="rake db:migrate && rake db:rollback && rake db:migrate && rake db:test:prepare"
+
+export NVM_DIR="/Users/james/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
