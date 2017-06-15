@@ -27,3 +27,7 @@ ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
 ```
 
 In your home folder, you can do `ls | grep lrw` to see which dot files are symlinks.
+
+## License
+
+MIT
