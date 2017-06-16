@@ -13,7 +13,7 @@ To keep dotfiles in sync, **create the appropriate softlinks**:
 #    ~/.some_dotfile   === soft link ===>   dotfiles/.some_dotfile
 #
 
-cd dot-files
+cd dotfiles
 ln -s $PWD/.gitignore_global ~/.gitignore_global
 ln -s $PWD/.gitconfig ~/.gitconfig
 ln -s $PWD/.vimrc ~/.vimrc
