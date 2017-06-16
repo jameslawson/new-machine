@@ -24,4 +24,3 @@ Snippet main int main(int argc, char *argv[]) {<cr> <{}> <cr>}
 " -- printf, printf with newline
 Snippet pf printf("<{}>")
 Snippet pfn printf("<{}>\n")
-

@@ -574,6 +574,17 @@ function! QuickWrap(wrapper)
   normal `<
 endfunction
 
+" http://vim.wikia.com/wiki/Making_a_list_of_numbers#Incrementing_selected_numbers
+function! Incr()
+  let a = line('.') - line("'<")
+  let c = virtcol("'<")
+  if a > 0
+    execute 'normal! '.c.'|'.a."\<C-a>"
+  endif
+  normal `<
+endfunction
+vnoremap <leader>a :call Incr()<CR>
+
 " -- depends on [8]
 function! s:Jq()
   %!jq .
