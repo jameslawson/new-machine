@@ -133,6 +133,7 @@ Plugin 'vim-airline/vim-airline-themes'
 "    used to run unit tests in background
 " Plugin 'tpope/vim-dispatch'
 
+Plugin 'jameslawson/sandwich.vim'
 
 " ----------------------------------------------------------
 
@@ -343,25 +344,25 @@ inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
 nnoremap <leader>rt :!npm run t<cr>
 
 " ----------------------------------------------------------
-" -- SANDWICH
+" -- VISUAL SANDWICH
 " ----------------------------------------------------------
 
 " -- Surround a visual selection with
 "    a given input (form a sandwich with the input).
-function! Sandwich()
-  let bread = input('Surround with: ', '')
-  if len(bread) > 0
-    " add the top slice
-    normal `<
-    exe 'normal i' . bread
+" function! Sandwich()
+"   let bread = input('Surround with: ', '')
+"   if len(bread) > 0
+"     " add the top slice
+"     normal `<
+"     exe 'normal i' . bread
 
-    " add the bottom slice
-    let command = (&selection == 'exclusive') ? 'i' : 'a'
-    normal `>
-    exe 'normal ' . command . bread
-  endif
-endfunction
-vnoremap <leader>s <esc>:call Sandwich()<cr>
+"     " add the bottom slice
+"     let command = (&selection == 'exclusive') ? 'i' : 'a'
+"     normal `>
+"     exe 'normal ' . command . bread
+"   endif
+" endfunction
+" vnoremap <leader>s <esc>:call Sandwich()<cr>
 
 " ----------------------------------------------------------
 " -- SMART BRACKETS
@@ -392,26 +393,6 @@ inoremap ( ()<esc>i
 inoremap ) <c-r>=SmartClose(')')<cr>
 inoremap } <c-r>=SmartClose('}')<cr>
 
-" ----------------------------------------------------------
-" -- SMART QUOTES
-" ----------------------------------------------------------
-
-function! SmartQuotes(thequote)
-  let col = col(".")
-  let sitting = getline(".")[col-1]
-  if (sitting ==# a:thequote)
-    " -- move the cursor right
-    call cursor(line("."), col+1)
-  else
-    " -- add the closing bracket
-    "    then position cursor over right quote
-    execute "normal! i" . a:thequote . a:thequote
-  endif
-  return ''
-endfunction
-
-inoremap ' <c-r>=SmartQuotes("'")<cr>
-inoremap " <c-r>=SmartQuotes('"')<cr>
 
 " ----------------------------------------------------------
 " -- MOVEMENT
