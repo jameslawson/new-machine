@@ -297,7 +297,7 @@ nnoremap Y y$
 " ----------------------------------------------------------
 
 " -- add a comma at the end of the line
-inoremap << <Esc>$a,<Esc>
+" inoremap << <Esc>$a,<Esc>
 
 " -- add a new line in normal mode
 nmap <cr> o<esc>k
