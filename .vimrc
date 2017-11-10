@@ -41,8 +41,6 @@
 "     $ ./install.sh
 "     Then go to iTerm2 and change the font to one of the newly installed
 "     fonts that end with "for powerline"
-" [8] jq
-"     $ brew install jq
 
 " ----------------------------------------------------------
 " -- SETUP VUNDLE
@@ -61,94 +59,75 @@ call vundle#begin()
 " -- IMPORT VIM PLUGINS (VIA VUNDLE)
 " ----------------------------------------------------------
 
-" -- [VUNDLE]: vundle plugin
-"    that manages Vundle. Essential, don't remove
-"    depends on [1]
-Plugin 'gmarik/Vundle.vim'
-
-" ----------------------------------------------------------
-
-" -- [ASYNC]: Add vim-async
-Plugin 'skywind3000/asyncrun.vim', { 'rev': '66af612eadb59e94c895ee57bca82b36d4aea732' }
-
-" -- [CTRLP]: ctrlp (control-p) - vim fuzzy file finder
-"    (written in vimscript and has no dependencies)
-Plugin 'kien/ctrlp.vim'
-
-" -- [AG]: make it easier to grep files inside vim
-"    Adds `The Silver Searcher` to vim
-"    depends on [6]
-Plugin 'rking/ag.vim'
-
-" ----------------------------------------------------------
-
-" -- [SLEUTH]: vim-sleuth - auto-detect indentation
-Plugin 'https://github.com/tpope/vim-sleuth'
-
-" -- [SNIPEMU]: SnippetsEmu
-Plugin 'https://github.com/vim-scripts/snippetsEmu'
-
-" -- [COMMENT]: tim Pope's commenting plugin
-"    use gcc to comment a line
-Plugin 'tpope/vim-commentary'
-
-" -- [RENAME]: adds :Rename user function
-"    so that you can rename a file from inside vim
-Plugin 'ReekenX/vim-rename2'
-
-" " -- [TMUX]: seamless navigation between tmux panes and vim splits
-" Plugin 'christoomey/vim-tmux-navigator'
-
-" -- [JKJUMP]: cursor can jumping back through previous positions
-Plugin 'teranex/jk-jumps.vim'
-
-" " -- [EMMET]: shortcuts for quickly writing HTML
-Plugin 'mattn/emmet-vim'
-
-" -- [WHITESP]: highlight trailing whitespace
-Plugin 'ntpeters/vim-better-whitespace'
-
-" -- [JELLY]: Jellybeans theme
-Plugin 'nanotech/jellybeans.vim'
-
-" -- [GITDIFF]: show lines added/modified/deleted next to line numbers
-Plugin 'airblade/vim-gitgutter'
-
-" -- [EXPAND]: expand selection gradually
-Plugin 'terryma/vim-expand-region'
-
-" -- [TXTOBJ]: custom text objects
-Plugin 'kana/vim-textobj-user'
-
-" -- [TXTOBJ-QUOTE]: treat quotes as a text object
-" depends on [TXTOBJ]
-Plugin 'beloglazov/vim-textobj-quotes'
-
-" -- [AIRLINE]: Add airline
-" -- depends on [7]
-Plugin 'vim-airline/vim-airline'
+Plugin 'gmarik/Vundle.vim'              " -- [VUNDLE], depends on [1]
+Plugin 'kien/ctrlp.vim'                 " -- [CTRLP]
+Plugin 'rking/ag.vim'                   " -- [AG], depends on [6]
+" Plugin 'tpope/vim-sleuth'               " -- [SLEUTH]
+Plugin 'vim-scripts/snippetsEmu'        " -- [SNIPEMU]
+Plugin 'tpope/vim-commentary'           " -- [COMMENT]
+Plugin 'ReekenX/vim-rename2'            " -- [RENAME]
+Plugin 'teranex/jk-jumps.vim'           " -- [JKJUMP]
+Plugin 'mattn/emmet-vim'                " -- [EMMET]
+Plugin 'ntpeters/vim-better-whitespace' " -- [WHITESP]
+Plugin 'nanotech/jellybeans.vim'        " -- [JELLY]
+Plugin 'airblade/vim-gitgutter'         " -- [GITDIFF]
+Plugin 'vim-airline/vim-airline'        " -- [AIRLINE] depends on [7]
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'jameslawson/sandwich.vim'       " -- [SANDWICH]
+Plugin 'jameslawson/grepx.vim'          " -- [GREPX]
 
-" -- [DISPATCH]: Add vim-dispatch
-"    used to run unit tests in background
-" Plugin 'tpope/vim-dispatch'
+function! GrepArgs(type)
+  if type ==? 'scala'
+    return [
+      '-G .scala',
+      '--ignore-case',
+      '--ignore-dir=node_modules/',
+      '--ignore-dir=.git/',
+    ]
+  elseif type ==? 'javascript'
+    return [
+      '-G .js',
+      '--ignore-case',
+      '--ignore-dir=node_modules/',
+      '--ignore-dir=.git/',
+    ]
+  else
+    return []
+  endif
+endfunction
 
-Plugin 'jameslawson/sandwich.vim'
+function! Grep(str)
+  let type = &filetype
+  let command = ['Ag', "'" . a:str . "'"]
+  command += GrepArgs(type)
+  execute join(command, " ")
+endfunction
+command -nargs=1 Grep call Grep('<args>')
 
-" ----------------------------------------------------------
+" TODO: take feature step and find matching regex
 
-" -- [YASL]: yet another javascript syntax
+" -- Text Objects
+Plugin 'kana/vim-textobj-user'          " -- [TEXTOBJ]
+Plugin 'beloglazov/vim-textobj-quotes'  " -- [TEXTOBJ-QUOTE], depends on [TEXTOBJ]
+Plugin 'terryma/vim-expand-region'      " -- [EXPAND]
+
+" -- Javascript
 Plugin 'othree/yajs.vim'
-Plugin 'mxw/vim-jsx'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'rust-lang/rust.vim'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'mxw/vim-jsx'                    " -- [JSJSX]
+
+" -- Scala
+Plugin 'derekwyatt/vim-scala'           " -- scala
+
 " -- Other Languages
-" Plugin 'tpope/vim-dispatch'
-" Plugin 'thoughtbot/vim-rspec'
-" Plugin 'tpope/vim-rails'
-" Plugin 'lukerandall/haskellmode-vim'
-" Plugin 'ElmCast/elm-vim'
+" Plugin 'rust-lang/rust.vim'            " -- rust
+" Plugin 'leafgarland/typescript-vim'    " -- typescript
+" Plugin 'tpope/vim-rails'             " -- ruby on rails
+" Plugin 'lukerandall/haskellmode-vim' " -- haskell
+" Plugin 'ElmCast/elm-vim'             " -- elm
+Plugin 'digitaltoad/vim-pug.git'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'purescript-contrib/purescript-vim'
+
 
 " ----------------------------------------------------------
 " -- END VIM PLUGINS
@@ -177,9 +156,6 @@ set number
 autocmd InsertEnter * :set number norelativenumber
 autocmd InsertLeave * :set relativenumber
 
-" -- Put vim in the background (use `fg` to restore vim)
-noremap zx <c-z>
-
 " -- make sure vim returns to the same line when you reopen a file.
 augroup line_return
     au!
@@ -189,13 +165,19 @@ augroup line_return
         \ endif
 augroup END
 
+" -- check if the file has been modified before we go into
+"    insert mode (or when the cursor hasn't moved for a while)
+"    this tries to prevent the "this file has already been modified" problem
+"    https://stackoverflow.com/a/927634/3649209
+autocmd CursorHold * checktime
+autocmd InsertEnter * checktime
+
 " ----------------------------------------------------------
 " -- ESSENTIAL APPEARANCE
 " ----------------------------------------------------------
 
 " -- enable highlighting of current line
-set cul
-hi CursorLine term=none cterm=none ctermbg=3
+set cursorline
 
 " -- use jellybeans theme
 "    depends on [JELLY]
@@ -204,8 +186,11 @@ colorscheme jellybeans
 " -- enable syntax highlighting
 syntax enable
 
-" -- change colour of the line numbers
-highlight LineNr ctermfg=DarkGrey
+" -- change fg and bg colours of the line numbers
+"    and the cursor line
+highlight LineNr ctermfg=235
+highlight CursorLine ctermbg=234
+highlight CursorLineNr ctermbg=234 ctermfg=250
 
 " -- always keep 3 lines visible at top and bottom
 "    when cursor hits top/bottom and you scroll
@@ -216,7 +201,7 @@ set scrolloff=3
 " -- change color of highlighting of matching paranthsis
 "    http://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
 set showmatch
-hi MatchParen cterm=bold ctermbg=none ctermfg=magenta
+highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " -- turn on invisibles by default
 "    and use the same symbols as TextMate for tabstops and EOLs
@@ -225,6 +210,12 @@ set listchars=tab:▸\ ,eol:¬
 
 " --  enable status bar
 set laststatus=2
+
+" -- show when lines exceeds the maximum line length
+"    highlight firstthe character that goes over the limit
+"    https://superuser.com/a/771555
+" highlight ColorColumn ctermbg=magenta
+" call matchadd('ColorColumn', '\%81v', 105)
 
 " ----------------------------------------------------------
 " -- SWAPFILES
@@ -289,9 +280,6 @@ set clipboard=unnamed
 "    go to just before/after pasted text with gp and gP
 nnoremap <leader>v `[v`]
 
-" -- yank till end of line
-nnoremap Y y$
-
 " ----------------------------------------------------------
 " -- EDITING
 " ----------------------------------------------------------
@@ -307,7 +295,7 @@ nnoremap J mzJ`z
 
 " -- given J joins a line, why not have S split a line "
 "    make S break a line into two lines
-nnoremap S i<cr><esc><right>
+nnoremap S i<cr><esc>:%s/\s\+$//e<cr>
 
 " -- some sneaky shortcuts for inserting symbols
 inoremap <leader>h #
@@ -326,73 +314,9 @@ inoremap <expr> <leader><leader> pumvisible() ?  "\<C-Y><Esc>$a;<Esc>" : "\<Esc>
 inoremap ;; <Esc>
 vnoremap ;; <Esc>
 
-" -- remove redundant whitespace quickly with KK
-nnoremap KK :%s/\s\+$//e<CR>"
-
-" -- quickly open vim autocomplete
-inoremap <leader>a <c-p>
-
 " -- supress newlines that are sometimes added by autocomplete
 "    http://superuser.com/a/941082
 inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
-
-" ----------------------------------------------------------
-" -- TDD
-" ----------------------------------------------------------
-
-" -- Run tests via `npm run t`
-nnoremap <leader>rt :!npm run t<cr>
-
-" ----------------------------------------------------------
-" -- VISUAL SANDWICH
-" ----------------------------------------------------------
-
-" -- Surround a visual selection with
-"    a given input (form a sandwich with the input).
-" function! Sandwich()
-"   let bread = input('Surround with: ', '')
-"   if len(bread) > 0
-"     " add the top slice
-"     normal `<
-"     exe 'normal i' . bread
-
-"     " add the bottom slice
-"     let command = (&selection == 'exclusive') ? 'i' : 'a'
-"     normal `>
-"     exe 'normal ' . command . bread
-"   endif
-" endfunction
-" vnoremap <leader>s <esc>:call Sandwich()<cr>
-
-" ----------------------------------------------------------
-" -- SMART BRACKETS
-" ----------------------------------------------------------
-
-" -- CLOSING BRACKETS:
-" -- move cursor when:
-"    - cursor sitting on a character that is )
-" -- add right bracket when:
-"    - cursor sitting on <CR> (ie the empty space at end of line)
-"    - cursor sitting on a character that is not )
-function! SmartClose(closebracket)
-  let col = col(".")
-  let sitting = getline(".")[col-1]
-  if (sitting ==# a:closebracket)
-    " -- move the cursor right
-    call cursor(line("."), col+1)
-    return ''
-  else
-    " -- add the closing bracket
-    return a:closebracket
-  endif
-  return ''
-endfunction
-
-inoremap { {}<esc>i
-inoremap ( ()<esc>i
-inoremap ) <c-r>=SmartClose(')')<cr>
-inoremap } <c-r>=SmartClose('}')<cr>
-
 
 " ----------------------------------------------------------
 " -- MOVEMENT
@@ -406,29 +330,11 @@ vnoremap H ^
 nnoremap L $
 vnoremap L $h
 
-" -- dH deletes from here to beginning of line
-nnoremap dH d^
-
-" -- go to matching parenthesis
-nnoremap <leader>m %
-
-" -- go to previous/next cursor locations
-"    gb is 'go back'
+" -- go to previous/next cursor locations (via vims jumplist)
+"    gb is 'go back', gf is 'go foward'
 "    depends on jk jumps plugin [JKJUMP]
 nnoremap gb <c-o>
-
-
-" ----------------------------------------------------------
-" -- READING
-" ----------------------------------------------------------
-
-" -- use :dir to print the directory the current file is in
-"    which is not the same as :pwd which shows the directory
-"    in which vim was exec'ed from
-function Dir()
-  echo expand('%:p:h')
-endfunction
-command! Dir call Dir()
+nnoremap gf <c-i>
 
 " ----------------------------------------------------------
 " -- SEARCH AND REPLACE
@@ -464,9 +370,10 @@ autocmd Filetype html setlocal ts=2 sts=2 sw=2
 autocmd Filetype c setlocal ts=4 sts=4 sw=4
 autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
-autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
+" autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
 autocmd Filetype json setlocal ts=4 sts=4 sw=4
-autocmd Filetype scss setlocal ts=4 sts=4 sw=4
+autocmd Filetype scss setlocal ts=2 sts=2 sw=2
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 
 " ----------------------------------------------------------
 " -- MACROS
@@ -479,6 +386,10 @@ nnoremap <Space> @q
 " -- PLUGINS
 " ----------------------------------------------------------
 
+" -- [AG]
+let g:ag_highlight = 1
+
+" -- [JSJSX]
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
 " -- [AIRLINE]
@@ -518,49 +429,6 @@ let g:jk_jumps_minimum_lines = 2
 " -- [AG]
 let g:ag_highlight = 1
 
-" -- [GITGUTTER]
-" Toggle with :GitGutterToggle
-" let g:gitgutter_map_keys = 0
-
-" --
-" https://github.com/ggreer/the_silver_searcher/blob/master/doc/ag.1.md
-
-" -- Grep functions
-"    These are built upon [AG] plugin
-function! GrepSass(arg)
-  let command = ['Ag']               " call the :Ag command that [AG] exposes
-  let command += ["'" . a:arg. "'"]  " and search for our query string
-  let command += ['--ignore-dir=node_modules/']
-  let command += ['--ignore-dir=.git/']
-  execute join(command, " ")
-endfunction
-command -nargs=1 GrepSass call GrepSass('<args>')
-
-function! GrepJs(arg)
-  let command = ['Ag']               " call the :Ag command that [AG] exposes
-  let command += ["'" . a:arg. "'"]  " and search for our query string
-  " echom &filetype
-  " if &filetype =~ 'javascript'
-  let command += ['-G .js']           " only search for .js files
-  let command += ['--ignore-case']    " case-insensitive
-  let command += ['--ignore-dir=node_modules/']
-  let command += ['--ignore-dir=.git/']
-  execute join(command, " ")
-endfunction
-command -nargs=1 GrepJs call GrepJs('<args>')
-
-function! Ctags()
-  let command = ['find . -type f ']        " find every file
-  let command += ['-iregex ".*\.js$" ']    " that is a javascript file
-  let command += ['-not -path "./node_modules/*" '] " ignore node_modules
-  let command += ['-not -path "bower_components/*" '] " ignore bower_components
-  let command += ['-exec jsctags {} -f \; '] " ignore node_modules
-  let command += ['| sed /^$/d ']            " remove newlines
-  let command += ['| sort ']                 " sort by name
-  let command += ['> tags']                  " write to file called `tags`
-endfunction
-
-
 vnoremap q <esc>:call QuickWrap("'")<cr>
 vnoremap Q <esc>:call QuickWrap('"')<cr>
 
@@ -584,130 +452,3 @@ function! Incr()
   normal `<
 endfunction
 vnoremap <leader>a :call Incr()<CR>
-
-" -- depends on [8]
-function! s:Jq()
-  %!jq .
-  set filetype=json
-endfunction
-command! PrettyJSON :call <sid>Jq()
-
-" ============================
-
-function! Open()
-  let l:dir = expand("%:p:h")
-  silent exe "!open " . l:dir
-endfunction
-command! -nargs=0 O :call Open()
-command! -nargs=0 Open :call Open()
-
-" -- Autocompletes :e to prepare to
-"    open a file **in the current file's folder**
-"    http://stackoverflow.com/a/1708936/3649209
-map ,e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" ============================
-
-function NoOp()
-endfunction
-
-function! Tdd_refresh()
-  fun! OnAsyncRunExit()
-    let g:tdd_running = 0
-    if g:asyncrun_status == 'success'
-      let g:tdd_status = "Passing"
-      call airline#parts#define('tdd', { 'function': 'Tdd_check', 'accent': 'green' })
-      let g:airline_section_b = airline#section#create(['tdd'])
-    elseif g:asyncrun_status == 'failure'
-      let g:tdd_status = "Failing"
-      call airline#parts#define('tdd', { 'function': 'Tdd_check', 'accent': 'red' })
-      let g:airline_section_b = airline#section#create(['tdd'])
-    endif
-
-    echom ''
-    exe ':AirlineRefresh'
-  endf
-  let g:asyncrun_exit = "silent! call OnAsyncRunExit()"
-
-  " let l:spec_location = @% " read the contents of the % regsiter
-  " let l:tdd_command = substitute(g:tdd_spec_command, "{spec}", l:spec_location, "g")
-  " let l:async_tdd_command = substitute("AsyncRun! {command}", "{command}", l:async_tdd_command, "g")
-  " execute l:async_tdd_command
-  if (g:tdd_running == 0)
-    let g:tdd_running = 1
-    execute "AsyncRun! npm run test"
-    exe ':AirlineRefresh'
-  endif
-  " TODO: change exe to execute?
-endfunction
-
-" function! s:InSpecFile()
-"   return match(expand("%"), ".spec.js$") != -1
-" endfunction
-
-let g:tdd_status = ""
-let g:tdd_running = 0
-function! Tdd_check()
-  return g:tdd_status
-endfunction
-
-function! Tdd_disabled()
-  return '-'
-endfunction
-
-" Tdd plugin is activated iff there exists some
-" regex in tdd_path_whitelist that matches the
-" current buffer's absolute path
-" Regexes can be deactived (not included in the above check)
-" by changing 1 to 0
-let g:tdd_path_whitelist = {
-    \ '/Users/lawsoj03/github_projects/tipo': 'BABEL_ENV=test ./node_modules/.bin/mocha {spec} --reporter spec --recursive --require ./test/util/spec.helper.js --compilers js:babel-core/register,scss:./test/util/mocha.scss.compiler.js',
-    \ }
-function! MyPlugin(...)
-  let l:file = expand("%:p")  " the filename including extension
-
-  " Determine if current buffer's path matches
-  " some regex in `file_in_whitelist`
-  let l:file_in_whitelist = 0
-  for regex in keys(g:tdd_path_whitelist)
-     if (match(l:file, regex) > -1)
-       let l:file_in_whitelist = 1
-       " let g:tdd_spec_command = tdd_path_whitelist[regex]
-     endif
-  endfor
-
-  " echom (&filetype =~ 'javascript')
-
-  if (&filetype =~ 'javascript' && l:file_in_whitelist)
-    " Enabled
-    " Whenever we save the file, call Tdd_refresh
-    call airline#parts#define('tdd', { 'function': 'Tdd_check' })
-
-    augroup RefreshTddStatus
-      autocmd!
-      autocmd BufWritePost * call Tdd_refresh()
-    augroup END
-
-  else
-    " Disabled
-    call airline#parts#define('tdd', { 'function': 'Tdd_disabled', 'accent': 'yellow' })
-    let g:airline_section_b = airline#section#create(['tdd'])
-  endif
-endfunction
-
-call airline#add_statusline_func('MyPlugin')
-
-" ============================
-
-" function! Spec()
-"   let l:file = expand("%:p")  " the filename including extension
-"   let l:dir = expand("%:p:h") " the directory containing the file
-"   " replace src/ with test/
-"   let l:testdir = substitute(l:dir, "src\/", "test\/", "g") " ???
-"   " replace .js with .spec.js
-
-" endfunction
-" command! -nargs=0 Open :call Open()
-
-" -- [AG]
-let g:ag_highlight=1
