@@ -13,28 +13,17 @@
 " -- BASICS
 " ----------------------------------------------------------
 
-" -- ES5 Strict Mode
-Snippet us 'use strict';
-Snippet strict 'use strict';
-
 " -- Console Log
-Snippet log console.log(<{}>)
 Snippet clog console.log(<{}>)
 
 " -- Function declaration
-Snippet fn function <{}>() {<cr> <{}> <cr>}
-Snippet fun function <{}>() {<cr> <{}> <cr>}
-
-
-" ----------------------------------------------------------
-" -- CONTROL FLOW
-" ----------------------------------------------------------
-
-" -- if statement
-Snippet if if (<{condition}>) {<cr> <{}> <cr>}
-
-" -- for loop
-Snippet for for (var <{i}> = <{}>; <{i}> < <{}> <{i}>++) {<cr> <{}> <cr>}
+"    Add non-trivial prefixes of "function" with len >= 2
+Snippet fu function <{}>
+Snippet fun function <{}>
+Snippet func function <{}>
+Snippet funct function <{}>
+Snippet functi function <{}>
+Snippet functio function <{}>
 
 " ----------------------------------------------------------
 " -- DOCUMENTATION
