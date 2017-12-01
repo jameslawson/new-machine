@@ -75,35 +75,6 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jameslawson/sandwich.vim'       " -- [SANDWICH]
 Plugin 'jameslawson/grepx.vim'          " -- [GREPX]
 
-
-function! GrepArgs(type)
-  if type ==? 'scala'
-    return [
-      '-G .scala',
-      '--ignore-case',
-      '--ignore-dir=node_modules/',
-      '--ignore-dir=.git/',
-    ]
-  elseif type ==? 'javascript'
-    return [
-      '-G .js',
-      '--ignore-case',
-      '--ignore-dir=node_modules/',
-      '--ignore-dir=.git/',
-    ]
-  else
-    return []
-  endif
-endfunction
-
-function! Grep(str)
-  let type = &filetype
-  let command = ['Ag', "'" . a:str . "'"]
-  command += GrepArgs(type)
-  execute join(command, " ")
-endfunction
-command -nargs=1 Grep call Grep('<args>')
-
 " -- Text Objects
 Plugin 'kana/vim-textobj-user'          " -- [TEXTOBJ]
 Plugin 'beloglazov/vim-textobj-quotes'  " -- [TEXTOBJ-QUOTE], depends on [TEXTOBJ]
