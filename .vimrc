@@ -62,7 +62,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'              " -- [VUNDLE], depends on [1]
 Plugin 'kien/ctrlp.vim'                 " -- [CTRLP]
 Plugin 'rking/ag.vim'                   " -- [AG], depends on [6]
-" Plugin 'tpope/vim-sleuth'               " -- [SLEUTH]
 Plugin 'vim-scripts/snippetsEmu'        " -- [SNIPEMU]
 Plugin 'tpope/vim-commentary'           " -- [COMMENT]
 Plugin 'ReekenX/vim-rename2'            " -- [RENAME]
@@ -75,6 +74,7 @@ Plugin 'vim-airline/vim-airline'        " -- [AIRLINE] depends on [7]
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jameslawson/sandwich.vim'       " -- [SANDWICH]
 Plugin 'jameslawson/grepx.vim'          " -- [GREPX]
+
 
 function! GrepArgs(type)
   if type ==? 'scala'
@@ -103,8 +103,6 @@ function! Grep(str)
   execute join(command, " ")
 endfunction
 command -nargs=1 Grep call Grep('<args>')
-
-" TODO: take feature step and find matching regex
 
 " -- Text Objects
 Plugin 'kana/vim-textobj-user'          " -- [TEXTOBJ]
