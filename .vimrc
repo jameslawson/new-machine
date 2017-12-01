@@ -196,11 +196,8 @@ highlight CursorLineNr ctermbg=234 ctermfg=250
 "    when cursor hits top/bottom and you scroll
 set scrolloff=3
 
-" -- show matching parentheses
-"    :help showmatch
 " -- change color of highlighting of matching paranthsis
 "    http://stackoverflow.com/questions/10746750/set-vim-bracket-highlighting-colors
-set showmatch
 highlight MatchParen cterm=bold ctermbg=none ctermfg=magenta
 
 " -- turn on invisibles by default
