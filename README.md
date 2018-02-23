@@ -240,12 +240,14 @@ brew install sbt
 brew install scala --with-docs
 ```
 
-## 11. Mongo, Redis
+## 11. Mongo, Redis, Postgresql
 
 ```
 brew install mongodb
 sudo mkdir -p /data/db
+
 brew install redis
+brew install postgresql
 ```
 
 
