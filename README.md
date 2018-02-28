@@ -64,7 +64,7 @@ Install Chrome and then [KeepingYouAwake](https://github.com/newmarcel/KeepingYo
 $ brew cask install iterm2
 $ brew cask install google-chrome
 $ brew cask install keepingyouawake
-$ brew cask install spectable
+$ brew cask install spectacle
 $ brew install pidof
 $ brew install wget
 $ brew install tree
