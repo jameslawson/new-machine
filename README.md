@@ -108,7 +108,7 @@ $ vim --version | grep python
 python+
 $ vim --version | grep clipboard
 clipboard+
-$ whereis vim --version | grep clipboard
+$ whereis vim
 /usr/bin/vim
 ```
 
