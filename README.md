@@ -39,7 +39,8 @@ Prerequisites:
 - Admin rights
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
 - Download/update Xcode and accept the Xcode Licence Agreement
-- If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine
+- If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
+  You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753).
 - Change the trackpad direction
 - Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
   ```
