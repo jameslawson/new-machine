@@ -43,8 +43,7 @@ Prerequisites:
 License: MIT
 
 ## 1. Dotfiles
-Download [dotfiles](https://github.com/jameslawson/dotfiles#installation
-), following the installation instructions from that repo.
+Open terminal. following the installation above for installing dotfiles.
 
 ## 2. Homebrew
   
