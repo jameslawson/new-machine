@@ -40,6 +40,8 @@ Prerequisites:
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
 - Download/update Xcode and accept the Xcode Licence Agreement
 - If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine
+- Change the trackpad direction
+- Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
 
 License: MIT
 
