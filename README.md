@@ -100,7 +100,12 @@ cd ~/.git-semantic-commits && ./install.sh
 - Settings > Show Home Button
 
 ## 3. Dotfiles
-Open terminal. following the installation above for installing dotfiles.
+Open terminal. following the installation above for installing dotfiles
+```
+git clone git@github.com:jameslawson/dotfiles.git ~/github/jameslawson
+cd  ~/github/jameslawson/dotfiles
+# ... see instructions for dotfiles to create softlinks
+```
 
 ## 4. vim
 
