@@ -81,6 +81,12 @@ $ git config --system http.proxy $HTTP_PROXY
 $ git config --system https.proxy $HTTPS_PROXY
 ```
 
+Git [semantic commits](https://github.com/fteem/git-semantic-commits):
+```bash
+git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
+cd ~/.git-semantic-commits && ./install.sh
+```
+
 ## 4. vim
 
 Install vim with `clipboard+` and `python+` support.
