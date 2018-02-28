@@ -46,6 +46,10 @@ Prerequisites:
   defaults write -g InitialKeyRepeat -int 10
   defaults write -g KeyRepeat -int 1
   ```
+- Setup directories:
+  ```
+  mkdir -p github/{bbc,jameslawson}
+  ```
 
 License: MIT
 
