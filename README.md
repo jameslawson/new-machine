@@ -48,13 +48,13 @@ Download [dotfiles](https://github.com/jameslawson/dotfiles#installation
 
 ## 2. Homebrew
   
-Install Homebrew.
+Install [Homebrew](https://brew.sh/).
 ```bash
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 Install [Cask](http://caskroom.io/).
 ```
-$ brew install caskroom/cask/brew-cask
+$ brew tap caskroom/cask
 ```
 Install Chrome and then [KeepingYouAwake](https://github.com/newmarcel/KeepingYouAwake), a Caffeine clone
 ```
@@ -64,6 +64,7 @@ $ brew cask install keepingyouawake
 $ brew install pidof
 $ brew install wget
 $ brew install tree
+$ brew cask install spectable
 ...
 ```
 
