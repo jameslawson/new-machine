@@ -61,7 +61,7 @@ $ brew tap caskroom/cask
 ```
 Install Chrome and then [KeepingYouAwake](https://github.com/newmarcel/KeepingYouAwake), a Caffeine clone
 ```
-$ brew cask install iterm
+$ brew cask install iterm2
 $ brew cask install google-chrome
 $ brew cask install keepingyouawake
 $ brew install pidof
@@ -90,6 +90,11 @@ Git [semantic commits](https://github.com/fteem/git-semantic-commits):
 git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
 cd ~/.git-semantic-commits && ./install.sh
 ```
+
+## 2. Chrome
+- Download Chrome
+- Import Bookmarks
+- Settings > Show Home Button
 
 ## 3. Dotfiles
 Open terminal. following the installation above for installing dotfiles.
