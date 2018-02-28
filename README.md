@@ -42,10 +42,7 @@ Prerequisites:
 
 License: MIT
 
-## 1. Dotfiles
-Open terminal. following the installation above for installing dotfiles.
-
-## 2. Homebrew
+## 1. Homebrew
   
 Install [Homebrew](https://brew.sh/).
 ```bash
@@ -67,7 +64,7 @@ $ brew cask install spectable
 ...
 ```
 
-## 3. git
+## 2. git
 ```bash
 $ brew install git
 $ git config --global user.name "James Lawson"
@@ -86,6 +83,9 @@ Git [semantic commits](https://github.com/fteem/git-semantic-commits):
 git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
 cd ~/.git-semantic-commits && ./install.sh
 ```
+
+## 3. Dotfiles
+Open terminal. following the installation above for installing dotfiles.
 
 ## 4. vim
 
