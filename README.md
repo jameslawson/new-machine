@@ -147,7 +147,8 @@ tmux
 ```
 
 Download iTerm from the [website](https://www.iterm2.com/).
-Open iTerm Preferences.  Go to *Profiles* on bar of icons.
+
+Go to *Profiles* in iTerm prferences.
 
 - We can automatically start tmux when you create iTerm session.     
   In *General* tab. In the *Send text at start:* field, enter the following:
