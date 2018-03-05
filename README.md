@@ -88,6 +88,7 @@ $ git config --global alias.ci commit -v
 $ git config --global alias.lg log --oneline --decorate --all --graph¬
 $ git config --system http.proxy $HTTP_PROXY
 $ git config --system https.proxy $HTTPS_PROXY
+git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 ```
 
 Git [semantic commits](https://github.com/fteem/git-semantic-commits):
