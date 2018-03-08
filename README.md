@@ -263,9 +263,10 @@ $ runhaskell foo.hs
 $ ghci
 ```
 
-## 10. Scala
+## 10. Java, Scala
 
 ```
+brew cask install java
 brew install sbt
 brew install scala --with-docs
 ```
