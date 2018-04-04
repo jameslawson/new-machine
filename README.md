@@ -161,11 +161,13 @@ Go to *Profiles* in iTerm prferences.
     ```
     set -g default-terminal "xterm-256color"
     ```
- - Scrolling in tmux's copy mode is painful. We can use vim style shortcuts to make scrolling in copy mode easier.
-   In the *keys* tab, add the following the iTerm Profile Keys:    
+ - Scrolling in tmux's copy mode is painful. Use vim style shortcuts:
+   In the *Keys* tab, click `+`. Focus the keyboard shortcut field and press CTRL+U (`^u`).     
+   Then choose *Send Escape Sequence* from the dropdown and enter `[0;73~` (the ANSI escape sequence for Page Up).
+   Repeat the same steps for CTRL+D, using `[0;73~` as the escape sequence.
    ```
-   CTRL+U = Send Page Up
-   CTRL+D = Send Page Down
+   CTRL+U = [21;2~
+   CTRL+D = [21;2~
    ```
  - Configure iTerm to start up a new tmux session by default.    
    In the *Profiles* tab, add the following to *Send Text at Start*:
