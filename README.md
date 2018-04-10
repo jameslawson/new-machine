@@ -116,10 +116,10 @@ Install vim with `clipboard+` and `python+` support.
 
 ```bash
 $ brew install vim --override-system-vi --with-python3 --with-custom-python
-$ vim --version | grep python 
-python+
+$ vim --version | grep python
++python3
 $ vim --version | grep clipboard
-clipboard+
++clipboard
 $ whereis vim
 /usr/bin/vim
 ```
