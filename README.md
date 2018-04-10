@@ -115,7 +115,7 @@ cd  ~/github/jameslawson/dotfiles
 Install vim with `clipboard+` and `python+` support.
 
 ```bash
-$ brew install vim --override-system-vi
+$ brew install vim --override-system-vi --with-python3 --with-custom-python
 $ vim --version | grep python 
 python+
 $ vim --version | grep clipboard
