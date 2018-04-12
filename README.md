@@ -273,6 +273,7 @@ sudo mkdir -p /data/db
 
 brew install redis
 brew install postgresql
+brew cask install psequel
 ```
 
 
