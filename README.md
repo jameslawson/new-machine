@@ -277,6 +277,11 @@ brew install postgresql
 brew cask install psequel
 ```
 
+## 12. Docker and Cloud
+
+- Download docker for OSX
+- Install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+
 
 ## License
 
