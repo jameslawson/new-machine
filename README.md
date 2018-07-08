@@ -51,6 +51,11 @@ Prerequisites:
   ```
   mkdir -p github/{bbc,jameslawson}
   ```
+- Aliases:
+  ```
+  alias l="ls -lah"
+  alias pynb="jupyter notebook"  
+  ```
 
 License: MIT
 
@@ -200,6 +205,12 @@ npm config set https-proxy $HTTP_PROXY
 pip install virtualenv
 python   # runs python v2
 python3  # runs python v3
+```
+
+Install [jupyter notebook](http://jupyter.org/install.html)
+```
+python3 -m pip install --upgrade pip
+python3 -m pip install jupyter
 ```
 
 
