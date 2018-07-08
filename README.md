@@ -60,6 +60,12 @@ Prerequisites:
   ```
 - Bash Custom PS1:
   ```bash
+  # -- use sed to delete all the lines in git branch's output that dont start with a asterix (*)
+  #    then take result and regex capture the text after the *, and then only print this text
+  parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+  }
+  
   # -- xterm 256-colours
   #    https://unix.stackexchange.com/a/124409
   export G="\[\033[38;5;040m\]"  # green
