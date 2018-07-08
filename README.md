@@ -4,6 +4,8 @@
   Configuration for vim, tmux, git, zsh, ...
 </p>
 
+License: MIT
+
 ## Installation
 Suppose you cloned this repo to `/dotfiles`.    
 To keep dotfiles in sync, **create the appropriate softlinks**:
@@ -51,13 +53,30 @@ Prerequisites:
   ```
   mkdir -p github/{bbc,jameslawson}
   ```
-- Aliases:
-  ```
+- Bash Aliases:
+  ```bash
   alias l="ls -lah"
   alias pynb="jupyter notebook"  
   ```
+- Bash Custom PS1:
+  ```bash
+  # -- xterm 256-colours
+  #    https://unix.stackexchange.com/a/124409
+  export G="\[\033[38;5;040m\]"  # green
+  export P="\[\033[38;5;162m\]"  # purple
+  export R="\[\033[00m\]"        # red
+  export D1="\[\033[38;5;244m\]" # dark
+  export D2="\[\033[38;5;239m\]" # darker
 
-License: MIT
+  export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
+  ```
+- Bash Cycle tab completion
+  ```bash
+  # -- Cycle bash completion
+  #    https://superuser.com/a/289022
+  bind 'TAB:menu-complete'
+  ```
+
 
 ## 1. Homebrew
   
@@ -101,6 +120,13 @@ Git [semantic commits](https://github.com/fteem/git-semantic-commits):
 ```bash
 git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
 cd ~/.git-semantic-commits && ./install.sh
+```
+
+Print tracking branch
+```bash
+tracking() {
+  git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
+}
 ```
 
 ## 2. Chrome
@@ -197,6 +223,19 @@ npm config set http_proxy $HTTP_PROXY
 npm config set https-proxy $HTTP_PROXY
 ```
 
+Turn off nvm by default
+```bash
+nvm() {
+  # -- nvm.sh is really is slow ... so wrap it in a function
+  #    USAGE:
+  #    $ nvm              <- run this nvm function, this loads nvm to path
+  #    $ nvm ls           <- now we can use the real nvm executable
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
+```
+
 
 ## 7. Python
 
@@ -273,11 +312,34 @@ $ ghci
 
 ```
 brew cask install java
+brew cask install java8
 brew install sbt
 brew install scala --with-docs
 ```
 
-## 11. Mongo, Redis, Postgresql
+Setting a jdk
+```bash
+# -- http://www.jayway.com/2014/01/15/how-to-switch-jdk-version-on-mac-os-x-maverick/
+#    Example use: setjdk 1.7 - selects the latest installed JDK version of the 1.7 branch
+#    Example use: setjdk 1.7.0_51 - select a specific version
+#    Run /usr/libexec/java_home -h to get more details on how to choose versions
+function setjdk() {
+  if [ $# -ne 0 ]; then
+    removeFromPath '/System/Library/Frameworks/JavaVM.framework/Home/bin'
+    if [ -n "${JAVA_HOME+x}" ]; then
+      removeFromPath $JAVA_HOME
+    fi
+    export JAVA_HOME=`/usr/libexec/java_home -v $@`
+    export PATH=$JAVA_HOME/bin:$PATH
+  fi
+}
+function removeFromPath() {
+  export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
+}
+setjdk 1.8
+```
+
+## 11. Mongo, Redis, PostgreSQL
 
 ```
 brew install mongodb
