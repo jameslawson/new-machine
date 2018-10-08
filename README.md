@@ -4,6 +4,8 @@
   Configuration for vim, tmux, git, zsh, ...
 </p>
 
+License: MIT
+
 ## Installation
 Suppose you cloned this repo to `/dotfiles`.    
 To keep dotfiles in sync, **create the appropriate softlinks**:
@@ -51,8 +53,36 @@ Prerequisites:
   ```
   mkdir -p github/{bbc,jameslawson}
   ```
+- Bash Aliases:
+  ```bash
+  alias l="ls -lah"
+  alias pynb="jupyter notebook"  
+  ```
+- Bash Custom PS1:
+  ```bash
+  # -- use sed to delete all the lines in git branch's output that dont start with a asterix (*)
+  #    then take result and regex capture the text after the *, and then only print this text
+  parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+  }
+  
+  # -- xterm 256-colours
+  #    https://unix.stackexchange.com/a/124409
+  export G="\[\033[38;5;040m\]"  # green
+  export P="\[\033[38;5;162m\]"  # purple
+  export R="\[\033[00m\]"        # red
+  export D1="\[\033[38;5;244m\]" # dark
+  export D2="\[\033[38;5;239m\]" # darker
 
-License: MIT
+  export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
+  ```
+- Bash Cycle tab completion
+  ```bash
+  # -- Cycle bash completion
+  #    https://superuser.com/a/289022
+  bind 'TAB:menu-complete'
+  ```
+
 
 ## 1. Homebrew
   
@@ -70,6 +100,7 @@ $ brew cask install iterm2
 $ brew cask install google-chrome
 $ brew cask install keepingyouawake
 $ brew cask install spectacle
+$ brew cask install sip
 $ brew install pidof
 $ brew install wget
 $ brew install tree
@@ -84,15 +115,24 @@ $ git config --global user.email "jameslawson@users.noreply.github.com"
 $ git config --global alias.co checkout
 $ git config --global alias.st status
 $ git config --global alias.ci commit -v
-$ git config --global alias.lg log --oneline --decorate --all --graph¬
+$ git config --global alias.lg log --graph --oneline --decorate --all
 $ git config --system http.proxy $HTTP_PROXY
 $ git config --system https.proxy $HTTPS_PROXY
+$ git config --global url.ssh://git@github.com/.insteadOf https://github.com/
+$ git config --global core.excludesfile ~/.gitignore_global
 ```
 
 Git [semantic commits](https://github.com/fteem/git-semantic-commits):
 ```bash
 git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
 cd ~/.git-semantic-commits && ./install.sh
+```
+
+Print tracking branch
+```bash
+tracking() {
+  git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
+}
 ```
 
 ## 2. Chrome
@@ -113,11 +153,11 @@ cd  ~/github/jameslawson/dotfiles
 Install vim with `clipboard+` and `python+` support.
 
 ```bash
-$ brew install vim --override-system-vi
-$ vim --version | grep python 
-python+
+$ brew install vim --override-system-vi --with-python3 --with-custom-python
+$ vim --version | grep python
++python3
 $ vim --version | grep clipboard
-clipboard+
++clipboard
 $ whereis vim
 /usr/bin/vim
 ```
@@ -146,7 +186,8 @@ tmux
 ```
 
 Download iTerm from the [website](https://www.iterm2.com/).
-Open iTerm Preferences.  Go to *Profiles* on bar of icons.
+
+Go to *Profiles* in iTerm prferences.
 
 - We can automatically start tmux when you create iTerm session.     
   In *General* tab. In the *Send text at start:* field, enter the following:
@@ -158,12 +199,6 @@ Open iTerm Preferences.  Go to *Profiles* on bar of icons.
     ```
     set -g default-terminal "xterm-256color"
     ```
- - Scrolling in tmux's copy mode is painful. We can use vim style shortcuts to make scrolling in copy mode easier.
-   In the *keys* tab, add the following the iTerm Profile Keys:    
-   ```
-   CTRL+U = Send Page Up
-   CTRL+D = Send Page Down
-   ```
  - Configure iTerm to start up a new tmux session by default.    
    In the *Profiles* tab, add the following to *Send Text at Start*:
    ```
@@ -194,6 +229,19 @@ npm config set http_proxy $HTTP_PROXY
 npm config set https-proxy $HTTP_PROXY
 ```
 
+Turn off nvm by default
+```bash
+nvm() {
+  # -- nvm.sh is really is slow ... so wrap it in a function
+  #    USAGE:
+  #    $ nvm              <- run this nvm function, this loads nvm to path
+  #    $ nvm ls           <- now we can use the real nvm executable
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+}
+```
+
 
 ## 7. Python
 
@@ -202,6 +250,12 @@ npm config set https-proxy $HTTP_PROXY
 pip install virtualenv
 python   # runs python v2
 python3  # runs python v3
+```
+
+Install [jupyter notebook](http://jupyter.org/install.html)
+```
+python3 -m pip install --upgrade pip
+python3 -m pip install jupyter
 ```
 
 
@@ -260,14 +314,38 @@ $ runhaskell foo.hs
 $ ghci
 ```
 
-## 10. Scala
+## 10. Java, Scala
 
 ```
+brew cask install java
+brew cask install java8
 brew install sbt
 brew install scala --with-docs
 ```
 
-## 11. Mongo, Redis, Postgresql
+Setting a jdk
+```bash
+# -- http://www.jayway.com/2014/01/15/how-to-switch-jdk-version-on-mac-os-x-maverick/
+#    Example use: setjdk 1.7 - selects the latest installed JDK version of the 1.7 branch
+#    Example use: setjdk 1.7.0_51 - select a specific version
+#    Run /usr/libexec/java_home -h to get more details on how to choose versions
+function setjdk() {
+  if [ $# -ne 0 ]; then
+    removeFromPath '/System/Library/Frameworks/JavaVM.framework/Home/bin'
+    if [ -n "${JAVA_HOME+x}" ]; then
+      removeFromPath $JAVA_HOME
+    fi
+    export JAVA_HOME=`/usr/libexec/java_home -v $@`
+    export PATH=$JAVA_HOME/bin:$PATH
+  fi
+}
+function removeFromPath() {
+  export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
+}
+setjdk 1.8
+```
+
+## 11. Mongo, Redis, PostgreSQL
 
 ```
 brew install mongodb
@@ -275,7 +353,13 @@ sudo mkdir -p /data/db
 
 brew install redis
 brew install postgresql
+brew cask install psequel
 ```
+
+## 12. Docker and Cloud
+
+- Download docker for OSX
+- Install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 
 
 ## License
