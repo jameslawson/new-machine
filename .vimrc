@@ -88,15 +88,16 @@ Plugin 'mxw/vim-jsx'                    " -- [JSJSX]
 Plugin 'derekwyatt/vim-scala'           " -- scala
 
 " -- Other Languages
+Plugin 'editorconfig/editorconfig-vim'   " -- editorconfig
+Plugin 'johnlim/vim-groovy'              " -- groovy
+Plugin 'chr4/nginx.vim'                  " -- nginx config files
+" Plugin 'digitaltoad/vim-pug.git'       " -- pug
 " Plugin 'rust-lang/rust.vim'            " -- rust
 " Plugin 'leafgarland/typescript-vim'    " -- typescript
-" Plugin 'tpope/vim-rails'             " -- ruby on rails
-" Plugin 'lukerandall/haskellmode-vim' " -- haskell
-" Plugin 'ElmCast/elm-vim'             " -- elm
-Plugin 'digitaltoad/vim-pug.git'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'purescript-contrib/purescript-vim'
-
+" Plugin 'tpope/vim-rails'               " -- ruby on rails
+" Plugin 'lukerandall/haskellmode-vim'   " -- haskell
+" Plugin 'ElmCast/elm-vim'               " -- elm
+" Plugin 'purescript-contrib/purescript-vim'
 
 " ----------------------------------------------------------
 " -- END VIM PLUGINS
@@ -120,10 +121,10 @@ set timeoutlen=500
 " -- use relative line numbering
 "    relative number is used in visual mode
 "    but becomes absolute number in insert mode
-set relativenumber
+" set relativenumber
 set number
-autocmd InsertEnter * :set number norelativenumber
-autocmd InsertLeave * :set relativenumber
+" autocmd InsertEnter * :set number norelativenumber
+" autocmd InsertLeave * :set relativenumber
 
 " -- make sure vim returns to the same line when you reopen a file.
 augroup line_return
@@ -140,6 +141,12 @@ augroup END
 "    https://stackoverflow.com/a/927634/3649209
 autocmd CursorHold * checktime
 autocmd InsertEnter * checktime
+
+
+" -- By default vim will only look for the tags file in the cwd of current buffer.
+"    We want vim to search up the directory hierarchy until it finds the tags file
+" set tags=tags;/
+set tags=./.tags,.tags,./tags,tags
 
 " ----------------------------------------------------------
 " -- ESSENTIAL APPEARANCE
@@ -331,13 +338,13 @@ set autoindent
 "    use either 2 or 4 spaces, depending on the language
 "    these will change according to [SLEUTH]
 autocmd Filetype ruby setlocal ts=2 sts=2 sw=2
-autocmd Filetype python setlocal ts=2 sts=2 sw=2
+autocmd Filetype python setlocal ts=4 sts=4 sw=4
 autocmd Filetype html setlocal ts=2 sts=2 sw=2
 autocmd Filetype c setlocal ts=4 sts=4 sw=4
-autocmd Filetype cpp setlocal ts=4 sts=4 sw=4
+autocmd Filetype cpp setlocal ts=2 sts=2 sw=2
 autocmd Filetype java setlocal ts=4 sts=4 sw=4
 " autocmd Filetype javascript setlocal ts=4 sts=4 sw=4
-autocmd Filetype json setlocal ts=4 sts=4 sw=4
+autocmd Filetype json setlocal ts=2 sts=2 sw=2
 autocmd Filetype scss setlocal ts=2 sts=2 sw=2
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 
@@ -358,23 +365,40 @@ let g:ag_highlight = 1
 " -- [JSJSX]
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
+" ----------------------------------------------------
 " -- [AIRLINE]
-let g:airline_theme='jellybeans'
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ' '
-let g:airline_left_alt_sep = '|'
-let g:airline_right_sep = ' '
-let g:airline_right_alt_sep = '|'
-" disable airline 'vim-gitdiff' extension (aka 'hunks' extension)
-let g:airline#extensions#hunks#enabled = 0
+" ----------------------------------------------------
+function! AirlineInit()
+  " let g:airline_section_a = airline#section#create([' ', ' ', 'branch'])
+  let g:airline_section_a = airline#section#create([''])
+  let g:airline_section_b = airline#section#create([''])
+  let g:airline_section_c = airline#section#create([''])
+  let g:airline_section_x = airline#section#create(['%f (', 'filetype', ')'])
+  let g:airline_section_y = airline#section#create([''])
+  let g:airline_section_z = airline#section#create([''])
+  " let g:airline_section_z = airline#section#create_right(['%l', '%c'])
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+endfunction
+autocmd VimEnter * call AirlineInit()
+call AirlineInit()
+
+" let g:airline_theme='minimalist'
+" let g:airline_powerline_fonts = 0
+" let g:airline_left_sep = ' '
+" let g:airline_left_alt_sep = '|'
+" let g:airline_right_sep = ' '
+" let g:airline_right_alt_sep = '|'
+" " disable airline 'vim-gitdiff' extension (aka 'hunks' extension)
+" let g:airline#extensions#hunks#enabled = 0
 
 " -- [SNIPEMU]
 let g:snippetsEmu_key = "["
 
 " -- [CTRLP]
 nnoremap <leader>p :CtrlP<CR>
+nnoremap <leader>r :CtrlPMRU<CR>
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|bower_components|tmp|target|dist)|(\.(swp|ico|git|svn))$'
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_use_caching = 0
 let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<leader>'],
