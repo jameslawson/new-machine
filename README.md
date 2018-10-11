@@ -120,6 +120,11 @@ $ git config --system http.proxy $HTTP_PROXY
 $ git config --system https.proxy $HTTPS_PROXY
 $ git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 $ git config --global core.excludesfile ~/.gitignore_global
+
+$ mkdir -p ~/.git-templates/hooks
+$ git config --global core.hooksPath ~/.git-templates/hooks
+$ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
+
 ```
 
 Git [semantic commits](https://github.com/fteem/git-semantic-commits):
