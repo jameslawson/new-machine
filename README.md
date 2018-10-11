@@ -22,6 +22,7 @@ ln -s $PWD/.vimrc ~/.vimrc
 ln -s $PWD/.ctags ~/.ctags
 ln -s $PWD/.zshrc ~/.zshrc
 ln -s $PWD/.tmux.conf ~/.tmux.conf
+ln -s $PWD/.git-templates/hooks/prepare-commit-msg ~/.git-templates/hooks/prepare-commit-msg
 
 # link snippetsemu snippet files
 mkdir -p ~/.vim/after
