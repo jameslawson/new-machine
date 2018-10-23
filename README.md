@@ -125,21 +125,36 @@ $ git config --global core.excludesfile ~/.gitignore_global
 $ mkdir -p ~/.git-templates/hooks
 $ git config --global core.hooksPath ~/.git-templates/hooks
 $ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
-
 ```
 
-Git [semantic commits](https://github.com/fteem/git-semantic-commits):
-```bash
-git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
-cd ~/.git-semantic-commits && ./install.sh
-```
+**vimdiff**: 
+- Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
+  ```
+  $ git config --global diff.tool vimdiff
+  $ git config --global difftool.prompt false
+  $ git config --global alias.d difftool
+  ```
+- See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
 
-Print tracking branch
-```bash
-tracking() {
-  git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
-}
-```
+**Semantic Commits**: 
+- Install Git [semantic commits](https://github.com/fteem/git-semantic-commits):
+  ```bash
+  git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
+  cd ~/.git-semantic-commits && ./install.sh
+  ```
+
+**Print Tracking Branch**: 
+- Create a tracking branch on push: `git push -u origin foo`
+- Or alternatively, avoid `-u` each time (aka always add upstream tracking on a push):
+    ```
+    git config --global branch.autosetupmerge always
+    ```
+- Print out what this branch is tracking on origin:
+  ```bash
+  tracking() {
+    git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
+  }
+  ```
 
 ## 2. Chrome
 - Download Chrome
