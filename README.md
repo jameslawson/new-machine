@@ -109,6 +109,8 @@ $ brew install tree
 ```
 
 ## 2. git
+
+
 ```bash
 $ brew install git
 $ git config --global user.name "James Lawson"
@@ -126,6 +128,9 @@ $ mkdir -p ~/.git-templates/hooks
 $ git config --global core.hooksPath ~/.git-templates/hooks
 $ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
 ```
+
+(note: `git config --list --show-origin`)
+  
 
 **vimdiff**: 
 - Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
