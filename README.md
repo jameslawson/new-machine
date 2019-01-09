@@ -129,8 +129,14 @@ $ git config --global core.hooksPath ~/.git-templates/hooks
 $ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
 ```
 
-(note: `git config --list --show-origin`)
-  
+**Printing Config**: 
+- Most config is either "system" or "global" (but there's also local, worktree, file)
+  ```
+  git config --list --show-origin
+  git config --list --system
+  git config --list --global
+  ```
+- See [git-config](https://git-scm.com/docs/git-config) Documentation
 
 **vimdiff**: 
 - Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
