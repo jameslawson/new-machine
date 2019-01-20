@@ -29,6 +29,11 @@ Prerequisites:
   ```
   mkdir -p github/{bbc,jameslawson}
   ```
+
+
+
+## 0. CLI
+
 - Bash Aliases:
   ```bash
   alias l="ls -lah"
@@ -58,7 +63,6 @@ Prerequisites:
   #    https://superuser.com/a/289022
   bind 'TAB:menu-complete'
   ```
-
 
 ## 1. Homebrew
   
