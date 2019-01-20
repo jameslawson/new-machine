@@ -1,6 +1,6 @@
 <h1 align="center">new-machine</h1>
 <p align="center">
-  :computer: Setting up a new OSX machine :computer: <br>
+  :computer: Setting up a new macOS machine :computer: <br>
   Most of the work needed to get a developer environment setup on macOS
 </p>
 
@@ -32,7 +32,7 @@ Prerequisites:
 
 
 
-## 0. CLI
+## 1. CLI
 
 - Bash Aliases:
   ```bash
@@ -64,30 +64,21 @@ Prerequisites:
   bind 'TAB:menu-complete'
   ```
 
-## 1. Homebrew
+## 2. Homebrew
   
-Install [Homebrew](https://brew.sh/).
-```bash
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-Install [Cask](http://caskroom.io/).
-```
-$ brew tap caskroom/cask
-```
-Install Chrome and then [KeepingYouAwake](https://github.com/newmarcel/KeepingYouAwake), a Caffeine clone
-```
-$ brew cask install iterm2
-$ brew cask install google-chrome
-$ brew cask install keepingyouawake
-$ brew cask install spectacle
-$ brew cask install sip
-$ brew install pidof
-$ brew install wget
-$ brew install tree
-...
-```
+- Install [Homebrew](https://brew.sh/).
+  ```bash
+  $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  ```
+- Install formulas:
+  ```bash
+  brew
+  ```
+  This will use the `Brewfile` to install essentials (`vim`, `git`, ...) 
+  languages (`java`, `scala`) and macOS applications (Chrome, KeepingYouAwake, Spectable, ...) via [Cask](http://caskroom.io/).
+  
 
-## 2. git
+## 3. git
 
 
 ```bash
@@ -146,20 +137,13 @@ $ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
   }
   ```
 
-## 2. Chrome
+## 4. Chrome
 - Download Chrome
 - Import Bookmarks
 - Settings > Show Home Button
 
-## 3. Dotfiles
-Open terminal. following the installation above for installing dotfiles
-```
-git clone git@github.com:jameslawson/dotfiles.git ~/github/jameslawson/dotfiles
-cd  ~/github/jameslawson/dotfiles
-# ... see instructions for dotfiles to create softlinks
-```
 
-## 4. vim
+## 5. vim
 
 Install vim with `clipboard+` and `python+` support.
 
@@ -180,7 +164,7 @@ vim
 :PluginInstall # run this command inside of vim
 ```
 
-## 5. tmux and iTerm
+## 6. tmux and iTerm
 
 Install tmux.
 
@@ -216,7 +200,7 @@ Go to *Profiles* in iTerm prferences.
    tmux new
    ```
 
-## 6. Node
+## 7. Node
 
 #### Setup nvm
 Run the [install script](https://github.com/creationix/nvm#install-script).
@@ -253,86 +237,25 @@ nvm() {
 }
 ```
 
+## 8. Python
 
-## 7. Python
+- Install virtualenv
+  ```
+  pip install virtualenv
+  python   # runs python v2
+  python3  # runs python v3
+  ```
 
-
-```
-pip install virtualenv
-python   # runs python v2
-python3  # runs python v3
-```
-
-Install [jupyter notebook](http://jupyter.org/install.html)
-```
-python3 -m pip install --upgrade pip
-python3 -m pip install jupyter
-```
-
+- Install [jupyter notebook](http://jupyter.org/install.html)
+  ```
+  python3 -m pip install --upgrade pip
+  python3 -m pip install jupyter
+  ```
 
 
-## 8. Ruby
-**Setup rbenv**    
-```
-$ brew install rbenv ruby-build
-$ echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile
-$ source ~/.bash_profile
-```
+## 9. Java and Scala
 
-**Install Ruby**    
-Find the latest version number, `<version>`, of Ruby.    
-At the time of writing, `<version> = 2.2.3`.
-Install this version via `rbenv install`.
-```
-$ rbenv install <version>
-```
-Then point global ruby to be this version:
-```
-$ rbenv global
-system
-$ rbenv global <version>
-$ rbenv global
-2.3.3
-$ ruby -v
-ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-darwin14]
-```
-
-**Setup Bundler**    
-```
-$ ruby -r bundler -e "puts RUBY_VERSION"
-(an error complaining about bundler being missing)
-$ gem install bundler
-$ ruby -r bundler -e "puts RUBY_VERSION"
-2.2.3
-$ brew install rbenv-bundler
-$ rbenv bundler on
-```
-
-**Local Ruby Project**     
-Suppose you have written a Gemfile for a project. To install the gems:
-```
-$ rbenv local <version>
-$ gem install bundler
-$ bundle install
-```
-where `<version>` is the desired version of Ruby. 
-
-## 9. Haskell
-
-```
-$ brew cask install haskell-platform  # all-in-one haskell environment: ghci, cabal, ...
-$ runhaskell foo.hs
-$ ghci
-```
-
-## 10. Java, Scala
-
-```
-brew cask install java
-brew cask install java8
-brew install sbt
-brew install scala --with-docs
-```
+The brewfile should have installed these formulas: `java7`, `java8`, `sbt` and `scala`.
 
 Setting a jdk
 ```bash
@@ -356,16 +279,14 @@ function removeFromPath() {
 setjdk 1.8
 ```
 
-## 11. Mongo, Redis, PostgreSQL
+## 10. Haskell
 
 ```
-brew install mongodb
-sudo mkdir -p /data/db
-
-brew install redis
-brew install postgresql
-brew cask install psequel
+$ brew cask install haskell-platform  # all-in-one haskell environment: ghci, cabal, ...
+$ runhaskell foo.hs
+$ ghci
 ```
+
 
 ## 12. Docker and Cloud
 
