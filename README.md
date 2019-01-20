@@ -166,39 +166,28 @@ vim
 
 ## 6. tmux and iTerm
 
-Install tmux.
+From the `Brewfile`, you should already have `tmux` formula installed.
 
-```
-brew install tmux
-brew install reattach-to-user-namespace  # some tmux plugins might need this
-```
+- Install tmux plugin manager, then install tmux plugins.
+  ```
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  tmux
+  <prefix> + I   # install plugins
+  ```
 
-Install tmux plugin manager, then install tmux plugins.
-```
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-tmux
-<prefix> + I   # install plugins
-```
+- **Autostart tmux**: We can automatically start tmux when you create iTerm session.    
 
-Download iTerm from the [website](https://www.iterm2.com/).
-
-Go to *Profiles* in iTerm prferences.
-
-- We can automatically start tmux when you create iTerm session.     
-  In *General* tab. In the *Send text at start:* field, enter the following:
-    ```
-    tmux new
-    ```
-- By default, colors can become messed up in tmux+iTerm. So we'll need to set color scheme.    
-  In the *Window* tab, in *Report Terminal Type* enter: `xterm-256color`. In `.tmux.conf`, you should have the color scheme config:
+  - Go to *Profiles* in iTerm prferences. In *General* tab.    
+    In the *Send Text at Start:* field, enter the following:
+      ```
+      tmux new
+      ```
+  - By default, colors can become messed up in tmux+iTerm. So we'll need to set color scheme.    
+    In the *Window* tab, in *Report Terminal Type* enter: `xterm-256color`. 
+    And verify that in `.tmux.conf`, we have the color scheme config:
     ```
     set -g default-terminal "xterm-256color"
     ```
- - Configure iTerm to start up a new tmux session by default.    
-   In the *Profiles* tab, add the following to *Send Text at Start*:
-   ```
-   tmux new
-   ```
 
 ## 7. Node
 
