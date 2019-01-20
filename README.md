@@ -1,50 +1,25 @@
-<h1 align="center">dotfiles</h1>
-<p align="center">
-  :wrench: A repo for my dotfiles :wrench: <br>
-  Configuration for vim, tmux, git, zsh, ...
-</p>
-
-License: MIT
-
-## Installation
-Suppose you cloned this repo to `/dotfiles`.    
-To keep dotfiles in sync, **create the appropriate softlinks**:
-
-```bash
-#
-#    ~/.some_dotfile   === soft link ===>   dotfiles/.some_dotfile
-#
-
-cd dotfiles
-ln -s $PWD/.gitignore_global ~/.gitignore_global
-ln -s $PWD/.gitconfig ~/.gitconfig
-ln -s $PWD/.vimrc ~/.vimrc
-ln -s $PWD/.ctags ~/.ctags
-ln -s $PWD/.zshrc ~/.zshrc
-ln -s $PWD/.tmux.conf ~/.tmux.conf
-ln -s $PWD/.git-templates/hooks/prepare-commit-msg ~/.git-templates/hooks/prepare-commit-msg
-
-# link snippetsemu snippet files
-mkdir -p ~/.vim/after
-ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
-```
-
-In your home folder, you can do `ls -lah | grep lrw` to see which dot files are symlinks.
-
 <h1 align="center">new-machine</h1>
 <p align="center">
-  :computer: Setting up a new OSX machine :computer: <br>
-  Most of the work needed to get a developer environment setup on OSX
+  :computer: Setting up a new macOS machine :computer: <br>
+  Most of the work needed to get a developer environment setup on macOS
 </p>
 
 Prerequisites:
 
 - Admin rights
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
-- Download/update Xcode and accept the Xcode Licence Agreement
+- Xcode: accept the Xcode Licence Agreement and install
+  ```
+  sudo xcodebuild -license
+  xcode-select --install
+  ```
 - If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
   You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753).
 - Change the trackpad direction
+- Create dotfiles (.vimrc, .tmux, Brewfile):
+  ```
+  ./create_dotfiles.sh
+  ```
 - Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
   ```
   defaults write -g InitialKeyRepeat -int 10
@@ -54,6 +29,11 @@ Prerequisites:
   ```
   mkdir -p github/{bbc,jameslawson}
   ```
+
+
+
+## 1. CLI
+
 - Bash Aliases:
   ```bash
   alias l="ls -lah"
@@ -84,31 +64,23 @@ Prerequisites:
   bind 'TAB:menu-complete'
   ```
 
-
-## 1. Homebrew
+## 2. Homebrew
   
-Install [Homebrew](https://brew.sh/).
-```bash
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
-Install [Cask](http://caskroom.io/).
-```
-$ brew tap caskroom/cask
-```
-Install Chrome and then [KeepingYouAwake](https://github.com/newmarcel/KeepingYouAwake), a Caffeine clone
-```
-$ brew cask install iterm2
-$ brew cask install google-chrome
-$ brew cask install keepingyouawake
-$ brew cask install spectacle
-$ brew cask install sip
-$ brew install pidof
-$ brew install wget
-$ brew install tree
-...
-```
+- Install [Homebrew](https://brew.sh/).
+  ```bash
+  $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  ```
+- Install formulas:
+  ```bash
+  brew bundle ~/Brewfile
+  ```
+  This will use the softlinked `Brewfile` to install essentials (`vim`, `git`, ...) 
+  languages (`java`, `scala`) and macOS applications (Chrome, KeepingYouAwake, Spectable, ...) via [Cask](http://caskroom.io/).
+  
 
-## 2. git
+## 3. git
+
+
 ```bash
 $ brew install git
 $ git config --global user.name "James Lawson"
@@ -125,93 +97,103 @@ $ git config --global core.excludesfile ~/.gitignore_global
 $ mkdir -p ~/.git-templates/hooks
 $ git config --global core.hooksPath ~/.git-templates/hooks
 $ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
-
 ```
 
-Git [semantic commits](https://github.com/fteem/git-semantic-commits):
-```bash
-git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
-cd ~/.git-semantic-commits && ./install.sh
-```
+**Printing Config**: 
+- Most config is either "system" or "global" (but there's also local, worktree, file)
+  ```
+  git config --list --show-origin
+  git config --list --system
+  git config --list --global
+  ```
+- See [git-config](https://git-scm.com/docs/git-config) Documentation
 
-Print tracking branch
-```bash
-tracking() {
-  git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
-}
-```
+**vimdiff**: 
+- Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
+  ```
+  $ git config --global diff.tool vimdiff
+  $ git config --global difftool.prompt false
+  $ git config --global alias.d difftool
+  ```
+- See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
 
-## 2. Chrome
-- Download Chrome
-- Import Bookmarks
-- Settings > Show Home Button
+**Semantic Commits**: 
+- Install Git [semantic commits](https://github.com/fteem/git-semantic-commits):
+  ```bash
+  git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
+  cd ~/.git-semantic-commits && ./install.sh
+  ```
 
-## 3. Dotfiles
-Open terminal. following the installation above for installing dotfiles
-```
-git clone git@github.com:jameslawson/dotfiles.git ~/github/jameslawson/dotfiles
-cd  ~/github/jameslawson/dotfiles
-# ... see instructions for dotfiles to create softlinks
-```
-
-## 4. vim
-
-Install vim with `clipboard+` and `python+` support.
-
-```bash
-$ brew install vim --override-system-vi --with-python3 --with-custom-python
-$ vim --version | grep python
-+python3
-$ vim --version | grep clipboard
-+clipboard
-$ whereis vim
-/usr/bin/vim
-```
-
-Install vundle (instructions taken from [here](https://github.com/VundleVim/Vundle.vim)):
-```
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim
-:PluginInstall # run this command inside of vim
-```
-
-## 5. tmux and iTerm
-
-Install tmux.
-
-```
-brew install tmux
-brew install reattach-to-user-namespace  # some tmux plugins might need this
-```
-
-Install tmux plugin manager, then install tmux plugins.
-```
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-tmux
-<prefix> + I   # install plugins
-```
-
-Download iTerm from the [website](https://www.iterm2.com/).
-
-Go to *Profiles* in iTerm prferences.
-
-- We can automatically start tmux when you create iTerm session.     
-  In *General* tab. In the *Send text at start:* field, enter the following:
+**Print Tracking Branch**: 
+- Create a tracking branch on push: `git push -u origin foo`
+- Or alternatively, avoid `-u` each time (aka always add upstream tracking on a push):
     ```
-    tmux new
+    git config --global branch.autosetupmerge always
     ```
-- By default, colors can become messed up in tmux+iTerm. So we'll need to set color scheme.    
-  In the *Window* tab, in *Report Terminal Type* enter: `xterm-256color`. In `.tmux.conf`, you should have the color scheme config:
+- Print out what this branch is tracking on origin:
+  ```bash
+  tracking() {
+    git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
+  }
+  ```
+
+## 4. Chrome
+- Sign into developer Google Account and sync bookmarks and extensions.
+- Or:
+  - Import Bookmarks
+  - Settings > Show Home Button
+  - Install extensions
+
+## 5. vim
+
+From the `Brewfile`, you should already have `vim` formula installed.
+
+- **Verify installation** check the `vim` formula installed vim with `clipboard+` and `python+` support:
+  ```bash
+  $ vim --version | grep python
+  +python3
+  $ vim --version | grep clipboard
+  +clipboard
+  ```
+  and verify that we're not using macOS vim by checking path. 
+  ```bash
+  $ whereis vim
+  /usr/bin/vim
+  ```
+
+- **Install vim plugins**: using vundle (instructions taken from [here](https://github.com/VundleVim/Vundle.vim)):
+  ```
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  vim
+  :PluginInstall # run this command inside of vim
+  ```
+
+## 6. tmux and iTerm
+
+From the `Brewfile`, you should already have `tmux` formula installed.
+
+- **Install plugins**: Install tmux plugin manager, then install tmux plugins.
+  ```
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  tmux
+  <prefix> + I   # install plugins
+  ```
+
+- **Autostart tmux**: We can automatically start tmux when you create iTerm session.    
+
+  - Go to *Profiles* in iTerm prferences. In *General* tab.    
+    In the *Send Text at Start:* field, enter the following:
+      ```
+      tmux new
+      ```
+  - By default, colors can become messed up in tmux+iTerm. So we'll need to set color scheme.    
+    In the *Window* tab, in *Report Terminal Type* enter: `xterm-256color`. 
+    And verify that in `.tmux.conf`, we have the color scheme config:
     ```
     set -g default-terminal "xterm-256color"
     ```
- - Configure iTerm to start up a new tmux session by default.    
-   In the *Profiles* tab, add the following to *Send Text at Start*:
-   ```
-   tmux new
-   ```
 
-## 6. Node
+## 7. Node
 
 #### Setup nvm
 Run the [install script](https://github.com/creationix/nvm#install-script).
@@ -248,86 +230,25 @@ nvm() {
 }
 ```
 
+## 8. Python
 
-## 7. Python
+- Install virtualenv
+  ```
+  pip install virtualenv
+  python   # runs python v2
+  python3  # runs python v3
+  ```
 
-
-```
-pip install virtualenv
-python   # runs python v2
-python3  # runs python v3
-```
-
-Install [jupyter notebook](http://jupyter.org/install.html)
-```
-python3 -m pip install --upgrade pip
-python3 -m pip install jupyter
-```
-
+- Install [jupyter notebook](http://jupyter.org/install.html)
+  ```
+  python3 -m pip install --upgrade pip
+  python3 -m pip install jupyter
+  ```
 
 
-## 8. Ruby
-**Setup rbenv**    
-```
-$ brew install rbenv ruby-build
-$ echo 'if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi' >> ~/.bash_profile
-$ source ~/.bash_profile
-```
+## 9. Java and Scala
 
-**Install Ruby**    
-Find the latest version number, `<version>`, of Ruby.    
-At the time of writing, `<version> = 2.2.3`.
-Install this version via `rbenv install`.
-```
-$ rbenv install <version>
-```
-Then point global ruby to be this version:
-```
-$ rbenv global
-system
-$ rbenv global <version>
-$ rbenv global
-2.3.3
-$ ruby -v
-ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-darwin14]
-```
-
-**Setup Bundler**    
-```
-$ ruby -r bundler -e "puts RUBY_VERSION"
-(an error complaining about bundler being missing)
-$ gem install bundler
-$ ruby -r bundler -e "puts RUBY_VERSION"
-2.2.3
-$ brew install rbenv-bundler
-$ rbenv bundler on
-```
-
-**Local Ruby Project**     
-Suppose you have written a Gemfile for a project. To install the gems:
-```
-$ rbenv local <version>
-$ gem install bundler
-$ bundle install
-```
-where `<version>` is the desired version of Ruby. 
-
-## 9. Haskell
-
-```
-$ brew cask install haskell-platform  # all-in-one haskell environment: ghci, cabal, ...
-$ runhaskell foo.hs
-$ ghci
-```
-
-## 10. Java, Scala
-
-```
-brew cask install java
-brew cask install java8
-brew install sbt
-brew install scala --with-docs
-```
+The brewfile should have installed these formulas: `java7`, `java8`, `sbt` and `scala`.
 
 Setting a jdk
 ```bash
@@ -351,21 +272,20 @@ function removeFromPath() {
 setjdk 1.8
 ```
 
-## 11. Mongo, Redis, PostgreSQL
+## 10. Haskell
 
 ```
-brew install mongodb
-sudo mkdir -p /data/db
-
-brew install redis
-brew install postgresql
-brew cask install psequel
+$ brew cask install haskell-platform  # all-in-one haskell environment: ghci, cabal, ...
+$ runhaskell foo.hs
+$ ghci
 ```
 
-## 12. Docker and Cloud
+
+## 11. Cloud
 
 - Download docker for OSX
 - Install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+- Install [Google Cloud SDK](https://cloud.google.com/sdk/install)
 
 
 ## License
