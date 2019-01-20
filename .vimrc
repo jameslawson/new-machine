@@ -74,6 +74,8 @@ Plugin 'vim-airline/vim-airline'        " -- [AIRLINE] depends on [7]
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jameslawson/sandwich.vim'       " -- [SANDWICH]
 Plugin 'jameslawson/grepx.vim'          " -- [GREPX]
+Plugin 'scrooloose/nerdtree'            " -- [NERD]
+Plugin 'terryma/vim-multiple-cursors'
 
 " -- Text Objects
 Plugin 'kana/vim-textobj-user'          " -- [TEXTOBJ]
@@ -91,6 +93,7 @@ Plugin 'derekwyatt/vim-scala'           " -- scala
 Plugin 'editorconfig/editorconfig-vim'   " -- editorconfig
 Plugin 'johnlim/vim-groovy'              " -- groovy
 Plugin 'chr4/nginx.vim'                  " -- nginx config files
+Plugin 'bfontaine/Brewfile.vim'          " -- brewfile syntax
 " Plugin 'digitaltoad/vim-pug.git'       " -- pug
 " Plugin 'rust-lang/rust.vim'            " -- rust
 " Plugin 'leafgarland/typescript-vim'    " -- typescript
@@ -358,6 +361,29 @@ nnoremap <Space> @q
 " ----------------------------------------------------------
 " -- PLUGINS
 " ----------------------------------------------------------
+
+" -- [NERD]
+" -- make CTRL+n open nerdtree
+map <leader>t :NERDTreeFind %<cr>
+:let g:NERDTreeWinSize=60
+
+
+" " -- Check if NERDTree is open or active
+" function! IsNERDTreeOpen()
+"   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" endfunction
+
+" " -- Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
+" "    file, and we're not in vimdiff
+" function! SyncTree()
+"   if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
+"     NERDTreeFind
+"     wincmd p
+"   endif
+" endfunction
+
+" " -- Highlight currently open buffer in NERDTree
+" autocmd BufEnter * call SyncTree()
 
 " -- [AG]
 let g:ag_highlight = 1
