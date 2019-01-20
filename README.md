@@ -1,14 +1,18 @@
 <h1 align="center">new-machine</h1>
 <p align="center">
   :computer: Setting up a new OSX machine :computer: <br>
-  Most of the work needed to get a developer environment setup on OSX
+  Most of the work needed to get a developer environment setup on macOS
 </p>
 
 Prerequisites:
 
 - Admin rights
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
-- Download/update Xcode and accept the Xcode Licence Agreement
+- Xcode: accept the Xcode Licence Agreement and install
+  ```
+  sudo xcodebuild -license
+  xcode-select --install
+  ```
 - If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
   You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753).
 - Change the trackpad direction
