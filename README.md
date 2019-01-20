@@ -5,21 +5,21 @@
 </p>
 
 Prerequisites:
-
 - Admin rights
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
-- Xcode: accept the Xcode Licence Agreement and install
-  ```
-  sudo xcodebuild -license
-  xcode-select --install
-  ```
-- If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
+
+
+**Xcode**: accept the Xcode Licence Agreement and install
+```
+sudo xcodebuild -license
+xcode-select --install
+``` 
+
+**SSH Keys**: If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
   You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753).
+
+**Mouse and Keyboard**
 - Change the trackpad direction
-- Create dotfiles (.vimrc, .tmux, Brewfile):
-  ```
-  ./create_dotfiles.sh
-  ```
 - Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
   ```
   defaults write -g InitialKeyRepeat -int 10
@@ -30,16 +30,20 @@ Prerequisites:
   mkdir -p github/{bbc,jameslawson}
   ```
 
+**Create dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
+```
+./create_dotfiles.sh
+``` 
 
 
 ## 1. CLI
 
-- Bash Aliases:
-  ```bash
-  alias l="ls -lah"
-  alias pynb="jupyter notebook"  
-  ```
-- Bash Custom PS1:
+**Aliases** for bash:
+```bash
+alias l="ls -lah"
+```
+
+**PS1**: customise command-line prompt:
   ```bash
   # -- use sed to delete all the lines in git branch's output that dont start with a asterix (*)
   #    then take result and regex capture the text after the *, and then only print this text
@@ -57,12 +61,12 @@ Prerequisites:
 
   export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
   ```
-- Bash Cycle tab completion
-  ```bash
-  # -- Cycle bash completion
-  #    https://superuser.com/a/289022
-  bind 'TAB:menu-complete'
-  ```
+**Tab completion**
+```bash
+# -- Cycle bash completion
+#    https://superuser.com/a/289022
+bind 'TAB:menu-complete'
+```
 
 ## 2. Homebrew
   
@@ -80,12 +84,11 @@ Prerequisites:
 
 ## 3. git
 
-
-- **Configure Git**: 
-  ```
-  ./configure_git.sh
-  ```
-- See [git-config](https://git-scm.com/docs/git-config) Documentation
+**Configure Git**: 
+```
+./configure_git.sh
+```
+ See [git-config](https://git-scm.com/docs/git-config) Documentation
 
 **vimdiff**: 
 - Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
@@ -151,26 +154,25 @@ From the `Brewfile`, you should already have `vim` formula installed.
 
 From the `Brewfile`, you should already have `tmux` formula installed.
 
-- **Install plugins**: Install tmux plugin manager, then install tmux plugins.
+**Install plugins**: Install tmux plugin manager, then install tmux plugins.
   ```
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   tmux
   <prefix> + I   # install plugins
   ```
 
-- **Autostart tmux**: We can automatically start tmux when you create iTerm session.    
-
-  - Go to *Profiles* in iTerm prferences. In *General* tab.    
-    In the *Send Text at Start:* field, enter the following:
-      ```
-      tmux new
-      ```
-  - By default, colors can become messed up in tmux+iTerm. So we'll need to set color scheme.    
-    In the *Window* tab, in *Report Terminal Type* enter: `xterm-256color`. 
-    And verify that in `.tmux.conf`, we have the color scheme config:
+**Autostart tmux**: We can automatically start tmux when you create iTerm session.    
+- Go to *Profiles* in iTerm prferences. In *General* tab.    
+  In the *Send Text at Start:* field, enter the following:
     ```
-    set -g default-terminal "xterm-256color"
+    tmux new
     ```
+- By default, colors can become messed up in tmux+iTerm. So we'll need to set color scheme.    
+  In the *Window* tab, in *Report Terminal Type* enter: `xterm-256color`. 
+  And verify that in `.tmux.conf`, we have the color scheme config:
+  ```
+  set -g default-terminal "xterm-256color"
+  ```
 
 ## 7. Node
 
@@ -196,7 +198,7 @@ npm config set http_proxy $HTTP_PROXY
 npm config set https-proxy $HTTP_PROXY
 ```
 
-Turn off nvm by default
+#### Turn off nvm by default
 ```bash
 nvm() {
   # -- nvm.sh is really is slow ... so wrap it in a function
@@ -211,19 +213,23 @@ nvm() {
 
 ## 8. Python
 
-- Install virtualenv
-  ```
-  pip install virtualenv
-  python   # runs python v2
-  python3  # runs python v3
-  ```
+Install virtualenv
+```
+pip install virtualenv
+python   # runs python v2
+python3  # runs python v3
+```
 
-- Install [jupyter notebook](http://jupyter.org/install.html)
+Install [jupyter notebook](http://jupyter.org/install.html)
   ```
   python3 -m pip install --upgrade pip
   python3 -m pip install jupyter
-  ```
+```
 
+Add alias
+```
+alias pynb="jupyter notebook"  
+```
 
 ## 9. Java and Scala
 
