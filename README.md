@@ -288,10 +288,11 @@ $ ghci
 ```
 
 
-## 12. Docker and Cloud
+## 11. Cloud
 
 - Download docker for OSX
 - Install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
+- Install [Google Cloud SDK](https://cloud.google.com/sdk/install)
 
 
 ## License
