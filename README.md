@@ -81,30 +81,9 @@ Prerequisites:
 ## 3. git
 
 
-```bash
-$ brew install git
-$ git config --global user.name "James Lawson"
-$ git config --global user.email "jameslawson@users.noreply.github.com"
-$ git config --global alias.co checkout
-$ git config --global alias.st status
-$ git config --global alias.ci commit -v
-$ git config --global alias.lg log --graph --oneline --decorate --all
-$ git config --system http.proxy $HTTP_PROXY
-$ git config --system https.proxy $HTTPS_PROXY
-$ git config --global url.ssh://git@github.com/.insteadOf https://github.com/
-$ git config --global core.excludesfile ~/.gitignore_global
-
-$ mkdir -p ~/.git-templates/hooks
-$ git config --global core.hooksPath ~/.git-templates/hooks
-$ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
-```
-
-**Printing Config**: 
-- Most config is either "system" or "global" (but there's also local, worktree, file)
+- **Configure Git**: 
   ```
-  git config --list --show-origin
-  git config --list --system
-  git config --list --global
+  ./configure_git.sh
   ```
 - See [git-config](https://git-scm.com/docs/git-config) Documentation
 
