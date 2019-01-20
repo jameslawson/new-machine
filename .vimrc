@@ -61,6 +61,8 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'              " -- [VUNDLE], depends on [1]
 Plugin 'kien/ctrlp.vim'                 " -- [CTRLP]
+" TODO: change to: https://github.com/ctrlpvim/ctrlp.vim
+
 Plugin 'rking/ag.vim'                   " -- [AG], depends on [6]
 Plugin 'vim-scripts/snippetsEmu'        " -- [SNIPEMU]
 Plugin 'tpope/vim-commentary'           " -- [COMMENT]
