@@ -1,36 +1,3 @@
-<h1 align="center">dotfiles</h1>
-<p align="center">
-  :wrench: A repo for my dotfiles :wrench: <br>
-  Configuration for vim, tmux, git, zsh, ...
-</p>
-
-License: MIT
-
-## Installation
-Suppose you cloned this repo to `/dotfiles`.    
-To keep dotfiles in sync, **create the appropriate softlinks**:
-
-```bash
-#
-#    ~/.some_dotfile   === soft link ===>   dotfiles/.some_dotfile
-#
-
-cd dotfiles
-ln -s $PWD/.gitignore_global ~/.gitignore_global
-ln -s $PWD/.gitconfig ~/.gitconfig
-ln -s $PWD/.vimrc ~/.vimrc
-ln -s $PWD/.ctags ~/.ctags
-ln -s $PWD/.zshrc ~/.zshrc
-ln -s $PWD/.tmux.conf ~/.tmux.conf
-ln -s $PWD/.git-templates/hooks/prepare-commit-msg ~/.git-templates/hooks/prepare-commit-msg
-
-# link snippetsemu snippet files
-mkdir -p ~/.vim/after
-ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
-```
-
-In your home folder, you can do `ls -lah | grep lrw` to see which dot files are symlinks.
-
 <h1 align="center">new-machine</h1>
 <p align="center">
   :computer: Setting up a new OSX machine :computer: <br>
@@ -45,6 +12,10 @@ Prerequisites:
 - If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
   You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753).
 - Change the trackpad direction
+- Create dotfiles (.vimrc, .tmux, Brewfile):
+  ```
+  ./create_dotfiles.sh
+  ```
 - Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
   ```
   defaults write -g InitialKeyRepeat -int 10
