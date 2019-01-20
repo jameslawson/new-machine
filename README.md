@@ -138,8 +138,11 @@ $ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
   ```
 
 ## 4. Chrome
-- Import Bookmarks
-- Settings > Show Home Button
+- Sign into developer Google Account and sync bookmarks and extensions.
+- Or:
+  - Import Bookmarks
+  - Settings > Show Home Button
+  - Install extensions
 
 ## 5. vim
 
