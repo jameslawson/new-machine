@@ -12,5 +12,8 @@ git config --global alias.lg log --graph --oneline --decorate --all
 git config --global url.ssh://git@github.com/.insteadOf https://github.com/
 git config --global core.excludesfile ~/.gitignore_global
 git config --global core.hooksPath ~/.git-templates/hooks
-echo "Success configured git"
+echo ">>> Success: configured git"
+echo ">>> You can view git config using: git config --list --show-origin"
+echo ">>> You can view global config using: git config --list --global"
+echo ">>> You can view system config using: git config --list --system"
 
