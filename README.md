@@ -72,9 +72,9 @@ Prerequisites:
   ```
 - Install formulas:
   ```bash
-  brew
+  brew bundle ~/Brewfile
   ```
-  This will use the `Brewfile` to install essentials (`vim`, `git`, ...) 
+  This will use the softlinked `Brewfile` to install essentials (`vim`, `git`, ...) 
   languages (`java`, `scala`) and macOS applications (Chrome, KeepingYouAwake, Spectable, ...) via [Cask](http://caskroom.io/).
   
 
@@ -138,37 +138,38 @@ $ chmod a+x ~/.git-templates/hooks/prepare-commit-msg
   ```
 
 ## 4. Chrome
-- Download Chrome
 - Import Bookmarks
 - Settings > Show Home Button
 
-
 ## 5. vim
 
-Install vim with `clipboard+` and `python+` support.
+From the `Brewfile`, you should already have `vim` formula installed.
 
-```bash
-$ brew install vim --override-system-vi --with-python3 --with-custom-python
-$ vim --version | grep python
-+python3
-$ vim --version | grep clipboard
-+clipboard
-$ whereis vim
-/usr/bin/vim
-```
+- **Verify installation** check the `vim` formula installed vim with `clipboard+` and `python+` support:
+  ```bash
+  $ vim --version | grep python
+  +python3
+  $ vim --version | grep clipboard
+  +clipboard
+  ```
+  and verify that we're not using macOS vim by checking path. 
+  ```bash
+  $ whereis vim
+  /usr/bin/vim
+  ```
 
-Install vundle (instructions taken from [here](https://github.com/VundleVim/Vundle.vim)):
-```
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-vim
-:PluginInstall # run this command inside of vim
-```
+- **Install vim plugins**: using vundle (instructions taken from [here](https://github.com/VundleVim/Vundle.vim)):
+  ```
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  vim
+  :PluginInstall # run this command inside of vim
+  ```
 
 ## 6. tmux and iTerm
 
 From the `Brewfile`, you should already have `tmux` formula installed.
 
-- Install tmux plugin manager, then install tmux plugins.
+- **Install plugins**: Install tmux plugin manager, then install tmux plugins.
   ```
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   tmux
