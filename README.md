@@ -262,6 +262,15 @@ $ runhaskell foo.hs
 $ ghci
 ```
 
+## 11. Rust
+
+- Installing [rustup](https://www.rust-lang.org/tools/install)
+
+```
+curl https://sh.rustup.rs -sSf | sh
+```
+
+
 
 ## 11. Cloud
 
