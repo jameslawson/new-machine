@@ -6,7 +6,7 @@
 " ----------------------------------------------------------
 " -- INSTALLATION
 " ----------------------------------------------------------
-" 1. Install the dependencies listed below.
+" 1. Install the external dependencies (in DEPENDENCIES)
 " 2. Open vim. Ignore any errors.
 " 3. In normal mode, execute :PluginInstall
 "    you should see all the plugins install successfully.
@@ -92,12 +92,14 @@ Plugin 'mxw/vim-jsx'                    " -- [JSJSX]
 Plugin 'derekwyatt/vim-scala'           " -- scala
 
 " -- Other Languages
+Plugin 'cespare/vim-toml'                " -- toml config files
 Plugin 'editorconfig/editorconfig-vim'   " -- editorconfig
 Plugin 'johnlim/vim-groovy'              " -- groovy
 Plugin 'chr4/nginx.vim'                  " -- nginx config files
 Plugin 'bfontaine/Brewfile.vim'          " -- brewfile syntax
+Plugin 'jparise/vim-graphql'             " -- graphql
 " Plugin 'digitaltoad/vim-pug.git'       " -- pug
-" Plugin 'rust-lang/rust.vim'            " -- rust
+Plugin 'rust-lang/rust.vim'            " -- rust
 " Plugin 'leafgarland/typescript-vim'    " -- typescript
 " Plugin 'tpope/vim-rails'               " -- ruby on rails
 " Plugin 'lukerandall/haskellmode-vim'   " -- haskell
