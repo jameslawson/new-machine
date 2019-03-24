@@ -9,41 +9,40 @@ Prerequisites:
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
 
 
-**Xcode**: accept the Xcode Licence Agreement and install
-```
-sudo xcodebuild -license
-xcode-select --install
-``` 
+## Essentials
 
-**SSH Keys**: If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
+- **Xcode**
+  accept the Xcode Licence Agreement and install
+  ```
+  sudo xcodebuild -license
+  xcode-select --install
+  ``` 
+- **SSH Keys**: If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
   You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753).
-
-**Mouse and Keyboard**
-- Change the trackpad direction
-- Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
-  ```
-  defaults write -g InitialKeyRepeat -int 10
-  defaults write -g KeyRepeat -int 1
-  ```
-- Setup directories:
+- **Mouse and Keyboard**
+  - Change the trackpad direction
+  - Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
+    ```
+    defaults write -g InitialKeyRepeat -int 10
+    defaults write -g KeyRepeat -int 1
+    ```
+- Setup **directories**:
   ```
   mkdir -p github/{bbc,jameslawson}
   ```
-
-**Create dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
-```
-./create_dotfiles.sh
-``` 
+- Create **dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
+  ```
+  ./create_dotfiles.sh
+  ``` 
 
 
 ## 1. CLI
 
-**Aliases** for bash:
-```bash
-alias l="ls -lah"
-```
-
-**PS1**: customise command-line prompt:
+- **Aliases** for bash:
+  ```bash
+  alias l="ls -lah"
+  ```
+- **PS1**: customise command-line prompt:
   ```bash
   # -- use sed to delete all the lines in git branch's output that dont start with a asterix (*)
   #    then take result and regex capture the text after the *, and then only print this text
@@ -61,12 +60,39 @@ alias l="ls -lah"
 
   export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
   ```
-**Tab completion**
-```bash
-# -- Cycle bash completion
-#    https://superuser.com/a/289022
-bind 'TAB:menu-complete'
-```
+- **Tab completion**
+  ```bash
+  # -- Cycle bash completion
+  #    https://superuser.com/a/289022
+  bind 'TAB:menu-complete'
+  ```
+- **Proxy changing functions**:
+  ```bash
+    add_proxy() {
+      # -- update git
+      git config --system http.proxy $HTTP_PROXY
+      git config --system https.proxy $HTTPS_PROXY
+      git config --list
+
+      # -- update npm
+      # echo "registry=http://registry.npmjs.org/" >> ~/.npmrc
+      # echo "strict-ssl=false" >> ~/.npmrc
+      npm config set proxy $HTTP_PROXY
+      npm config set http_proxy $HTTP_PROXY
+      npm config set https-proxy $HTTP_PROXY
+      # npm config list
+      # -- update .ssh/config, commenting out all ProxyCommand directives
+      sed -i .bak '/^[#][ ]*ProxyCommand nc.*$/ s/^#\(.*ProxyCommand nc.*$\)/\1/' ~/.ssh/config
+  }
+  remove_proxy() {
+    git config --system --unset http.proxy
+    git config --system --unset https.proxy
+    npm config rm proxy
+    npm config rm http_proxy
+    npm config rm https-proxy
+    sed -i .bak '/^[^#][ ]*ProxyCommand nc.*$/ s/\(^.*ProxyCommand nc.*$\)/#\1/' ~/.ssh/config
+  }
+  ```
 
 ## 2. Homebrew
   
@@ -84,40 +110,38 @@ bind 'TAB:menu-complete'
 
 ## 3. git
 
-**Configure Git**: 
-```
-./configure_git.sh
-```
+- **Configure Git**: 
+  ```
+  ./configure_git.sh
+  ```
  See [git-config](https://git-scm.com/docs/git-config) Documentation
 
-**vimdiff**: 
-- Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
-  ```
-  $ git config --global diff.tool vimdiff
-  $ git config --global difftool.prompt false
-  $ git config --global alias.d difftool
-  ```
-- See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
+- **vimdiff**: Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
+    ```
+    $ git config --global diff.tool vimdiff
+    $ git config --global difftool.prompt false
+    $ git config --global alias.d difftool
+    ```
+    See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
 
-**Semantic Commits**: 
-- Install Git [semantic commits](https://github.com/fteem/git-semantic-commits):
+- **Semantic Commits**: Install Git [semantic commits](https://github.com/fteem/git-semantic-commits):
   ```bash
   git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
   cd ~/.git-semantic-commits && ./install.sh
   ```
 
-**Print Tracking Branch**: 
-- Create a tracking branch on push: `git push -u origin foo`
-- Or alternatively, avoid `-u` each time (aka always add upstream tracking on a push):
+- **Print Tracking Branch**: 
+  - Create a tracking branch on push: `git push -u origin foo`
+  - Or alternatively, avoid `-u` each time (aka always add upstream tracking on a push):
+      ```
+      git config --global branch.autosetupmerge always
+      ```
+  - Print out what this branch is tracking on origin:
+    ```bash
+    tracking() {
+      git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
+    }
     ```
-    git config --global branch.autosetupmerge always
-    ```
-- Print out what this branch is tracking on origin:
-  ```bash
-  tracking() {
-    git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
-  }
-  ```
 
 ## 4. Chrome
 - Sign into developer Google Account and sync bookmarks and extensions.
@@ -213,18 +237,18 @@ nvm() {
 
 ## 8. Python
 
-Install virtualenv
-```
-pip install virtualenv
-python   # runs python v2
-python3  # runs python v3
-```
-
-Install [jupyter notebook](http://jupyter.org/install.html)
+- Install [anaconda distro](https://www.anaconda.com/distribution/)
+- Install virtualenv
+  ```
+  pip install virtualenv
+  python   # runs python v2
+  python3  # runs python v3
+  ```
+- Install [jupyter notebook](http://jupyter.org/install.html)
   ```
   python3 -m pip install --upgrade pip
   python3 -m pip install jupyter
-```
+  ```
 
 Add alias
 ```
@@ -264,6 +288,15 @@ $ brew cask install haskell-platform  # all-in-one haskell environment: ghci, ca
 $ runhaskell foo.hs
 $ ghci
 ```
+
+## 11. Rust
+
+- Installing [rustup](https://www.rust-lang.org/tools/install)
+
+```
+curl https://sh.rustup.rs -sSf | sh
+```
+
 
 
 ## 11. Cloud
