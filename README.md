@@ -66,6 +66,33 @@ Prerequisites:
   #    https://superuser.com/a/289022
   bind 'TAB:menu-complete'
   ```
+- **Proxy changing functions**:
+  ```bash
+    add_proxy() {
+      # -- update git
+      git config --system http.proxy $HTTP_PROXY
+      git config --system https.proxy $HTTPS_PROXY
+      git config --list
+
+      # -- update npm
+      # echo "registry=http://registry.npmjs.org/" >> ~/.npmrc
+      # echo "strict-ssl=false" >> ~/.npmrc
+      npm config set proxy $HTTP_PROXY
+      npm config set http_proxy $HTTP_PROXY
+      npm config set https-proxy $HTTP_PROXY
+      # npm config list
+      # -- update .ssh/config, commenting out all ProxyCommand directives
+      sed -i .bak '/^[#][ ]*ProxyCommand nc.*$/ s/^#\(.*ProxyCommand nc.*$\)/\1/' ~/.ssh/config
+  }
+  remove_proxy() {
+    git config --system --unset http.proxy
+    git config --system --unset https.proxy
+    npm config rm proxy
+    npm config rm http_proxy
+    npm config rm https-proxy
+    sed -i .bak '/^[^#][ ]*ProxyCommand nc.*$/ s/\(^.*ProxyCommand nc.*$\)/#\1/' ~/.ssh/config
+  }
+  ```
 
 ## 2. Homebrew
   
@@ -210,18 +237,18 @@ nvm() {
 
 ## 8. Python
 
-Install virtualenv
-```
-pip install virtualenv
-python   # runs python v2
-python3  # runs python v3
-```
-
-Install [jupyter notebook](http://jupyter.org/install.html)
+- Install [anaconda distro](https://www.anaconda.com/distribution/)
+- Install virtualenv
+  ```
+  pip install virtualenv
+  python   # runs python v2
+  python3  # runs python v3
+  ```
+- Install [jupyter notebook](http://jupyter.org/install.html)
   ```
   python3 -m pip install --upgrade pip
   python3 -m pip install jupyter
-```
+  ```
 
 Add alias
 ```
