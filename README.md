@@ -246,20 +246,13 @@ To automatically start tmux when an iTerm session is created:
 
 ## 6. Node
 
-
-**Note:** Homebrew didn't install Node in an earlier step. The instructions
+**Note:** Homebrew installed Node Version Manager (nvm) in an earlier step. The instructions
 below assumes the use of Node Version Manager (nvm) to 
 handle all system-wide and project-specific installations of node.
 
-### Node Version Manager (nvm)
+### Install Node
 
-To install nvm and install versions of node:
-
-1. To install nvm run the following at a command-line prompt:
-    ```bash
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.7/install.sh | bash
-    ```
-2. Optional: Install desired versions of node:
+1. Install desired versions of node:
     ```
     nvm ls-remote
     nvm install v0.12.15
