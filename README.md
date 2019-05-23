@@ -108,7 +108,7 @@ below assume you have the `git` formulae installed.
 
 ### Verify Installation
 
-Verify that we are using Homebrew git, and not the macOS vim:
+Verify that we are using Homebrew git, and not the macOS git:
 1. Check the path is correct:
 
     ```bash
@@ -124,14 +124,14 @@ Verify that we are using Homebrew git, and not the macOS vim:
    if you see `(Apple Git-xxx)` when running `git --version` then you are likely using the macOS vim.
    If this is the case then the Homebrew installation of git is not correct.
 
-### Congfigure Git
+### Configure Git
 
 Run the following script to configure git:
 ```
 ./configure_git.sh
 ```
 
-### Setup vimdiff
+### vimdiff
 
 **Note:** vimdiff is bundled together with git. The configure_git.sh script automatically
 configured git to use vimdiff to resolve conflicts. See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
@@ -198,6 +198,19 @@ To install [vundle](https://github.com/VundleVim/Vundle.vim), a plugin manager f
 
 **Note:** tmux and iTerm were installed via Homebrew in an earlier step. The instructions
 below assume you have the `tmux` formulae installed and `iterm2` cask installed.
+
+### Verify Installation 
+
+1. Check the version of tmux:
+   ```
+   tmux -V
+   ```
+   and verify the version is 2.9a or above.
+2. Check the installation path:
+   ```
+   which tmux
+   ```
+   and verify the path is `/usr/local/bin/tmux`. 
 
 ### tmux plugins
 
@@ -379,7 +392,7 @@ Python 3.x can access packages installed using `pip3`. This is summarised in the
 the version of Python, and the packages chosen, are fixed on per-project basis
 rather than at the system level. These tools are installed by either 
 using a Homebrew's `pip` command or by a Homebrew formula. 
-Read this [Stackoverflow post](https://stackoverflow.com/a/41573588/3649209)
+Read this [Stack Overflow post](https://stackoverflow.com/a/41573588/3649209)
 for more information about the tools for creating virtual environments.
 
 | Tool             | Python 2.x                | Python 3.x                |
@@ -427,29 +440,9 @@ alias pynb="jupyter notebook"
 **Note:** Java was installed via Homebrew in an earlier step. The instructions
 below assume the `java7`, `java8`, `sbt`, `scala` formulae were installed.
 
-Optional: Bash functions for changing the JDK version:
-```bash
-# -- http://www.jayway.com/2014/01/15/how-to-switch-jdk-version-on-mac-os-x-maverick/
-#    Example use: setjdk 1.7 - selects the latest installed JDK version of the 1.7 branch
-#    Example use: setjdk 1.7.0_51 - select a specific version
-#    Run /usr/libexec/java_home -h to get more details on how to choose versions
-function setjdk() {
-  if [ $# -ne 0 ]; then
-    removeFromPath '/System/Library/Frameworks/JavaVM.framework/Home/bin'
-    if [ -n "${JAVA_HOME+x}" ]; then
-      removeFromPath $JAVA_HOME
-    fi
-    export JAVA_HOME=`/usr/libexec/java_home -v $@`
-    export PATH=$JAVA_HOME/bin:$PATH
-  fi
-}
+Optional: Bash functions for changing the JDK version by adding the functions
+in `set_jdk.sh` to a startup script (like .bash_profile).
 
-function removeFromPath() {
-  export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
-}
-
-setjdk 1.8
-```
 
 ## 9. Haskell
 
