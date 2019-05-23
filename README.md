@@ -12,13 +12,15 @@ Prerequisites:
 ## Essentials
 
 - **Xcode**
-  accept the Xcode Licence Agreement and install
+  Accept the Xcode Licence Agreement and install Xcode:
   ```
   sudo xcodebuild -license
   xcode-select --install
   ``` 
 - **SSH Keys**: If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
-  You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753).
+  You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753). To
+  add a private key to the ssh agent, run `ssh-add -K`.
+  
 - **Mouse and Keyboard**
   - Change the trackpad direction
   - Increase the [keyboard repeat rate](https://apple.stackexchange.com/a/83923)
