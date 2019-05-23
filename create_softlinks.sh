@@ -4,6 +4,7 @@
 #    where s is dotfile in src control and h is file in home directory
 echo ">>>>> Creating softlinks..."
 
+ln -s $PWD/.inputrc ~/.inputrc
 ln -s $PWD/.gitignore_global ~/.gitignore_global
 ln -s $PWD/.gitconfig ~/.gitconfig
 ln -s $PWD/.vimrc ~/.vimrc
