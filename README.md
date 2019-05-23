@@ -227,20 +227,60 @@ To automatically start tmux when an iTerm session is created:
 
 ## 6. Node
 
-#### Setup nvm
-Run the [install script](https://github.com/creationix/nvm#install-script).
-```
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.7/install.sh | bash
-nvm ls-remote
-nvm install v0.12.15
-nvm install v4.5.0
-nvm install v5.12.0
-nvm ls
-nvm use v5.12.0
-nvm alias default v5.12.0
-```
 
-#### Configure npm
+**Note:** Homebrew didn't install Node in an earlier step. The instructions
+below assumes the use of Node Version Manager (nvm) to 
+handle all system-wide and project-specific installations of node.
+
+### Node Version Manager (nvm)
+
+To install nvm and install versions of node:
+
+1. To install nvm run the following at a command-line prompt:
+    ```bash
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.7/install.sh | bash
+    ```
+2. Optional: Install desired versions of node:
+    ```
+    nvm ls-remote
+    nvm install v0.12.15
+    nvm install v4.5.0
+    nvm install v5.12.0
+    ```
+3. Optional: Pick a version to be the default:
+    ```
+    nvm use v5.12.0
+    nvm alias default v5.12.0
+    ```
+
+4. Optional: Remove nvm automatic loading in `.bash_profile`.
+   By default, nvm automatically loads itself on each tty session startup by running a bash script in
+   .bash_profile. This uses over 1 second to load itself, significantly slowing down
+   the overall tty session startup time. For terminal multiplexers (like tmux), this 
+   can hinder a developer's workflow where tty sessions are created and destroyed frequently.
+   A workarund is to instead, _manually_ load nvm by wrapping
+   the nvm loader shell script in a bash function.
+
+   ```diff
+   - export NVM_DIR="$HOME/.nvm"
+   - [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+   - [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+   + nvm() {
+   +   export NVM_DIR="$HOME/.nvm"
+   +   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+   +   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+   +  }
+   ```
+   Then the first time `nvm` is run in the tty session will cause nvm to load into the bash path. 
+   All subsequent times we run `nvm`, the actual `nvm` executable will run because it has since been loaded into the path.
+   ```
+   nvm              <- run this nvm function, this loads nvm to path
+   nvm ls           <- now we can use the real nvm executable
+   ```
+
+### Node Package Manager (npm)
+
+Configure npm:
 ```
 npm config set init.author.name $name  
 npm config set init.author.email $email
@@ -249,41 +289,96 @@ npm config set http_proxy $HTTP_PROXY
 npm config set https-proxy $HTTP_PROXY
 ```
 
-#### Turn off nvm by default
-```bash
-nvm() {
-  # -- nvm.sh is really is slow ... so wrap it in a function
-  #    USAGE:
-  #    $ nvm              <- run this nvm function, this loads nvm to path
-  #    $ nvm ls           <- now we can use the real nvm executable
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-}
-```
+
 
 ## 7. Python
 
 **Note:** Python was install via Homebrew in an earlier step. The instructions
-below assume you have the `python` and `python3` formulae installed.
+below assume the `python` and `python3` formulae were installed.
+
+### Summary of Homebrew Python
+
+Python 2 is being replaced by Python 3 and by the end of January
+2020 Python 2 will reach its End of Life date (see [PEP 373](https://legacy.python.org/dev/peps/pep-0373/)).
+The [Official Homebrew Documentation](https://docs.brew.sh/Homebrew-and-Python) has information on how
+Homebrew installs Python. To allow developers to write code in either Python 2.x or Python 3.x during
+this migration, Homebrew has set up its Python installation like so:
+
+- The `python` and `python3` Homebrew formulae are installed
+- The `python3` command points to Homebrew's Python 3.x (provided by the `python3` formula)
+- The `python2` command points to Homebrew's Python 2.x (provided by the `python` formula)
+- The `python` command, for now, points to Homebrew Python 2.x. This will likely change when python 2 reaches its End of Life.    
+  **Note**: If Homebrew is not installed correctly with the PATH setup correctly, or the `python` and `python3` packages formulae are not installed then the `python` command will point to the Python executable that comes bundled
+  with the macOS. It is better to avoid this situation where possible because it 
+  is unconventional to use the macOS python executable in conjuction with any Homebrew Python installations.  
+  **Note**: It isn't recommended to change `python` to point to Python 3.x. Some macOS
+  system-wide programs depend on the `python` and they expect this to point to Python 2;
+  changing `python` to point to Python 3.x could cause these programs not to behave correctly.
+
+### Summary of Homebrew pip
+
+Homebrew automatically installs Python's package management tool pip. When you install 
+the `python` and `python3` formulae, the `pip` and `pip3` commands are automatically installed like so: 
+- The `pip3` command will install packages under Homebrew's Python 3.x (provided by the `python3` formula)
+- The `pip2` command will install packages under Homebrew's Python 2.x (provided by the `python` formula)
+- The `pip` command, for now, install packages under Homebrew Python 2.x. This will likely change when python 2 reaches its End of Life status.
+
+These Homebrew pip commands are system-side, the packages are installed globally and are accessible to python programs
+that are executed with the appropriate version of Homebrew Python. Programs that run with Python 2.x can access packages installed using `pip2` (and for now, `pip`); and programs that are run with 
+Python 3.x can access packages installed using `pip3`. This is summarised in the table below:
 
 
+| Python Version   | Pip Install Command       | Package Install Path                               |
+| ---------------- | ------------------------- | -------------------------------------------------- |
+| Python 2.x       | `pip2 install <package>`  | `/usr/local/lib/python2.x/site-packages/<package>` |
+| Python 3.x       | `pip3 install <package>`  | `/usr/local/lib/python3.x/site-packages/<package>` |      
 
 
-- Install [anaconda distro](https://www.anaconda.com/distribution/)
-- Install virtualenv
-  ```
-  pip install virtualenv
-  python   # runs python v2
-  python3  # runs python v3
-  ```
-- Install [jupyter notebook](http://jupyter.org/install.html)
-  ```
-  python3 -m pip install --upgrade pip
-  python3 -m pip install jupyter
-  ```
+### Virtual Environments (`virutalenv`, `venv`, `pipenv`, ...)
 
-Add alias
+**Note:** There are tools for creating isolated project-specfic environments where
+the version of Python, and the packages chosen, are fixed on per-project basis
+rather than at the system level. These tools are installed by either 
+using a Homebrew's `pip` command or by a Homebrew formula. 
+Read this [Stackoverflow post](https://stackoverflow.com/a/41573588/3649209)
+for more information about the tools for creating virtual environments.
+
+| Tool             | Python 2.x                | Python 3.x                |
+| ---------------- | ------------------------- | ------------------------- |
+| virtualenv       | `pip2 install virtualenv` | `pip3 install virtualenv` |
+| venv (pyvenv)    | `python2 -m venv`         | `python3 -m venv` |  
+
+| Tool             | Homebrew Command        |
+| ---------------- | ----------------------- |
+| pyenv            | `brew install pyenv`    |  
+| pipenv           | `brew install pipenv`    |  
+
+
+### Binary Distributions (`setuptools`, `easy_install`, `eggs`, `wheel`, ...)
+
+**Note:** There are tools for creating and install binary distributions.
+These tools can be installed in Homebrew using Homebrew's `pip` command.
+Read this [Stackoverflow post](https://stackoverflow.com/a/8550546/3649209)
+for more information about tools to create binary distributions.
+
+
+| Tool                                | Python 2.x                | Python 3.x                |
+| ----------------------------------- | ------------------------- | ------------------------- |
+| setuptools and easy_install         | `pip2 install setuptools` | `pip3 install setuptools` |
+| wheel                               | `pip2 install wheel`      | `pip3 install wheel`      |  
+| wheel (python 3.6+)                 | -                         | `pip3 wheel`              |  
+
+
+### anaconda
+
+**Note:** Anaconda was installed via Homebrew in an earlier step. The instructions below assume
+the `anaconda` cask is installed.
+
+### jupyter notebook
+
+**Note:** Jupyter notebook was installed via anaconda distribution in an earlier step.
+
+Add alias:
 ```
 alias pynb="jupyter notebook"  
 ```
