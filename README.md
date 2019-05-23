@@ -104,8 +104,19 @@ Prerequisites:
   ```bash
   brew bundle ~/Brewfile
   ```
-  This will use the softlinked `Brewfile` to install essentials (`vim`, `git`, ...) 
-  languages (`java`, `scala`) and macOS applications (Chrome, KeepingYouAwake, Spectable, ...) via [Cask](http://caskroom.io/).
+
+This will use the softlink Brewfile to install essential tools like vim, git, tree; 
+install languages likes Java, Scala; and macOS applications like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
+
+Finally, you can perform a final check to verify the installation. Run the following:
+
+```
+$ echo $PATH
+```
+and confirm that the output begins with `/usr/local/bin:`; 
+if it does not, then you'll need to [update your PATH](https://stackoverflow.com/questions/10343834/how-to-modify-path-for-homebrew) by either changing a Shell startup file like `.bash_profile`
+or by changing the order of paths in `/etc/paths`. 
+
   
 
 ## 3. git
