@@ -28,7 +28,7 @@ Prerequisites:
     ```
 - Setup **directories**:
   ```
-  mkdir -p github/{bbc,jameslawson}
+  mkdir -p github/{work,jameslawson}
   ```
 - Create **dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
   ```
