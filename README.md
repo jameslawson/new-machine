@@ -121,10 +121,10 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
     If any of the above are not true, then you'll need to [update your PATH](https://stackoverflow.com/questions/10343834/how-to-modify-path-for-homebrew) by either changing the `$PATH` environment variable in a startup file like `.bash_profile`
     or by changing the order of paths in `/etc/paths`.     
     
-     **Note**: `/usr/local/bin` and `/usr/local/sbin` are directories where Homebrew places executables upon 
+     **Note**: `/usr/local/bin` and `/usr/local/sbin` are the default directories where Homebrew places executables upon 
      the installation of Formulas. We must ensure that our [UNIX path search](https://tiswww.case.edu/php/chet/bash/bashref.html#Command-Search-and-Execution-1) is configured
      so that these directories are searched before the standard macOS directories of `/usr/bin` and 
-     `/usr/sbin` are searched. 
+     `/usr/sbin` are searched.
 
   
 
@@ -165,27 +165,35 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
 
 ## 4. vim
 
-From the `Brewfile`, you should already have `vim` formula installed.
+**Note:** vim was installed via Homebrew in an earlier step. The instructions
+below assume you have the `vim` formulae installed.
 
-- **Verify installation** check the `vim` formula installed vim with `clipboard+` and `python+` support:
-  ```bash
-  $ vim --version | grep python
-  +python3
-  $ vim --version | grep clipboard
-  +clipboard
-  ```
-  and verify that we're not using macOS vim by checking path. 
-  ```bash
-  $ whereis vim
-  /usr/bin/vim
-  ```
+### Verify Installation 
 
-- **Install vim plugins**: using vundle (instructions taken from [here](https://github.com/VundleVim/Vundle.vim)):
-  ```
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-  vim
-  :PluginInstall # run this command inside of vim
-  ```
+1. Verify that we are using homebrew vim, and not the macOS vim, by running: 
+    ```bash
+    $ which vim
+    ```
+    The output should be `/usr/local/bin/vim`.
+  
+2. To verify that vim was installed with python and system-clipboard support, run in the comand-line prompt:
+    ```
+    $ vim --version | grep python
+    $ vim --version | grep clipboard
+    ```
+    and verify that the output contains `+python3` and `+clipboard`. If you see `-python3` or `-clipboard`
+    then the installation of vim is not correct.
+
+### Install vim Plugins 
+
+To install [vundle](https://github.com/VundleVim/Vundle.vim), a plugin manager for vim and vim plugins:
+1. Run in the command-line:
+    ```
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    ```
+2. Open vim and from inside vim, install plugins by running the vim user command: **:PluginInstall** 
+
+
 
 ## 5. tmux and iTerm
 
@@ -193,7 +201,6 @@ From the `Brewfile`, you should already have `vim` formula installed.
 below assume you have the `tmux` formulae installed and `iterm2` cask installed.
 
 ### tmux plugins
-
 
 To install the tmux plugin manager (tpm) and tmux plugins:
 1. Run in the command-line:
@@ -282,19 +289,52 @@ To install nvm and install versions of node:
 
 Configure npm:
 ```
-npm config set init.author.name $name  
-npm config set init.author.email $email
-npm config set proxy $HTTP_PROXY
-npm config set http_proxy $HTTP_PROXY
-npm config set https-proxy $HTTP_PROXY
+$ npm config set init.author.name $name  
+$ npm config set init.author.email $email
+$ npm config set proxy $HTTP_PROXY
+$ npm config set http_proxy $HTTP_PROXY
+$ npm config set https-proxy $HTTP_PROXY
 ```
 
 
 
 ## 7. Python
 
-**Note:** Python was install via Homebrew in an earlier step. The instructions
+**Note:** Python was installed via Homebrew in an earlier step. The instructions
 below assume the `python` and `python3` formulae were installed.
+
+### Verify Installation of Homebrew Python
+
+| Executable  | Command              | Expected Output |
+| ---------   | -------------------- | --------------- |
+| `python3`   | `python3 --version`  | `Python 3.x.x`  |
+| `python2`   | `python2 --version`  | `Python 2.x.x`  |
+| `python`    | `python2 --version`  | `Python 2.x.x`  |
+| `pip3`      | `pip3 --version`     | `pip A.B.C from /usr/local/lib/python3.x/site-packages/pip (python 3.x)`  |
+| `pip2`      | `pip2 --version`     | `pip A.B.C from /usr/local/lib/python2.x/site-packages/pip (python 2.x)`  |
+| `pip`       | `pip --version`      | `pip A.B.C from /usr/local/lib/python2.x/site-packages/pip (python 2.x)`  |
+
+
+| Executable  | Command              | Expected Output |
+| ---------   | -------------------- | --------------- |
+| `python3`   | `which python3`      | `/usr/local/bin/python3`  | 
+| `python2`   | `which python2`      | `/usr/local/bin/python2`  |
+| `python`    | `which python`       | `/usr/local/bin/python`   |
+| `pip3`      | `which pip3`         | `/usr/local/bin/pip3`     |
+| `pip2`      | `which pip2`         | `/usr/local/bin/pip2`     |
+| `pip`       | `which pip`          | `/usr/local/bin/pip`     |
+
+
+You can additionally verify that `python` and `python2` binary files in `/usr/local`
+are both symbolic links that link to the same executable:
+
+```bash
+$ readlink /usr/local/bin/python
+../Cellar/python@2/2.7.16/bin/python
+$ readlink /usr/local/bin/python2
+../Cellar/python@2/2.7.16/bin/python
+```
+
 
 ### Summary of Homebrew Python
 
@@ -385,9 +425,10 @@ alias pynb="jupyter notebook"
 
 ## 8. Java and Scala
 
-The brewfile should have installed these formulas: `java7`, `java8`, `sbt` and `scala`.
+**Note:** Java was installed via Homebrew in an earlier step. The instructions
+below assume the `java7`, `java8`, `sbt`, `scala` formulae were installed.
 
-Setting a jdk
+Optional: Bash functions for changing the JDK version:
 ```bash
 # -- http://www.jayway.com/2014/01/15/how-to-switch-jdk-version-on-mac-os-x-maverick/
 #    Example use: setjdk 1.7 - selects the latest installed JDK version of the 1.7 branch
@@ -403,9 +444,11 @@ function setjdk() {
     export PATH=$JAVA_HOME/bin:$PATH
   fi
 }
+
 function removeFromPath() {
   export PATH=$(echo $PATH | sed -E -e "s;:$1;;" -e "s;$1:?;;")
 }
+
 setjdk 1.8
 ```
 
