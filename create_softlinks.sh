@@ -14,6 +14,9 @@ ln -s $PWD/.zshrc ~/.zshrc
 ln -s $PWD/.tmux.conf ~/.tmux.conf
 ln -s $PWD/Brewfile ~/Brewfile
 
+mkdir -p ~/.config/nvim
+ln -s $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
+
 mkdir -p ~/.vim/after
 ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
 
