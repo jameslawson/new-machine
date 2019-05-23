@@ -37,35 +37,10 @@ Prerequisites:
   ./create_dotfiles.sh
   ``` 
 
-
 ## 1. Command Prompt
 
-At the following to a startup script (like .bash_profile) to configure the command prompt:
-
-1. Add aliases for bash:
-    ```bash
-    alias l="ls -lah"
-    ```
-2. Customise command-line prompt statement (PS1):
-    ```bash
-    # -- use sed to delete all the lines in git branch's output that dont start with a asterix (*)
-    #    then take result and regex capture the text after the *, and then only print this text
-    parse_git_branch() {
-      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
-    }
-
-    # -- xterm 256-colours
-    #    https://unix.stackexchange.com/a/124409
-    export G="\[\033[38;5;040m\]"  # green
-    export P="\[\033[38;5;162m\]"  # purple
-    export R="\[\033[00m\]"        # red
-    export D1="\[\033[38;5;244m\]" # dark
-    export D2="\[\033[38;5;239m\]" # darker
-
-    export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
-    ```
-3. Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` to a start-up script.
-
+Optional: Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` 
+to a start-up script (like .bash_profile).
 
 ## 2. Homebrew
   
