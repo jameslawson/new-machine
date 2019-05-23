@@ -96,26 +96,35 @@ Prerequisites:
 
 ## 2. Homebrew
   
-- Install [Homebrew](https://brew.sh/).
-  ```bash
-  $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-  ```
-- Install formulas:
-  ```bash
-  brew bundle ~/Brewfile
-  ```
+To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
 
-This will use the softlink Brewfile to install essential tools like vim, git, tree; 
-install languages likes Java, Scala; and macOS applications like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
+1. Run the following at a command-prompt:
+    ```bash
+    $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    ```
+2. Install formulas:
+    ```bash
+    brew bundle ~/Brewfile
+    ```
+    **Note**: This command reads `~/Brewfile` to install essential tools like vim, git, tree; 
+    install languages likes Java, Scala; and macOS applications like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
 
-Finally, you can perform a final check to verify the installation. Run the following:
+3. Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
+    ```bash
+    $ echo $PATH
+    ```
 
-```
-$ echo $PATH
-```
-and confirm that the output begins with `/usr/local/bin:`; 
-if it does not, then you'll need to [update your PATH](https://stackoverflow.com/questions/10343834/how-to-modify-path-for-homebrew) by either changing a Shell startup file like `.bash_profile`
-or by changing the order of paths in `/etc/paths`. 
+    and confirm the following:
+    1. `/usr/local/bin` comes before `/usr/bin` in the output
+    2. `/usr/local/sbin/` comes before `/usr/sbin` in the output
+
+    If any of the above are not true, then you'll need to [update your PATH](https://stackoverflow.com/questions/10343834/how-to-modify-path-for-homebrew) by either changing the `$PATH` environment variable in a startup file like `.bash_profile`
+    or by changing the order of paths in `/etc/paths`.     
+    
+     **Note**: `/usr/local/bin` and `/usr/local/abin` are directories where Homebrew places executables upon 
+     the installation of Formulas. We must ensure that our [UNIX path search](https://tiswww.case.edu/php/chet/bash/bashref.html#Command-Search-and-Execution-1) is configured
+     so that these directories are searched before the standard macOS directories of `/usr/bin` and 
+     `/usr/sbin` are searched. 
 
   
 
