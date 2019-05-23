@@ -102,14 +102,14 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
     ```bash
     $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
-2. Install formulas:
+2. Install Formulas:
     ```bash
     brew bundle ~/Brewfile
     ```
     **Note**: This command reads `~/Brewfile` to install essential tools like vim, git, tree; 
-    install languages likes Java, Scala; and macOS applications like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
+    install languages likes Java, Scala; and install macOS apps like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
 
-3. Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
+3. Optional: Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
     ```bash
     $ echo $PATH
     ```
@@ -121,7 +121,7 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
     If any of the above are not true, then you'll need to [update your PATH](https://stackoverflow.com/questions/10343834/how-to-modify-path-for-homebrew) by either changing the `$PATH` environment variable in a startup file like `.bash_profile`
     or by changing the order of paths in `/etc/paths`.     
     
-     **Note**: `/usr/local/bin` and `/usr/local/abin` are directories where Homebrew places executables upon 
+     **Note**: `/usr/local/bin` and `/usr/local/sbin` are directories where Homebrew places executables upon 
      the installation of Formulas. We must ensure that our [UNIX path search](https://tiswww.case.edu/php/chet/bash/bashref.html#Command-Search-and-Execution-1) is configured
      so that these directories are searched before the standard macOS directories of `/usr/bin` and 
      `/usr/sbin` are searched. 
@@ -163,14 +163,7 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
     }
     ```
 
-## 4. Chrome
-- Sign into developer Google Account and sync bookmarks and extensions.
-- Or:
-  - Import Bookmarks
-  - Settings > Show Home Button
-  - Install extensions
-
-## 5. vim
+## 4. vim
 
 From the `Brewfile`, you should already have `vim` formula installed.
 
@@ -194,7 +187,7 @@ From the `Brewfile`, you should already have `vim` formula installed.
   :PluginInstall # run this command inside of vim
   ```
 
-## 6. tmux and iTerm
+## 5. tmux and iTerm
 
 From the `Brewfile`, you should already have `tmux` formula installed.
 
@@ -218,7 +211,7 @@ From the `Brewfile`, you should already have `tmux` formula installed.
   set -g default-terminal "xterm-256color"
   ```
 
-## 7. Node
+## 6. Node
 
 #### Setup nvm
 Run the [install script](https://github.com/creationix/nvm#install-script).
@@ -255,7 +248,12 @@ nvm() {
 }
 ```
 
-## 8. Python
+## 7. Python
+
+**Note:** Python was install via Homebrew in an earlier step.
+
+
+
 
 - Install [anaconda distro](https://www.anaconda.com/distribution/)
 - Install virtualenv
@@ -275,7 +273,7 @@ Add alias
 alias pynb="jupyter notebook"  
 ```
 
-## 9. Java and Scala
+## 8. Java and Scala
 
 The brewfile should have installed these formulas: `java7`, `java8`, `sbt` and `scala`.
 
@@ -301,7 +299,7 @@ function removeFromPath() {
 setjdk 1.8
 ```
 
-## 10. Haskell
+## 9. Haskell
 
 ```
 $ brew cask install haskell-platform  # all-in-one haskell environment: ghci, cabal, ...
@@ -309,7 +307,7 @@ $ runhaskell foo.hs
 $ ghci
 ```
 
-## 11. Rust
+## 10. Rust
 
 - Installing [rustup](https://www.rust-lang.org/tools/install)
 
@@ -317,13 +315,19 @@ $ ghci
 curl https://sh.rustup.rs -sSf | sh
 ```
 
-
-
-## 11. Cloud
+## 11. Cloud and Containerization
 
 - Download docker for OSX
 - Install [AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html)
 - Install [Google Cloud SDK](https://cloud.google.com/sdk/install)
+
+
+## 12. Chrome
+- Sign into developer Google Account and sync bookmarks and extensions.
+- Or:
+  - Import Bookmarks
+  - Settings > Show Home Button
+  - Install extensions
 
 
 ## License
