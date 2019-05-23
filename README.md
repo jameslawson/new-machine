@@ -129,20 +129,11 @@ Run the following script to configure git:
 ./configure_git.sh
 ```
 
-See [git-config](https://git-scm.com/docs/git-config) Documentation
-
 ### Setup vimdiff
 
-**Note:** vimdiff is bundled together with git
+**Note:** vimdiff is bundled together with git. The configure_git.sh script automatically
+configured git to use vimdiff to resolve conflicts. See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
 
-Configire git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209)
-```
-$ git config --global diff.tool vimdiff
-$ git config --global difftool.prompt false
-$ git config --global alias.d difftool
-```
-
-See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
 
 ### Optional: Semantic Commits
 
