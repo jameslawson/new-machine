@@ -130,38 +130,74 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
 
 ## 3. git
 
-- **Configure Git**: 
-  ```
-  ./configure_git.sh
-  ```
- See [git-config](https://git-scm.com/docs/git-config) Documentation
+**Note:** git was installed via Homebrew in an earlier step. The instructions
+below assume you have the `git` formulae installed.
 
-- **vimdiff**: Config git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209) (bundled with git)
-    ```
-    $ git config --global diff.tool vimdiff
-    $ git config --global difftool.prompt false
-    $ git config --global alias.d difftool
-    ```
-    See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
+### Verify Installation
 
-- **Semantic Commits**: Install Git [semantic commits](https://github.com/fteem/git-semantic-commits):
+Verify that we are using Homebrew git, and not the macOS vim:
+1. Check the path is correct:
+
+    ```bash
+    $ which git
+    ```
+    The output should be `/usr/local/bin/git`. If the output is `/usr/bin/git` then you are likely using 
+    the macOS vim. If this is the case then the Homebrew installation of git is not correct.
+    
+2. Check the version string:
+   ```
+   $ git --version
+   ```
+   if you see `(Apple Git-xxx)` when running `git --version` then you are likely using the macOS vim.
+   If this is the case then the Homebrew installation of git is not correct.
+
+### Congfigure Git
+
+Run the following script to configure git:
+```
+./configure_git.sh
+```
+
+See [git-config](https://git-scm.com/docs/git-config) Documentation
+
+### Setup vimdiff
+
+**Note:** vimdiff is bundled together with git
+
+Configire git to use [vimdiff](https://stackoverflow.com/a/3713865/3649209)
+```
+$ git config --global diff.tool vimdiff
+$ git config --global difftool.prompt false
+$ git config --global alias.d difftool
+```
+
+See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
+
+### Optional: Semantic Commits
+
+For projects using Semantic commits, install git aliases from [semantic commits](https://github.com/fteem/git-semantic-commits): 
   ```bash
   git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
   cd ~/.git-semantic-commits && ./install.sh
   ```
 
-- **Print Tracking Branch**: 
-  - Create a tracking branch on push: `git push -u origin foo`
-  - Or alternatively, avoid `-u` each time (aka always add upstream tracking on a push):
-      ```
-      git config --global branch.autosetupmerge always
-      ```
-  - Print out what this branch is tracking on origin:
-    ```bash
-    tracking() {
-      git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
-    }
-    ```
+### Bash Function to Print Tracking Branch: 
+
+
+To print out what this branch is tracking on origin, add the following to a startup script (like `.bash_profile`):
+```bash
+tracking() {
+  git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
+}
+```
+
+Then writing `$ tracking` and pressing Enter will show the current tracking branch if there is one,
+and print an empty line is there is no tracking branch.
+
+**Note:** To create a tracking branch on push: `git push -u origin foo`, or alternatively, to 
+avoid writing `-u` each time (and always add upstream tracking on a push), you can use
+`git config --global branch.autosetupmerge always`.
+
 
 ## 4. vim
 
