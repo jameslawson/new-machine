@@ -36,63 +36,34 @@ Prerequisites:
   ``` 
 
 
-## 1. CLI
+## 1. Command Prompt
 
-- **Aliases** for bash:
-  ```bash
-  alias l="ls -lah"
-  ```
-- **PS1**: customise command-line prompt:
-  ```bash
-  # -- use sed to delete all the lines in git branch's output that dont start with a asterix (*)
-  #    then take result and regex capture the text after the *, and then only print this text
-  parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
-  }
-  
-  # -- xterm 256-colours
-  #    https://unix.stackexchange.com/a/124409
-  export G="\[\033[38;5;040m\]"  # green
-  export P="\[\033[38;5;162m\]"  # purple
-  export R="\[\033[00m\]"        # red
-  export D1="\[\033[38;5;244m\]" # dark
-  export D2="\[\033[38;5;239m\]" # darker
+At the following to a startup script (like .bash_profile) to configure the command prompt:
 
-  export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
-  ```
-- **Tab completion**
-  ```bash
-  # -- Cycle bash completion
-  #    https://superuser.com/a/289022
-  bind 'TAB:menu-complete'
-  ```
-- **Proxy changing functions**:
-  ```bash
-    add_proxy() {
-      # -- update git
-      git config --system http.proxy $HTTP_PROXY
-      git config --system https.proxy $HTTPS_PROXY
-      git config --list
+1. Add aliases for bash:
+    ```bash
+    alias l="ls -lah"
+    ```
+2. Customise command-line prompt statement (PS1):
+    ```bash
+    # -- use sed to delete all the lines in git branch's output that dont start with a asterix (*)
+    #    then take result and regex capture the text after the *, and then only print this text
+    parse_git_branch() {
+      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ \1/'
+    }
 
-      # -- update npm
-      # echo "registry=http://registry.npmjs.org/" >> ~/.npmrc
-      # echo "strict-ssl=false" >> ~/.npmrc
-      npm config set proxy $HTTP_PROXY
-      npm config set http_proxy $HTTP_PROXY
-      npm config set https-proxy $HTTP_PROXY
-      # npm config list
-      # -- update .ssh/config, commenting out all ProxyCommand directives
-      sed -i .bak '/^[#][ ]*ProxyCommand nc.*$/ s/^#\(.*ProxyCommand nc.*$\)/\1/' ~/.ssh/config
-  }
-  remove_proxy() {
-    git config --system --unset http.proxy
-    git config --system --unset https.proxy
-    npm config rm proxy
-    npm config rm http_proxy
-    npm config rm https-proxy
-    sed -i .bak '/^[^#][ ]*ProxyCommand nc.*$/ s/\(^.*ProxyCommand nc.*$\)/#\1/' ~/.ssh/config
-  }
-  ```
+    # -- xterm 256-colours
+    #    https://unix.stackexchange.com/a/124409
+    export G="\[\033[38;5;040m\]"  # green
+    export P="\[\033[38;5;162m\]"  # purple
+    export R="\[\033[00m\]"        # red
+    export D1="\[\033[38;5;244m\]" # dark
+    export D2="\[\033[38;5;239m\]" # darker
+
+    export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
+    ```
+3. Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` to a start-up script.
+
 
 ## 2. Homebrew
   
@@ -181,8 +152,7 @@ For projects using Semantic commits, install git aliases from [semantic commits]
   cd ~/.git-semantic-commits && ./install.sh
   ```
 
-### Bash Function to Print Tracking Branch: 
-
+### Bash Function to Print Tracking Branch
 
 To print out what this branch is tracking on origin, add the following to a startup script (like `.bash_profile`):
 ```bash
