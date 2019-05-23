@@ -192,6 +192,9 @@ From the `Brewfile`, you should already have `vim` formula installed.
 **Note:** tmux and iTerm were installed via Homebrew in an earlier step. The instructions
 below assume you have the `tmux` formulae installed and `iterm2` cask installed.
 
+### tmux plugins
+
+
 To install the tmux plugin manager (tpm) and tmux plugins:
 1. Run in the command-line:
   ```
@@ -200,19 +203,27 @@ To install the tmux plugin manager (tpm) and tmux plugins:
 2. Open tmux install plugins by running **`<prefix> + I`** 
 
 
+### Automatially start tmux in iTerm
 
-**Autostart tmux**: We can automatically start tmux when you create iTerm session.    
-- Go to *Profiles* in iTerm prferences. In *General* tab.    
-  In the *Send Text at Start:* field, enter the following:
+To automatically start tmux when an iTerm session is created:    
+
+1. In iTerm Preferences, view **Profiles > General**
+2. In the **Send Text at Start:** field, enter the following:
     ```
     tmux new
     ```
-- By default, colors can become messed up in tmux+iTerm. So we'll need to set color scheme.    
-  In the *Window* tab, in *Report Terminal Type* enter: `xterm-256color`. 
-  And verify that in `.tmux.conf`, we have the color scheme config:
-  ```
-  set -g default-terminal "xterm-256color"
-  ```
+    
+    
+### Using `xterm-256color` in iTerm
+
+1. In iTerm Preferences, view **Profiles > Terminal**
+2. In the **Report Terminal Type** enter: `xterm-256color`. 
+3. In `.tmux.conf`, verify that this line exists: 
+    ```
+    set -g default-terminal "screen-256color"
+    ```
+  
+
 
 ## 6. Node
 
