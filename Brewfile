@@ -20,6 +20,7 @@ brew 'java7'
 brew 'java8'
 brew 'sbt'
 brew 'sbt@0.13'
+brew 'nvm'
 
 # -- Databases
 brew 'mongodb'
