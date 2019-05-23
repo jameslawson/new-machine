@@ -25,4 +25,6 @@ echo ">>> Success: configured git"
 echo ">>> You can view all git config using: git config --list --show-origin"
 echo ">>> You can view global config using: git config --list --global"
 echo ">>> You can view system config using: git config --list --system"
+echo ">>> For more info, see git-config documentation: https://git-scm.com/docs/git-config"
+
 
