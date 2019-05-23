@@ -189,14 +189,17 @@ From the `Brewfile`, you should already have `vim` formula installed.
 
 ## 5. tmux and iTerm
 
-From the `Brewfile`, you should already have `tmux` formula installed.
+**Note:** tmux and iTerm were installed via Homebrew in an earlier step. The instructions
+below assume you have the `tmux` formulae installed and `iterm2` cask installed.
 
-**Install plugins**: Install tmux plugin manager, then install tmux plugins.
+To install the tmux plugin manager (tpm) and tmux plugins:
+1. Run in the command-line:
   ```
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  tmux
-  <prefix> + I   # install plugins
   ```
+2. Open tmux install plugins by running **`<prefix> + I`** 
+
+
 
 **Autostart tmux**: We can automatically start tmux when you create iTerm session.    
 - Go to *Profiles* in iTerm prferences. In *General* tab.    
@@ -250,7 +253,8 @@ nvm() {
 
 ## 7. Python
 
-**Note:** Python was install via Homebrew in an earlier step.
+**Note:** Python was install via Homebrew in an earlier step. The instructions
+below assume you have the `python` and `python3` formulae installed.
 
 
 
