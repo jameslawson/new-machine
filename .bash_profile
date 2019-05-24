@@ -23,4 +23,5 @@ export PATH="/usr/local/sbin:$PATH"
 alias kboff="sudo kextunload /system/library/extensions/appleusbtopcase.kext/contents/plugins/appleusbtckeyboard.kext/"
 alias kbon="sudo kextload /system/library/extensions/appleusbtopcase.kext/contents/plugins/appleusbtckeyboard.kext/"
 
-alias l="ls -lah"
+alias l="ls -lahGFh"
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
