@@ -170,16 +170,18 @@ To install [vundle](https://github.com/VundleVim/Vundle.vim), a plugin manager f
 ## 4X. Neovim (Experimental)
 
 **Note:** Neovim was installed via Homebrew in an earlier step. The instructions
-below assume you have the `neovim` formulae installed.
+below assume you have the `neovim` formula installed.
 
 ### vim-plug
 
-Download vim-plug:
-```
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-```
+To install plugins for Neovim:
 
+1. Download [vim-plug](https://github.com/junegunn/vim-plug/wiki/tutorial) (for Neovim on UNIX):
+    ```
+    curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    ```
+2. Open Neovim (by running the `nvim` command) and execute the Neovim user command **:PlugInstall** in Normal Mode.
 
 ## 5. tmux and iTerm
 
