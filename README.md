@@ -182,6 +182,7 @@ To install plugins for Neovim:
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     ```
 2. Open Neovim (by running the `nvim` command) and execute the Neovim user command **:PlugInstall** in Normal Mode.
+3. Optional: Check Neovim's startup time is below 100ms using: `nvim --startuptime /dev/stdout +qall` 
 
 ### Plugin Dependencies
 
