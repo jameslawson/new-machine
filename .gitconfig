@@ -19,7 +19,7 @@
 	name = James Lawson
 	email = jameslawson@users.noreply.github.com
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = /Users/james/.gitignore_global
 	hooksPath = /Users/james/.git-templates/hooks
 [alias]
