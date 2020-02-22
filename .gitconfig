@@ -20,13 +20,19 @@
 	email = jameslawson@users.noreply.github.com
 [core]
 	editor = vim
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/james/.gitignore_global
+	hooksPath = /Users/james/.git-templates/hooks
 [alias]
 	st = status
-	ci = commit -v
+	ci = commit
 	co = checkout
 	s = status -s
 	lg = log --oneline --decorate --all --graph
+	d = difftool
+	ci = commit
+	ci = commit
+	ci = commit
+	ci = commit
 
 ; Depends on [1]
 [difftool "sourcetree"]
@@ -43,3 +49,9 @@
 ; 	rebase = true
 [push]
 	default = simple
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/

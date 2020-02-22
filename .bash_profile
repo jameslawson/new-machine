@@ -11,17 +11,7 @@ export P="\[\033[38;5;162m\]"  # purple
 export R="\[\033[00m\]"        # red
 export D1="\[\033[38;5;244m\]" # dark
 export D2="\[\033[38;5;239m\]" # darker
-
 export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
-
-# -- homebrew
-#    force bash to search Homebrew's /usr/local/sbin before the usual /usr/sbin
-export PATH="/usr/local/sbin:$PATH"
-
-# -- enable/disable macbook laptop keyboard
-#    (useful for disabling broken keyboards)
-alias kboff="sudo kextunload /system/library/extensions/appleusbtopcase.kext/contents/plugins/appleusbtckeyboard.kext/"
-alias kbon="sudo kextload /system/library/extensions/appleusbtopcase.kext/contents/plugins/appleusbtckeyboard.kext/"
 
 alias l="ls -lahGFh"
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
