@@ -73,7 +73,7 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
     ```
 2. Install Formulas:
     ```bash
-    brew bundle ~/Brewfile
+    brew bundle --file ~/Brewfile
     ```
     **Note**: This command reads `~/Brewfile` to install essential tools like vim, git, tree; 
     install languages likes Java, Scala; and install macOS apps like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
