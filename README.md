@@ -56,7 +56,7 @@ Prerequisites:
 - Create **dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
   ```
   cd ~/github/dotfiles
-  ./create_dotfiles.sh
+  ./create_softlinks.sh
   ``` 
 
 - **Corporate HTTP Proxy**: Optional: Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` 
