@@ -4,9 +4,9 @@ tap 'homebrew/cask-cask' || true
 tap 'homebrew/cask-versions' || true
 
 # -- Essential
-brew 'vim', args: ["override-system-vi", "with-python3", "with-custom-python"]
 brew 'bash-completion'
 brew 'git'
+brew 'tmux'
 
 # -- Commands
 brew 'tree'
@@ -14,13 +14,15 @@ brew 'pstree'
 brew 'wget'
 brew 'pidof'
 
-# -- Languages
+# -- Node
+brew 'nvm'
+
+# -- JVM Languages
 # brew 'scala', args: ["--with-docs"]
 # brew 'java7'
 # brew 'java8'
 # brew 'sbt'
 # brew 'sbt@0.13'
-brew 'nvm'
 
 # -- Databases
 # brew 'mongodb'
