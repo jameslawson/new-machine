@@ -5,7 +5,7 @@
 </p>
 
 Prerequisites:
-- Admin rights
+- macOS 10.14.6+ with Admin User
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
 
 
@@ -67,20 +67,19 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
 - **Homebrew**: Run the following at a command-prompt:
     ```bash
     $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    ``` .   
+    ```
+    
     Optional: Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
     ```bash
     $ echo $PATH
     ```
-
     and confirm the following:
     1. `/usr/local/bin` comes before `/usr/bin` in the output
     2. `/usr/local/sbin/` comes before `/usr/sbin` in the output
-
     If any of the above are not true, then you'll need to [update your PATH](https://stackoverflow.com/questions/10343834/how-to-modify-path-for-homebrew) by either changing the `$PATH` environment variable in a startup file like `.bash_profile`
     or by changing the order of paths in `/etc/paths`.     
     
-     **Note**: `/usr/local/bin` and `/usr/local/sbin` are the default directories where Homebrew places executables upon 
+     **Note**: `/usr/local/bin` is the default directories where Homebrew places executables upon 
      the installation of Formulas. We must ensure that our [UNIX path search](https://tiswww.case.edu/php/chet/bash/bashref.html#Command-Search-and-Execution-1) is configured
      so that these directories are searched before the standard macOS directories of `/usr/bin` and 
      `/usr/sbin` are searched.
@@ -110,6 +109,7 @@ Verify that we are using Homebrew git, and not the macOS git:
    ```
    if you see `(Apple Git-xxx)` when running `git --version` then you are likely using the macOS vim.
    If this is the case then the Homebrew installation of git is not correct.
+   You can try [running](https://apple.stackexchange.com/a/272220) `brew link --overwrite git`.
 
 ### Configure Git
 
