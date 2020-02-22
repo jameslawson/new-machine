@@ -9,7 +9,7 @@ Prerequisites:
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
 
 
-## Essentials
+## 1. Essentials
 
 - **Xcode**
   Accept the Xcode Licence Agreement and install Xcode:
@@ -45,10 +45,9 @@ Prerequisites:
   ./create_dotfiles.sh
   ``` 
 
-## 1. Command Prompt
-
-Optional: Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` 
+- **Corporate HTTP Proxy**: Optional: Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` 
 to a start-up script (like .bash_profile).
+
 
 ## 2. Homebrew
   
