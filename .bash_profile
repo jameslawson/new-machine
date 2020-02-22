@@ -13,5 +13,11 @@ export D1="\[\033[38;5;244m\]" # dark
 export D2="\[\033[38;5;239m\]" # darker
 export PS1="$D1[$D2 \t $D1] $G\w$P\$(parse_git_branch) $D1$R$ "
 
+alias vim="nvim"
+alias vi="nvim"
 alias l="ls -lahGFh"
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
