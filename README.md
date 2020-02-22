@@ -61,24 +61,14 @@ Prerequisites:
 
 - **Corporate HTTP Proxy**: Optional: Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` 
 to a start-up script (like .bash_profile).
-
-
-## 2. Homebrew
   
 To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
 
-1. Run the following at a command-prompt:
+- **Homebrew**: Run the following at a command-prompt:
     ```bash
     $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    ```
-2. Install Formulas:
-    ```bash
-    brew bundle --file ~/Brewfile
-    ```
-    **Note**: This command reads `~/Brewfile` to install essential tools like vim, git, tree; 
-    install languages likes Java, Scala; and install macOS apps like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
-
-3. Optional: Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
+    ``` .   
+    Optional: Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
     ```bash
     $ echo $PATH
     ```
@@ -95,12 +85,13 @@ To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
      so that these directories are searched before the standard macOS directories of `/usr/bin` and 
      `/usr/sbin` are searched.
 
-  
+    
+    
 
-## 3. git
+## 2. git
 
-**Note:** git was installed via Homebrew in an earlier step. The instructions
-below assume you have the `git` formulae installed.
+Install git:
+`brew install git`
 
 ### Verify Installation
 
@@ -156,6 +147,16 @@ and print an empty line is there is no tracking branch.
 **Note:** To create a tracking branch on push: `git push -u origin foo`, or alternatively, to 
 avoid writing `-u` each time (and always add upstream tracking on a push), you can use
 `git config --global branch.autosetupmerge always`.
+
+## 3. Homebrew Formulas
+
+Install Formulas:
+```bash
+brew bundle --file ~/Brewfile
+```
+**Note**: This command reads `~/Brewfile` to install essential tools like vim, git, tree; 
+install languages likes Java, Scala; and install macOS apps like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
+
 
 
 ## 4. vim
