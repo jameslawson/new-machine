@@ -5,7 +5,7 @@
 </p>
 
 Prerequisites:
-- Admin rights
+- macOS 10.14.6+ with Admin User
 - Set up your proxy `$HTTP_PROXY`, `$HTTPS_PROXY` if needed
 
 
@@ -56,51 +56,41 @@ Prerequisites:
 - Create **dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
   ```
   cd ~/github/dotfiles
-  ./create_dotfiles.sh
+  ./create_softlinks.sh
   ``` 
 
 - **Corporate HTTP Proxy**: Optional: Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` 
 to a start-up script (like .bash_profile).
-
-
-## 2. Homebrew
   
 To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
 
-1. Run the following at a command-prompt:
+- **Homebrew**: Run the following at a command-prompt:
     ```bash
     $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     ```
-2. Install Formulas:
-    ```bash
-    brew bundle ~/Brewfile
-    ```
-    **Note**: This command reads `~/Brewfile` to install essential tools like vim, git, tree; 
-    install languages likes Java, Scala; and install macOS apps like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
-
-3. Optional: Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
+    
+    Optional: Verify the installation has modified your PATH correctly. Output the `$PATH` environment variable:
     ```bash
     $ echo $PATH
     ```
-
     and confirm the following:
     1. `/usr/local/bin` comes before `/usr/bin` in the output
     2. `/usr/local/sbin/` comes before `/usr/sbin` in the output
-
     If any of the above are not true, then you'll need to [update your PATH](https://stackoverflow.com/questions/10343834/how-to-modify-path-for-homebrew) by either changing the `$PATH` environment variable in a startup file like `.bash_profile`
     or by changing the order of paths in `/etc/paths`.     
     
-     **Note**: `/usr/local/bin` and `/usr/local/sbin` are the default directories where Homebrew places executables upon 
+     **Note**: `/usr/local/bin` is the default directories where Homebrew places executables upon 
      the installation of Formulas. We must ensure that our [UNIX path search](https://tiswww.case.edu/php/chet/bash/bashref.html#Command-Search-and-Execution-1) is configured
      so that these directories are searched before the standard macOS directories of `/usr/bin` and 
      `/usr/sbin` are searched.
 
-  
+    
+    
 
-## 3. git
+## 2. git
 
-**Note:** git was installed via Homebrew in an earlier step. The instructions
-below assume you have the `git` formulae installed.
+Install git:
+`brew install git`
 
 ### Verify Installation
 
@@ -119,6 +109,7 @@ Verify that we are using Homebrew git, and not the macOS git:
    ```
    if you see `(Apple Git-xxx)` when running `git --version` then you are likely using the macOS vim.
    If this is the case then the Homebrew installation of git is not correct.
+   You can try [running](https://apple.stackexchange.com/a/272220) `brew link --overwrite git`.
 
 ### Configure Git
 
@@ -156,6 +147,16 @@ and print an empty line is there is no tracking branch.
 **Note:** To create a tracking branch on push: `git push -u origin foo`, or alternatively, to 
 avoid writing `-u` each time (and always add upstream tracking on a push), you can use
 `git config --global branch.autosetupmerge always`.
+
+## 3. Homebrew Formulas
+
+Install Formulas:
+```bash
+brew bundle --file ~/Brewfile
+```
+**Note**: This command reads `~/Brewfile` to install essential tools like vim, git, tree; 
+install languages likes Java, Scala; and install macOS apps like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
+
 
 
 ## 4. vim
