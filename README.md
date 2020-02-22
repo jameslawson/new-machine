@@ -17,10 +17,24 @@ Prerequisites:
   sudo xcodebuild -license
   xcode-select --install
   ``` 
-- **SSH Keys**: If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
-  This should include your **GitHub SSH key**.
-  You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753). To
-  add a private key to the ssh agent, run `ssh-add -K`.
+- **SSH Keys**: For updating existing machines copy `.bash_profile`, `.ssh/`, certificates, any other non-public files from
+  the filesystem to the new filesystem.
+  For new machines, [create a new SSH Key](https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh). This should include your **GitHub SSH key**.
+  ```
+  ssh-keygen -t rsa -b 4096 -C "mail@jameslawson.io"
+  chmod 400 ~/.ssh/id_rsa
+  ssh-add -K
+  ```
+  The above chmod .ssh makes sure the keys are not [too open](https://stackoverflow.com/a/9270753).
+  The ssh-add adds the private key to the ssh agent, so it doesn't keep asking for the private key over again.    
+  Also add the following to `~/.ssh/config` to [automatically load keys](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent) to the agent.
+  ```
+  Host *
+    AddKeysToAgent yes
+    UseKeychain yes
+    IdentityFile ~/.ssh/id_rsa
+  ```
+  Then add the [public key](https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account) to your account.
   
 - **Mouse and Keyboard**
   - Change the trackpad direction
