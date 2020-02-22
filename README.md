@@ -18,6 +18,7 @@ Prerequisites:
   xcode-select --install
   ``` 
 - **SSH Keys**: If necessary, copy `.bash_profile`, `.ssh/`, certificates, any other non-public files to your machine.
+  This should include your **GitHub SSH key**.
   You may need to chmod .ssh files so that they are not [too open](https://stackoverflow.com/a/9270753). To
   add a private key to the ssh agent, run `ssh-add -K`.
   
@@ -32,8 +33,15 @@ Prerequisites:
   ```
   mkdir -p github/{work,jameslawson}
   ```
+- **Clone the dotfiles repo**:
+  ```
+  cd ~/github
+  git clone git@github.com:jameslawson/dotfiles.git
+  ```
+  
 - Create **dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
   ```
+  cd ~/github/dotfiles
   ./create_dotfiles.sh
   ``` 
 
