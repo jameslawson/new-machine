@@ -146,21 +146,32 @@ nnoremap U <nop>
 call plug#begin('~/.local/share/nvim/plugged')
 
 " -- EDITING
-Plug 'tpope/vim-commentary'           " -- [COMMENT]
-Plug 'kana/vim-textobj-user'          " -- [TOBJ]
-Plug 'beloglazov/vim-textobj-quotes'  " -- [TOBJQ], depends on [TOBJ]
+Plug 'tpope/vim-commentary'           " [COMMENT]
+Plug 'kana/vim-textobj-user'          " [TOBJ]
+Plug 'beloglazov/vim-textobj-quotes'  " [TOBJQ], depends on [TOBJ]
+Plug 'mattn/emmet-vim'                " [EMMET]
 
 " -- BEHAVIOUR
-Plug 'milkypostman/vim-togglelist'    " -- [TOGLIST]
+Plug 'milkypostman/vim-togglelist'    " [TOGLIST]
 
 " -- APPEARANCE
-Plug 'nanotech/jellybeans.vim'         " -- [JELLY]
-Plug 'vim-airline/vim-airline'         " -- [AIRLINE]
-Plug 'ntpeters/vim-better-whitespace'  " -- [WSPACE]
+Plug 'nanotech/jellybeans.vim'         " [JELLY]
+Plug 'vim-airline/vim-airline'         " [AIRLINE]
+Plug 'ntpeters/vim-better-whitespace'  " [WSPACE]
+
+" -- SYNTAX HIGHLIGHTING
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'gutenye/json5.vim'
 
 " -- BACKGROUND PROCESSES (CODE COMPLETION, SEARCH, ERROR CHECKING)
+Plug 'dense-analysis/ale'                                         " [ALE]
+Plug 'embear/vim-localvimrc'
 Plug 'neomake/neomake'                                            " [NEOMAKE]
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     " [DEOPLETE]
+Plug 'SirVer/ultisnips'                                           " [ULTISNIPS]
+Plug 'junegunn/fzf', { 'do': './install --bin' }                  " [FZF]
+Plug 'junegunn/fzf.vim'                                           " [FZF]
 
 call plug#end()
 
@@ -183,4 +194,20 @@ let g:neomake_message_sign = {'text': '*', 'texthl': 'NeomakeMessageSign' }
 :highlight NeomakeWarningSign ctermfg=130 ctermbg=237
 
 " -- depends on [DEOPLETE]
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
+
+" " -- depends on [ALE]
+" let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint'], 'typescriptreact': ['eslint']}
+let g:localvimrc_whitelist='/Users/james/github/jameslawson/*'
+
+
+" -- depends on [FZF], brew install ripgrep
+nnoremap <leader>p :Files<CR>
+
+" -- change default from CTRL+Y-comma to comma-e-comma
+" let g:user_emmet_leader_key='<leader>e'
+
+" -- [ULTI] change snippet insert from TAB to [
+" let g:UltiSnipsExpandTrigger="[" this doesnt work because of SirVer/ultisnips/issues/376
+let g:UltiSnipsExpandTrigger = "<nop>"
+inoremap <expr> [ pumvisible() ? "<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>" : "\["
