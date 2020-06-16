@@ -158,41 +158,20 @@ brew bundle --file ~/Brewfile
 install languages likes Java, Scala; and install macOS apps like Chrome, KeepingYouAwake, Spectable via [Homebrew Cask](http://caskroom.io/).
 
 
+## 4. Vim (Neovim)
 
-## 4. vim
-
-**Note:** vim was installed via Homebrew in an earlier step. The instructions
-below assume you have the `vim` formulae installed.
+```
+brew install neovim
+```
 
 ### Verify Installation 
 
-1. Verify that we are using homebrew vim, and not the macOS vim, by running: 
-    ```bash
-    $ which vim
-    ```
-    The output should be `/usr/local/bin/vim`.
-  
-2. To verify that vim was installed with python and system-clipboard support, run in the comand-line prompt:
-    ```
-    $ vim --version | grep python
-    $ vim --version | grep clipboard
-    ```
-    and verify that the output contains `+python3` and `+clipboard`. If you see `-python3` or `-clipboard`
-    then the installation of vim is not correct.
+1. Check the version of neovim:
+   ```
+   nvim -version
+   ```
+   and verify the version is v0.4.3 or above
 
-### Install vim Plugins 
-
-To install [vundle](https://github.com/VundleVim/Vundle.vim), a plugin manager for vim and vim plugins:
-1. Run in the command-line:
-    ```
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    ```
-2. Open vim and from inside vim, install plugins by running the vim user command: **:PluginInstall** 
-
-## 4X. Neovim (Experimental)
-
-**Note:** Neovim was installed via Homebrew in an earlier step. The instructions
-below assume you have the `neovim` formula installed.
 
 ### Neovim Plugins
 
@@ -217,7 +196,14 @@ For the `Shougo/deoplete.nvim` plugin (`[DEOP]`), you need to install Python 3 f
     **Note:** This step assumes the steps in "7. Python" are complete.
 2. Open Neovim (by running the `nvim` command) and execute the Neovim user command **:UpdateRemotePlugins** in Normal Mode.
 
+### bash_profile alias (optional)
+ 
+Add the following alias to `.bash_profile` to redirect vim and vi commands to nvim
 
+```
+alias vim="nvim"
+alias vi="nvim"
+```
 
 
 ## 5. tmux and iTerm
@@ -231,7 +217,7 @@ below assume you have the `tmux` formulae installed and `iterm2` cask installed.
    ```
    tmux -V
    ```
-   and verify the version is 2.9a or above.
+   and verify the version is 3.1b or above.
 2. Check the installation path:
    ```
    which tmux
