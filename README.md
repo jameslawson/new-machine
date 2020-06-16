@@ -185,7 +185,7 @@ To install plugins for Neovim:
 2. Open Neovim (by running the `nvim` command) and execute the Neovim user command **:PlugInstall** in Normal Mode.
 3. Optional: Check Neovim's startup time is below 100ms using: `nvim --startuptime /dev/stdout +qall` 
 
-### Plugin Dependencies
+### Deoplete Dependencies (Autocompletion)
 
 For the `Shougo/deoplete.nvim` plugin (`[DEOP]`), you need to install Python 3 for neovim.
 
@@ -195,6 +195,28 @@ For the `Shougo/deoplete.nvim` plugin (`[DEOP]`), you need to install Python 3 f
     ```
     **Note:** This step assumes the steps in "7. Python" are complete.
 2. Open Neovim (by running the `nvim` command) and execute the Neovim user command **:UpdateRemotePlugins** in Normal Mode.
+
+
+### FZF Dependencies (Filename fuzzy search, Project-wide Code Search)
+
+For `junegunn/fzf` plugin, you need to install FZF 
+
+
+You can optionally keep fzf output but override the internal search algorithm to something faster,
+and most crucially, something that is smart enough to [respect gitignore](https://github.com/junegunn/fzf#respecting-gitignore), after all, we don't node_module files ultimately appearing in our vim fzf searches.
+(popular overrides are [ag ("silver surfer")](https://github.com/ggreer/the_silver_searcher) or [ripgrep](https://github.com/BurntSushi/ripgrep)). Let's use ripgrep.
+
+```
+brew install ripgrep
+```
+
+Then when running either (:Files for Filename fuzzy search, or :Rg for big-grep search), `junegunn/fzf` will run the
+command defined by `$FZF_DEFAULT_COMMAND` environment variable and pipe it into fzf which in turn produces a list inside vim. Add the following to .bash_profile:
+  
+```
+$FZF_DEFAULT_COMMAND=`rg --files --follow --hidden`
+```
+
 
 ### bash_profile alias (optional)
  
