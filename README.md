@@ -245,6 +245,12 @@ below assume you have the `tmux` formulae installed and `iterm2` cask installed.
    which tmux
    ```
    and verify the path is `/usr/local/bin/tmux`. 
+   
+### copy mode
+In tmux copy-mode, to copy to macOS clipboard we need to use [reattach-to-user-namespace](https://thoughtbot.com/blog/tmux-copy-paste-on-os-x-a-better-future) or else copying will silently fail. 
+```
+brew install reattach-to-user-namespace
+```
 
 ### tmux plugins
 
