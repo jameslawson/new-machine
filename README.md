@@ -344,36 +344,12 @@ Run the following script to configure npm:
 **Note:** Python was installed via Homebrew in an earlier step. The instructions
 below assume the `python` and `python3` formulae were installed.
 
-### Verify Installation of Homebrew Python
-
-| Executable  | Command              | Expected Output |
-| ---------   | -------------------- | --------------- |
-| `python3`   | `python3 --version`  | `Python 3.x.x`  |
-| `python2`   | `python2 --version`  | `Python 2.x.x`  |
-| `python`    | `python2 --version`  | `Python 2.x.x`  |
-| `pip3`      | `pip3 --version`     | `pip A.B.C from /usr/local/lib/python3.x/site-packages/pip (python 3.x)`  |
-| `pip2`      | `pip2 --version`     | `pip A.B.C from /usr/local/lib/python2.x/site-packages/pip (python 2.x)`  |
-| `pip`       | `pip --version`      | `pip A.B.C from /usr/local/lib/python2.x/site-packages/pip (python 2.x)`  |
-
-
-| Executable  | Command              | Expected Output |
-| ---------   | -------------------- | --------------- |
-| `python3`   | `which python3`      | `/usr/local/bin/python3`  | 
-| `python2`   | `which python2`      | `/usr/local/bin/python2`  |
-| `python`    | `which python`       | `/usr/local/bin/python`   |
-| `pip3`      | `which pip3`         | `/usr/local/bin/pip3`     |
-| `pip2`      | `which pip2`         | `/usr/local/bin/pip2`     |
-| `pip`       | `which pip`          | `/usr/local/bin/pip`     |
-
-
-You can additionally verify that `python` and `python2` binary files in `/usr/local`
-are both symbolic links that link to the same executable:
-
-```bash
-$ readlink /usr/local/bin/python
-../Cellar/python@2/2.7.16/bin/python
-$ readlink /usr/local/bin/python2
-../Cellar/python@2/2.7.16/bin/python
+```
+brew install pyenv
+brew install openssl readline sqlite3 xz zlib
+pyenv install 2.7.18
+pyenv install 3.8.5
+pyenv local 3.8.5
 ```
 
 ### anaconda
