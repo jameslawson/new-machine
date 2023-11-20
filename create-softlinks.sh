@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# -- create softlinks of: s <- h,
-#    where s is dotfile in src control and h is file in home directory
+# -- create softlinks of the form: "ln -s <vcs> <-- <home>"
+#    where <vrc> is dotfile under src control and <home>
+#    is file in home directory
 echo ">>>>> Creating softlinks..."
 
 ln -s $PWD/.inputrc ~/.inputrc
@@ -14,13 +15,6 @@ ln -s $PWD/Brewfile ~/Brewfile
 
 mkdir -p ~/.config/nvim
 ln -s $PWD/.config/nvim/init.vim ~/.config/nvim/init.vim
-
-mkdir -p ~/.vim/after
-ln -s $PWD/.vim/after/ftplugin ~/.vim/after/ftplugin
-
-mkdir -p ~/.git-templates/hooks
-ln -s $PWD/.git-templates/hooks/prepare-commit-msg ~/.git-templates/hooks/prepare-commit-msg
-chmod a+x ~/.git-templates/hooks/prepare-commit-msg
 
 echo ">>>>> Success: Created softlinks."
 
