@@ -167,11 +167,7 @@ Plug 'jonsmithers/vim-html-template-literals' " [HTL]
 Plug 'leafgarland/typescript-vim'
 
 " -- BACKGROUND PROCESSES (CODE COMPLETION, SEARCH, ERROR CHECKING)
-Plug 'dense-analysis/ale'                                         " [ALE]
 Plug 'embear/vim-localvimrc'
-Plug 'neomake/neomake'                                            " [NEOMAKE]
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }     " [DEOPLETE]
-Plug 'SirVer/ultisnips'                                           " [ULTISNIPS]
 Plug 'junegunn/fzf', { 'do': './install --bin' }                  " [FZF]
 Plug 'junegunn/fzf.vim'                                           " [FZF]
 
@@ -199,36 +195,6 @@ set fillchars=fold:\ ,vert:\│,eob:\ ,msgsep:‾
 hi clear CursorLine
 highlight CursorLine ctermbg=234 guibg=fg
 
-" -- depends on [NEOMAKE]
-" call neomake#configure#automake('rw', 500)
-" let g:neomake_virtualtext_current_error = 0
-" let g:neomake_python_enabled_makers = ['pylama']
-" let g:neomake_error_sign={'text': '*', 'texthl': 'NeomakeErrorSign'}
-" let g:neomake_warning_sign={'text': '*', 'texthl': 'NeomakeWarningSign'}
-" let g:neomake_info_sign = {'text': '*', 'texthl': 'NeomakeInfoSign' }
-" let g:neomake_message_sign = {'text': '*', 'texthl': 'NeomakeMessageSign' }
-" :highlight NeomakeErrorMsg ctermfg=227 ctermbg=237
-" :highlight NeomakeWarningSign ctermfg=130 ctermbg=237
-
-" -- depends on [DEOPLETE]
-" let g:deoplete#enable_at_startup = 1
-
-" " -- depends on [ALE]
-" let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint'], 'typescriptreact': ['eslint']}
-let g:localvimrc_whitelist='/Users/james/github/jameslawson/*'
-
-let g:ale_linters = {'javascript': ['eslint']}
-let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'typescriptreact': ['prettier', 'eslint']}
-let g:ale_fix_on_save = 1
-
 " -- depends on [FZF], brew install ripgrep
 nnoremap <leader>p :Files<CR>
 nnoremap <leader>r :History<CR>
-
-" -- change default from CTRL+Y-comma to comma-e-comma
-" let g:user_emmet_leader_key='<leader>e'
-
-" -- [ULTI] change snippet insert from TAB to [
-" let g:UltiSnipsExpandTrigger="[" this doesnt work because of SirVer/ultisnips/issues/376
-let g:UltiSnipsExpandTrigger = "<nop>"
-inoremap <expr> [ pumvisible() ? "<C-R>=UltiSnips#ExpandSnippetOrJump()<CR>" : "\["

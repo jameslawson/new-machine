@@ -6,11 +6,8 @@
 
 # -- For every project, do the following...
 
-# -- Ignore the exuberant ctags file
-tags
-
 # -- Ignore any file with tilde (temporary)
 *~
 
-# -- Ignore the OSX "Desktop Services Store" file
+# -- Ignore the macOS "Desktop Services Store" file
 .DS_Store

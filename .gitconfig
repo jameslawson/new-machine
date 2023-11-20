@@ -14,7 +14,7 @@
 	email = jameslawson@users.noreply.github.com
 [core]
 	editor = nvim
-	excludesfile = /Users/james/.gitignore_global
+	excludesfile = /Users/james/.git-excludesfile
 	hooksPath = /Users/james/.git-templates/hooks
 [alias]
 	st = status
