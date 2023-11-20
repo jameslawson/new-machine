@@ -4,17 +4,11 @@
 ; | Licence: MIT
 ; +---------------------------------------------------------
 ;
-; ----------------------------------------------------------
-; -- DEPENDENCIES
-; ----------------------------------------------------------
+; +---------------------------------------------------------
+; |- DEPENDENCIES
+; +---------------------------------------------------------
 ; [*]: Requires v2.6.3+ of git
-; [1]: Requires SourceTree:
-;      https://www.sourcetreeapp.com/
-;
-; [http]
-; 	proxy = http://blah.blah.blah:1234
-; [https]
-; 	proxy = https://blah.blah.blah:1234
+
 [user]
 	name = James Lawson
 	email = jameslawson@users.noreply.github.com
@@ -30,23 +24,9 @@
 	lg = log --oneline --decorate --all --graph
 	d = difftool
 	ci = commit
-	ci = commit
-	ci = commit
-	ci = commit
-
-; Depends on [1]
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-; Depends on [1]
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 
 [url "https://"]
 	insteadOf = git://
-; [pull]
-; 	rebase = true
 [push]
 	default = simple
 [diff]
@@ -55,3 +35,5 @@
 	prompt = false
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
+[init]
+	defaultBranch = main

@@ -160,9 +160,11 @@ Plug 'vim-airline/vim-airline'         " [AIRLINE]
 Plug 'ntpeters/vim-better-whitespace'  " [WSPACE]
 
 " -- SYNTAX HIGHLIGHTING
-Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'gutenye/json5.vim'
+Plug 'jonsmithers/vim-html-template-literals' " [HTL]
+Plug 'leafgarland/typescript-vim'
 
 " -- BACKGROUND PROCESSES (CODE COMPLETION, SEARCH, ERROR CHECKING)
 Plug 'dense-analysis/ale'                                         " [ALE]
@@ -179,19 +181,34 @@ call plug#end()
 " -- 12. PLUGIN CONFIG
 " ----------------------------------------------------------
 
+" -- depends on [HTL]
+let g:htl_css_templates = 1
+
 " -- depends on [JELLY]
 colorscheme jellybeans
 
+" -- tweak [JELLY] to add transparent background
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE
+autocmd vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE
+
+" -- tweak [JELLY] and remove ugly ~ at end of buffer
+"    https://github.com/neovim/neovim/issues/2067
+set fillchars=fold:\ ,vert:\│,eob:\ ,msgsep:‾
+
+" -- tweak [JELLY] to show more prominent cursorline
+hi clear CursorLine
+highlight CursorLine ctermbg=234 guibg=fg
+
 " -- depends on [NEOMAKE]
-call neomake#configure#automake('rw', 500)
-let g:neomake_virtualtext_current_error = 0
-let g:neomake_python_enabled_makers = ['pylama']
-let g:neomake_error_sign={'text': '*', 'texthl': 'NeomakeErrorSign'}
-let g:neomake_warning_sign={'text': '*', 'texthl': 'NeomakeWarningSign'}
-let g:neomake_info_sign = {'text': '*', 'texthl': 'NeomakeInfoSign' }
-let g:neomake_message_sign = {'text': '*', 'texthl': 'NeomakeMessageSign' }
-:highlight NeomakeErrorMsg ctermfg=227 ctermbg=237
-:highlight NeomakeWarningSign ctermfg=130 ctermbg=237
+" call neomake#configure#automake('rw', 500)
+" let g:neomake_virtualtext_current_error = 0
+" let g:neomake_python_enabled_makers = ['pylama']
+" let g:neomake_error_sign={'text': '*', 'texthl': 'NeomakeErrorSign'}
+" let g:neomake_warning_sign={'text': '*', 'texthl': 'NeomakeWarningSign'}
+" let g:neomake_info_sign = {'text': '*', 'texthl': 'NeomakeInfoSign' }
+" let g:neomake_message_sign = {'text': '*', 'texthl': 'NeomakeMessageSign' }
+" :highlight NeomakeErrorMsg ctermfg=227 ctermbg=237
+" :highlight NeomakeWarningSign ctermfg=130 ctermbg=237
 
 " -- depends on [DEOPLETE]
 " let g:deoplete#enable_at_startup = 1
@@ -200,9 +217,13 @@ let g:neomake_message_sign = {'text': '*', 'texthl': 'NeomakeMessageSign' }
 " let g:ale_fixers = {'javascript': ['eslint'], 'typescript': ['eslint'], 'typescriptreact': ['eslint']}
 let g:localvimrc_whitelist='/Users/james/github/jameslawson/*'
 
+let g:ale_linters = {'javascript': ['eslint']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'typescriptreact': ['prettier', 'eslint']}
+let g:ale_fix_on_save = 1
 
 " -- depends on [FZF], brew install ripgrep
 nnoremap <leader>p :Files<CR>
+nnoremap <leader>r :History<CR>
 
 " -- change default from CTRL+Y-comma to comma-e-comma
 " let g:user_emmet_leader_key='<leader>e'
