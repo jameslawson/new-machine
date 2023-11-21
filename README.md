@@ -45,7 +45,7 @@ Prerequisites:
     ```
 - Setup **directories**:
   ```
-  mkdir -p github/{work,jameslawson}
+  mkdir -p github/jameslawson
   ```
 - **Clone the dotfiles repo**:
   ```
@@ -56,11 +56,9 @@ Prerequisites:
 - Create **dotfiles** create symlinks for .vimrc, .tmux, Brewfile, ...:
   ```
   cd ~/github/dotfiles
-  ./create_softlinks.sh
-  ``` 
-
-- **Corporate HTTP Proxy**: Optional: Add the HTTP Proxy add/remove functions in `./add_remove_proxy.sh` 
-to a start-up script (like .bash_profile).
+  ./create-softlinks.sh
+  ```
+  
   
 To install [Homebrew](https://brew.sh/) and the Homebrew formulas:
 
@@ -111,42 +109,6 @@ Verify that we are using Homebrew git, and not the macOS git:
    If this is the case then the Homebrew installation of git is not correct.
    You can try [running](https://apple.stackexchange.com/a/272220) `brew link --overwrite git`.
 
-### Configure Git
-
-Run the following script to configure git:
-```
-./configure_git.sh
-```
-
-### vimdiff
-
-**Note:** vimdiff is bundled together with git. The configure_git.sh script automatically
-configured git to use vimdiff to resolve conflicts. See [vimdiff cheatsheet](https://gist.github.com/mattratleph/4026987)
-
-
-### Optional: Semantic Commits
-
-For projects using Semantic commits, install git aliases from [semantic commits](https://github.com/fteem/git-semantic-commits): 
-  ```bash
-  git clone https://github.com/fteem/git-semantic-commits ~/.git-semantic-commits
-  cd ~/.git-semantic-commits && ./install.sh
-  ```
-
-### Bash Function to Print Tracking Branch
-
-To print out what this branch is tracking on origin, add the following to a startup script (like `.bash_profile`):
-```bash
-tracking() {
-  git rev-parse --abbrev-ref --symbolic-full-name @{u} 2> /dev/null
-}
-```
-
-Then writing `$ tracking` and pressing Enter will show the current tracking branch if there is one,
-and print an empty line is there is no tracking branch.
-
-**Note:** To create a tracking branch on push: `git push -u origin foo`, or alternatively, to 
-avoid writing `-u` each time (and always add upstream tracking on a push), you can use
-`git config --global branch.autosetupmerge always`.
 
 ## 3. Homebrew Formulas
 
