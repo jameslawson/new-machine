@@ -1,12 +1,23 @@
-cask_args appdir: '/Applications'
+cask_args appdir: "/Applications", require_sha: true
 
-tap 'homebrew/cask-cask' || true
-tap 'homebrew/cask-versions' || true
+tap 'homebrew/cask-cask'
+tap 'oven-sh/bun' 
 
 # -- Essential
-brew 'bash-completion'
 brew 'git'
 brew 'tmux'
+brew "neovim"
+brew "ripgrep"
+
+# -- macOS Applications
+cask "visual-studio-code"
+cask 'iterm2'
+cask 'keepingyouawake'
+cask 'rectangle'
+
+# -- Node
+brew 'nvm'
+brew 'rustup'
 
 # -- Commands
 brew 'tree'
@@ -14,21 +25,8 @@ brew 'pstree'
 brew 'wget'
 brew 'pidof'
 
-# -- Node
-brew 'nvm'
 
-# -- JVM Languages
-# brew 'scala', args: ["--with-docs"]
-# brew 'java7'
-# brew 'java8'
-# brew 'sbt'
-# brew 'sbt@0.13'
 
-# -- Databases
-# brew 'mongodb'
-# brew 'redis'
 
-# -- macOS Applications
-cask 'iterm2'
-cask 'keepingyouawake'
-cask 'rectangle'
+
+
