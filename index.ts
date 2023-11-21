@@ -99,8 +99,8 @@ async function repeatRate() {
   console.log("Note: you will need to logout for changes to take effect");
 }
 
-await homebrewFormulas();
 await createSoftlinks();
+await homebrewFormulas();
 await neovimSetup();
 await tmuxSetup();
 await rustSetup();
