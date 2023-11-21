@@ -3,14 +3,14 @@ cask_args appdir: "/Applications", require_sha: true
 tap 'homebrew/cask-cask'
 tap 'oven-sh/bun' 
 
-# -- Essential
+# -- Essentials
 brew 'git'
 brew 'tmux'
 brew "neovim"
 brew "ripgrep"
+cask "visual-studio-code"
 
 # -- macOS Applications
-cask "visual-studio-code"
 cask 'iterm2'
 cask 'keepingyouawake'
 cask 'rectangle'
@@ -24,9 +24,3 @@ brew 'tree'
 brew 'pstree'
 brew 'wget'
 brew 'pidof'
-
-
-
-
-
-
