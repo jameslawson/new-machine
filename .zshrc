@@ -4,7 +4,7 @@ plugins=(git)
 zstyle ':omz:update' frequency 30
 
 # ; -- Begin Manual Config
-source ~/.zsh/zsh-user.sh
+source ~/.zsh/.zsh-user.sh
 # ; -- End Manual Config
 
 # ; -- All config below this line has been added by tools
