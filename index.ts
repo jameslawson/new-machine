@@ -35,15 +35,15 @@ async function createSoftlinks() {
   const home = homedir();
 
   for (let path of links) {
-    const source = resolve(import.meta.dir, path);
-    const destination = resolve(home, path);
+    const destination = resolve(import.meta.dir, path);
+    const src = resolve(home, path);
 
-    const destinationDir = dirname(destination);
-    if (destinationDir != home) {
-      await $`mkdir -p ${destinationDir}`;
+    const srcDir = dirname(destination);
+    if (srcDir != src) {
+      await $`mkdir -p ${srcDir}`;
     }
 
-    await $`ln -s ${destination} ${source}`;
+    await $`ln -s ${destination} ${src}`;
   }
 
   console.log("Done: Softlinks created.");
