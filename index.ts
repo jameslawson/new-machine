@@ -26,8 +26,7 @@ async function homebrewFormulas() {
 
 async function rustSetup() {
   // rust (rust-lang.org/tools/install)
-  await $`rustup-init`;
-  await $`rustc --version`;
+  await $`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`;
 }
 
 async function createSoftlinks() {

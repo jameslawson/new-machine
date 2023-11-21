@@ -18,7 +18,6 @@ cask "keepingyouawake"
 
 # -- Node
 brew "nvm"
-brew "rustup"
 
 # -- Commands
 brew "tree"
