@@ -7,6 +7,7 @@ import { $ } from 'zx'
 
 const links: string[] = [
   '.config/nvim/init.vim',
+  '.ssh/config',
   '.git-excludesfile',
   '.gitconfig',
   '.inputrc',
@@ -74,10 +75,28 @@ async function neovimSetup() {
 }
 
 async function tmuxSetup() {
+  console.log("Setting up tmux...");
+
   // tmux should be installed by homebrew
   await $`tmux -V`;
   await $`which tmux`;
+
+  // install tmux plugin manager
   await $`git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`
+
+  console.log("Done: tmux installed");
+}
+
+async function repeatRate() {
+  console.log("Updating macOS keyboard repeat rate");
+
+  // Increase the keyboard repeat rate
+  // https://apple.stackexchange.com/questions/10467/how-to-increase-keyboard-key-repeat-rate-on-os-x/83923#83923
+  await $`defaults write -g InitialKeyRepeat -int 10`;
+  await $`defaults write -g KeyRepeat -int 1`;
+
+  console.log("Done: keyboard repeat rate updated.");
+  console.log("Note: you will need to logout for changes to take effect");
 }
 
 await homebrewFormulas();
@@ -85,3 +104,4 @@ await createSoftlinks();
 await neovimSetup();
 await tmuxSetup();
 await rustSetup();
+await repeatRate();
