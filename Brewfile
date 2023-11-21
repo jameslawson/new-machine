@@ -15,6 +15,7 @@ cask "google-chrome"
 # -- macOS Applications
 cask "iterm2"
 cask "keepingyouawake"
+cask "rectangle"
 
 # -- Node
 brew "nvm"
