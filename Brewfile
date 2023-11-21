@@ -1,6 +1,6 @@
 cask_args appdir: "/Applications"
 
-tap "homebrew/cask-cask"
+tap "homebrew/cask"
 tap "oven-sh/bun"
 
 # -- Essentials
