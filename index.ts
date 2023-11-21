@@ -1,6 +1,7 @@
 /**
  * Usage: `bun run index.ts`
  */
+import { existsSync } from 'fs';
 import { homedir } from 'os';
 import { dirname, resolve } from 'path';
 import { $ } from 'zx'
@@ -39,11 +40,13 @@ async function createSoftlinks() {
     const src = resolve(home, path);
 
     const srcDir = dirname(destination);
-    if (srcDir != src) {
+    if (srcDir != src && !existsSync(srcDir)) {
       await $`mkdir -p ${srcDir}`;
     }
 
-    await $`ln -s ${destination} ${src}`;
+    if (!existsSync(src)) {
+      await $`ln -s ${destination} ${src}`;
+    }
   }
 
   console.log("Done: Softlinks created.");
