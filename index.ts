@@ -3,17 +3,17 @@
  */
 import { existsSync } from 'fs';
 import { homedir } from 'os';
-import { dirname, resolve } from 'path';
+import { dirname, join } from 'path';
 import { $ } from 'zx'
 
 const links: string[] = [
   '.config/nvim/init.vim',
+  '.zsh/.zsh-user.sh',
   '.ssh/config',
   '.git-excludesfile',
   '.gitconfig',
   '.inputrc',
   '.tmux.conf',
-  '.zsh-user.sh',
   '.zshrc',
 ];
 
@@ -26,24 +26,24 @@ async function homebrewFormulas() {
 
 async function rustSetup() {
   // rust (rust-lang.org/tools/install)
-  await $`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`;
+  await $`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y`;
 }
 
 async function createSoftlinks() {
-  console.log("Creating softlinks for dotfiles...");
+  console.log("Creating softlinks for dotfiles (2)...");
 
   const home = homedir();
 
   for (let path of links) {
-    const destination = resolve(import.meta.dir, path);
-    const src = resolve(home, path);
-
-    const srcDir = dirname(destination);
-    if (srcDir != src && !existsSync(srcDir)) {
-      await $`mkdir -p ${srcDir}`;
-    }
+    const destination = join(import.meta.dir, path);
+    const src = join(home, path);
 
     if (!existsSync(src)) {
+      const srcDir = dirname(src);
+      if (srcDir != src && !existsSync(srcDir)) {
+        await $`mkdir -p ${srcDir}`;
+      }
+
       await $`ln -s ${destination} ${src}`;
     }
   }
@@ -71,8 +71,10 @@ async function neovimSetup() {
   // junegunn/fzf will run the command defined by $FZF_DEFAULT_COMMAND environment variable 
   // and pipe it into fzf which in turn produces a list inside vim. 
   // Add the following to .bash_profile:
-  const output = `$FZF_DEFAULT_COMMAND="rg --files --follow --hidden"`;
-  await $`echo ${output} >> .zshrc`;
+  if (!process.env.FZF_DEFAULT_COMMAND) {
+    const output = `$FZF_DEFAULT_COMMAND="rg --files --follow --hidden"`;
+    await $`echo ${output} >> .zshrc`;
+  }
   console.log("Done: Neovim setup completed");
 }
 
@@ -84,7 +86,11 @@ async function tmuxSetup() {
   await $`which tmux`;
 
   // install tmux plugin manager
-  await $`git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`
+  const home = homedir();
+  const tpmDir = join(home, '.tmux/plugins/tpm');
+  if (!existsSync(tpmDir)) {
+    await $`git clone https://github.com/tmux-plugins/tpm ${tpmDir}`
+  }
 
   console.log("Done: tmux installed");
 }

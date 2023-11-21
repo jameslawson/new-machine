@@ -11,3 +11,4 @@ source ~/.zsh/.zsh-user.sh
 # ;    running installation scripts. These changes should not be
 # ;    committed to GitHub
 
+$FZF_DEFAULT_COMMAND="rg --files --follow --hidden"
