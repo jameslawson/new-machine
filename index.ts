@@ -17,15 +17,15 @@ const links: string[] = [
 
 async function homebrewFormulas() {
   console.log("Installing homebrew formulas...");
-  // await $`brew bundle --file Brewfile`;
+  await $`brew bundle --file Brewfile`;
   console.log("Done: homebrew formulas installed");
 }
 
 
 async function rustSetup() {
   // rust (rust-lang.org/tools/install)
-  // await $`rustup-init`;
-  // await $`rustc --version`;
+  await $`rustup-init`;
+  await $`rustc --version`;
 }
 
 async function createSoftlinks() {
@@ -39,12 +39,10 @@ async function createSoftlinks() {
 
     const destinationDir = dirname(destination);
     if (destinationDir != home) {
-      console.log(`mkdir -p ${destinationDir}`)
-      // await $`mkdir -p ${destinationDir}`;
+      await $`mkdir -p ${destinationDir}`;
     }
 
-    console.log(`ln -s ${destination} ${source}`)
-    // await $`ln -s ${destination} ${source}`;
+    await $`ln -s ${destination} ${source}`;
   }
 
   console.log("Done: Softlinks created.");
@@ -52,21 +50,38 @@ async function createSoftlinks() {
 
 async function neovimSetup() {
   console.log("Setting up neovim...");
+
+  // neovim should be installed by homebrew
+  await $`nvim -version`;
+
   // Download vim-plugin
-  // const vimplug = `https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`;
-  // await $`curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs ${vimplug}`;
+  const vimplug = `https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`;
+  await $`curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs ${vimplug}`;
 
   // This automated equivalent of:
   // 1. opening Neovim (by running nvim)
   // 2. Running :PlugInstall in Normal Mode
+  await $`nvim -c ':PlugInstall' -c 'qa!'`;
 
-  // Add FZF to .zsh
-  // const output = `$FZF_DEFAULT_COMMAND="rg --files --follow --hidden"`
-  // await $`echo ${output} >> .zshrc`;
+  // Add FZF config to .zsh
+  // When running either (:Files for Filename fuzzy search, or :Rg for big-grep search), 
+  // junegunn/fzf will run the command defined by $FZF_DEFAULT_COMMAND environment variable 
+  // and pipe it into fzf which in turn produces a list inside vim. 
+  // Add the following to .bash_profile:
+  const output = `$FZF_DEFAULT_COMMAND="rg --files --follow --hidden"`;
+  await $`echo ${output} >> .zshrc`;
   console.log("Done: Neovim setup completed");
+}
+
+async function tmuxSetup() {
+  // tmux should be installed by homebrew
+  await $`tmux -V`;
+  await $`which tmux`;
+  await $`git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm`
 }
 
 await homebrewFormulas();
 await createSoftlinks();
 await neovimSetup();
+await tmuxSetup();
 await rustSetup();
