@@ -1,4 +1,4 @@
-cask_args appdir: "/Applications", require_sha: true
+cask_args appdir: "/Applications"
 
 tap "homebrew/cask-cask"
 tap "oven-sh/bun"
