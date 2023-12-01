@@ -102,6 +102,8 @@ async function repeatRate() {
   // https://apple.stackexchange.com/questions/10467/how-to-increase-keyboard-key-repeat-rate-on-os-x/83923#83923
   await $`defaults write -g InitialKeyRepeat -int 10`;
   await $`defaults write -g KeyRepeat -int 1`;
+  // https://stackoverflow.com/questions/39972335/how-do-i-press-and-hold-a-key-and-have-it-repeat-in-vscode
+  await $`defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false`;
 
   console.log("Done: keyboard repeat rate updated.");
   console.log("Note: you will need to logout for changes to take effect");
