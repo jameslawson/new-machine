@@ -5,6 +5,7 @@ tap "oven-sh/bun"
 
 # -- Essentials
 brew "git"
+brew "gh"
 brew "diff-so-fancy"
 brew "tmux"
 brew "neovim"
